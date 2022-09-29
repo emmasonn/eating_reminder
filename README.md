@@ -1,4 +1,4 @@
-# informat
+# Eating Reminder
 
 A new Flutter project.
 
