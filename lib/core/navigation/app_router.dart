@@ -5,15 +5,15 @@ import 'package:informat/core/navigation/app_routes.dart';
 import 'package:informat/feature/what_to_eat/pages/page_foods.dart';
 import 'package:informat/main.dart';
 
-
 final goRouter = GoRouter(
     // initialLocation: ContactRoutes.home.path,
-    initialLocation: '/',
+    initialLocation: '/what-to-eat',
     urlPathStrategy: UrlPathStrategy.path,
     refreshListenable: foodManager,
     routes: [
-     AppRoutes.home,
-     AppRoutes.collection
+      AppRoutes.home,
+      AppRoutes.collection,
+      AppRoutes.schedule,
     ],
     redirect: (GoRouterState state) {
       return null;
@@ -22,5 +22,7 @@ final goRouter = GoRouter(
       print(state.error);
       // final pageFoods =
       //     pr.Provider.of<FoodManager>(context, listen: false);
-      return PageFoods.page(key: state.pageKey,);
+      return PageFoods.page(
+        key: state.pageKey,
+      );
     });
