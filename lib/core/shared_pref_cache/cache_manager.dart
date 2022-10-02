@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CacheManager {
   //Static variable as a single entrypoint to this class
   static final CacheManager instance = CacheManager._();
-
   Future<SharedPreferences>? _sharedPref;
 
   ///private Constructor
