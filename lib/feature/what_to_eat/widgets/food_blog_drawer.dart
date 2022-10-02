@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:informat/feature/profile/widgets/drawer_profile_header.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_drawer_item.dart';
 
 class FoodBlogDrawer extends StatefulWidget {
@@ -22,12 +23,17 @@ class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
     return Container(
       width: size.width * 0.7,
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 120),
+      padding: const EdgeInsets.symmetric(vertical: 120),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const ProfileDrawerHeader(),
+          const Divider(
+            color: Color(0xff34333f),
+          ),
           Expanded(
             child: SingleChildScrollView(
+              padding: const EdgeInsets.only(left: 16, top: 10),
               child: Column(
                 children: [
                   FoodDrawerItem(

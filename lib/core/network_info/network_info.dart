@@ -2,7 +2,6 @@
 * File : network_info
 * Version : 1.0.0
 * */
-
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 abstract class NetworkInfo {

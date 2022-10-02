@@ -10,7 +10,7 @@ import 'package:informat/core/resources/strings.dart';
 
 class HiveFireServiceRunner<T> {
   final NetworkInfo networkInfo;
-  final Future<bool> Function(T)? onCacheTask;
+  final Future<void> Function(T)? onCacheTask;
   final  Future<T> Function()? getFromCache;
 
 

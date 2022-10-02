@@ -1,4 +1,4 @@
-enum FilterType { equals, greaterThan }
+enum FilterType { equals, greaterThan, whereIn }
 
 class WhereClause {
   const WhereClause._({
@@ -19,9 +19,12 @@ class WhereClause {
   const factory WhereClause.greaterThan({
     required String fieldName,
     required Object value,
+  }) = _WhereClauseGreaterThan;
 
-}) = _WhereClauseGreaterThan;
-
+  const factory WhereClause.whereIn({
+    required String fieldName,
+    required List<Object> value,
+  }) = _WhereClauseWhereIn;
 }
 
 class _WhereClauseEqual extends WhereClause {
@@ -32,9 +35,23 @@ class _WhereClauseEqual extends WhereClause {
 }
 
 class _WhereClauseGreaterThan extends WhereClause {
- const _WhereClauseGreaterThan({
-  required String fieldName,
-  required Object value,
-  }) : super._(fieldName: fieldName, type: FilterType.greaterThan, value: value);
+  const _WhereClauseGreaterThan({
+    required String fieldName,
+    required Object value,
+  }) : super._(
+          fieldName: fieldName,
+          type: FilterType.greaterThan,
+          value: value,
+        );
+}
 
+class _WhereClauseWhereIn extends WhereClause {
+  const _WhereClauseWhereIn({
+    required String fieldName,
+    required List<Object> value,
+  }) : super._(
+          fieldName: fieldName,
+          type: FilterType.whereIn,
+          value: value,
+        );
 }

@@ -13,7 +13,7 @@ abstract class Source<T extends DataModel> {
 
   Future<List<T>> getItems();
 
-  Future<T> setItem(T obj);
+  Future<T?> setItem(T obj);
 
   Future<void> deleteItem(T obj);
 

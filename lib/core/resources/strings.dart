@@ -16,3 +16,10 @@ const String processFailure = 'Process Filure';
 const String formatError = 'Format Error';
 const String unknownError = 'Unknown Error';
 const String implementationError = 'Implementation Error';
+
+//What-to-eat preference keys
+const String profileKey = 'profile_pref_key';
+
+//What-to-eat Firebase String
+const String mealSchedulersPath = 'meal_schedulers';
+const String profilesPath = 'profiles';
