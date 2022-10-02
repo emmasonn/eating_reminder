@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1005828134409",
+    "project_id": "meal-scheduler-742a6",
+    "storage_bucket": "meal-scheduler-742a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005828134409:android:6120d63c2a35177cc54ad8",
+        "android_client_info": {
+          "package_name": "com.beacon.mealscheduler"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005828134409-fk4m29q96njsf00v444h95l2r7gpms5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beacon.mealscheduler",
+            "certificate_hash": "ed5a7abce4dc15ca2818d2b797d1ce8664925b0b"
+          }
+        },
+        {
+          "client_id": "1005828134409-jnenidr56vknv24fkcdgh53mcidmmvr3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIiGEt39qfgFRPyrk6XWB7qaYQOkDTQGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005828134409-jnenidr56vknv24fkcdgh53mcidmmvr3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
