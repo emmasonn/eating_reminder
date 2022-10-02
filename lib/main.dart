@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:informat/bootstrap.dart';
 import 'package:informat/core/resources/app_theme.dart';
-import 'package:informat/feature/what_to_eat/managers/food_manager.dart';
-import 'package:informat/injection_container.dart' as di;
 import 'package:provider/provider.dart' as pr;
 
 import 'core/navigation/app_router.dart';
-import 'injection_container.dart';
-
-late FoodManager foodManager;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //initializing getit package
-  await di.init();
-  //initializing foodManager instance variable
-  foodManager = sl<FoodManager>();
+
+  //call boostrap function here
+  await bootStrap();
 
   runApp(const FoodBlog());
 }
@@ -39,7 +34,7 @@ class _FoodBlogState extends State<FoodBlog> {
     return pr.MultiProvider(
       providers: [
         pr.ChangeNotifierProvider.value(
-          value: foodManager ,
+          value: foodManager,
         )
       ],
       child: MaterialApp.router(
