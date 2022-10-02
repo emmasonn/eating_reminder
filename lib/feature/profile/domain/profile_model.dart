@@ -52,7 +52,7 @@ class ProfileModel extends DataModel implements Equatable {
     String? name,
     String? country,
     String? imageUrl,
-    required DataModel dataModel,
+    required DateTime lastUpdated,
     int? count,
     String? telephone,
     String? username,
@@ -94,6 +94,7 @@ class ProfileModel extends DataModel implements Equatable {
         country,
         username,
         telephone,
+        lastUpdated,
         schedulers,
       ];
 
