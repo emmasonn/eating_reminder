@@ -7,12 +7,10 @@ import 'package:informat/core/utils/select_media.dart';
 class ImageButtomSheetWidget extends StatelessWidget {
   const ImageButtomSheetWidget({
     Key? key,
-    required this.cameraClicked,
-    required this.galleryClicked
+    required this.onImageSelected,
   }) : super(key: key);
-  final Function() galleryClicked;
-  final Function() cameraClicked;
-  
+  final Function(String) onImageSelected;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +42,11 @@ class ImageButtomSheetWidget extends StatelessWidget {
                     ),
                     InkWell(
                       splashColor: lightPink.withOpacity(0.2),
-                      onTap: () => cameraClicked,
+                      onTap: () {
+                        selectImage(ImageSource.gallery, (path) {
+                          onImageSelected(path);
+                        });
+                      },
                       child: Column(
                         children: [
                           const Icon(
@@ -67,7 +69,11 @@ class ImageButtomSheetWidget extends StatelessWidget {
                       width: 50,
                     ),
                     InkWell(
-                      onTap: () => galleryClicked,
+                      onTap: () {
+                        selectImage(ImageSource.gallery, (path) {
+                          onImageSelected(path);
+                        });
+                      },
                       child: Column(
                         children: [
                           const Icon(Icons.photo_rounded,
@@ -90,8 +96,7 @@ class ImageButtomSheetWidget extends StatelessWidget {
 
 void selectImageBottomSheet(
   BuildContext context, {
-  required Function() fromGallery,
-  required Function() fromCamera,
+  required Function(String) onSelected,
 }) {
   showModalBottomSheet(
       context: context,
@@ -103,8 +108,7 @@ void selectImageBottomSheet(
       ),
       builder: (context) {
         return ImageButtomSheetWidget(
-          cameraClicked: fromCamera,
-          galleryClicked: fromGallery,
+          onImageSelected: onSelected,
         );
       });
 }
