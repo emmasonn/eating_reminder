@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1005828134409-trogit0v2vgtrj0nl30sttmfdepd0e8m.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1005828134409-trogit0v2vgtrj0nl30sttmfdepd0e8m</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1005828134409-fk4m29q96njsf00v444h95l2r7gpms5f.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyArFZBNMP-KO5iu1VIyOw3JQ6-qzSguImE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1005828134409</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.beacon.mealscheduler</string>
+	<key>PROJECT_ID</key>
+	<string>meal-scheduler-742a6</string>
+	<key>STORAGE_BUCKET</key>
+	<string>meal-scheduler-742a6.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1005828134409:ios:25bd58e82032b971c54ad8</string>
+</dict>
+</plist>

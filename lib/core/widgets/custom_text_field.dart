@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:informat/core/constants/enum_constants.dart';
 import 'package:informat/core/widgets/custom_input_border.dart';
-
-enum DisplayHint { inside, outside }
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
@@ -59,7 +58,8 @@ class CustomTextField extends StatelessWidget {
             )
           ],
           TextFormField(
-            style: theme.textTheme.headline6?.copyWith(fontSize: 18),
+            style: theme.textTheme.headline6
+                ?.copyWith(fontSize: 16, fontFamily: 'Rubik'),
             enabled: true,
             keyboardType: TextInputType.number,
             autocorrect: false,
@@ -83,8 +83,8 @@ class CustomTextField extends StatelessWidget {
                     ),
                     helperText: helperText,
                     hintText: hintText,
-                    hintStyle: theme.textTheme.subtitle1
-                        ?.copyWith(color: theme.primaryColorLight.withOpacity(0.4)),
+                    hintStyle: theme.textTheme.subtitle1?.copyWith(
+                        color: theme.primaryColorLight.withOpacity(0.4)),
                     prefixIcon: prefixIcon,
                     suffixIcon: suffixIcon,
                   )
@@ -96,7 +96,8 @@ class CustomTextField extends StatelessWidget {
                         ),
                         Text(
                           hintText,
-                          style: const TextStyle(fontSize: 16),
+                          style: const TextStyle(
+                              fontSize: 16, fontFamily: 'Rubik'),
                         )
                       ],
                     ),
