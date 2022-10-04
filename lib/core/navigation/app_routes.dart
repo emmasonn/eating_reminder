@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/core/widgets/custom_page.dart';
+import 'package:informat/feature/Auth/pages/page_auth.dart';
+import 'package:informat/feature/profile/pages/page_edit_profile.dart';
 import 'package:informat/feature/what_to_eat/pages/page_foods.dart';
-import 'package:informat/feature/what_to_eat/pages/page_schedule.dart';
-import 'package:provider/provider.dart' as pr;
+import 'package:informat/feature/meal_schedule/pages/page_schedule.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRoutes {
@@ -17,23 +17,42 @@ class AppRoutes {
           child: const PageFoods());
     },
     routes: [
+      login,
       details,
     ],
   );
 
   static final schedule = GoRoute(
-    path: '/schedule',
-    name: 'schedule',
-    pageBuilder: (BuildContext context, GoRouterState state) {
-      return PageMealSchedule.page(key: state.pageKey);
-    },
-  );
+      path: '/schedule',
+      name: 'schedule',
+      pageBuilder: (BuildContext context, GoRouterState state) {
+        return PageMealSchedule.page(key: state.pageKey);
+      },
+      routes: [
+        editProfile,
+      ]);
 
   static final collection = GoRoute(
     path: '/collection',
     name: 'collection',
     pageBuilder: (BuildContext context, GoRouterState state) {
       return PageFoods.page(key: state.pageKey);
+    },
+  );
+
+  static final login = GoRoute(
+    path: 'login',
+    name: 'login',
+    pageBuilder: (BuildContext context, GoRouterState state) {
+      return PageAuth.page(key: state.pageKey);
+    },
+  );
+
+  static final editProfile = GoRoute(
+    path: 'edit-profile',
+    name: 'edit-profile',
+    pageBuilder: (BuildContext context, GoRouterState state) {
+      return PageEditProfie.page(key: state.pageKey);
     },
   );
 
@@ -45,11 +64,4 @@ class AppRoutes {
       return PageFoods.page(key: state.pageKey);
     },
   );
-
-  // static final addContact = GoRoute(
-  //     path: 'add-contact',
-  //     name: 'addContact',
-  //     pageBuilder: (BuildContext context, GoRouterState state) {
-  //       return PageAddContact.page(key: state.pageKey);
-  //     });
 }

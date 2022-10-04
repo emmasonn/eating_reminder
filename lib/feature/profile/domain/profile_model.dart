@@ -48,22 +48,23 @@ class ProfileModel extends DataModel implements Equatable {
   }
 
   ProfileModel copyWith({
+    String? id,
     String? email,
     String? name,
     String? country,
     String? imageUrl,
-    required DateTime lastUpdated,
+    DateTime? lastUpdated,
     int? count,
     String? telephone,
     String? username,
     List<String>? schedulers,
   }) {
     return ProfileModel(
-      id: id,
+      id: id ?? this.id,
       email: email ?? this.email,
       name: name ?? this.name,
       country: country ?? this.country,
-      lastUpdated: lastUpdated,
+      lastUpdated: lastUpdated ?? this.lastUpdated,
       imageUrl: imageUrl ?? this.imageUrl,
       telephone: telephone ?? this.telephone,
       username: username ?? this.username,

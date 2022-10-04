@@ -1,15 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:informat/core/failure/failure.dart';
+import 'package:informat/core/firebase_services/firebase_auth.dart';
 import 'package:informat/core/firebase_services/firebase_service_runner.dart';
 import 'package:informat/core/firebase_services/firebase_source.dart';
 import 'package:informat/core/firebase_services/firebase_util.dart';
 import 'package:informat/core/local_storage/hive_local_source.dart';
 import 'package:informat/core/network_info/network_info.dart';
 import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
-import 'package:informat/feature/profile/domain/profile_model.dart';
 import 'package:informat/feature/profile/repository/profile_repository.dart';
 
 abstract class MealScheduleRepository<T extends MealScheduleModel> {
+  Future<bool> get isLoggedIn;
   Future<List<T>> getCachedMealSchedule();
   Future<Either<Failure, T?>> createMealSchedule(T obj);
   Future<Either<Failure, bool>> pinMealSchedule(T obj);
@@ -21,15 +22,21 @@ class MealScheduleRepositoryImpl<T extends MealScheduleModel>
     extends MealScheduleRepository<T> {
   final FirebaseSource<T> schedulerFirebaseSource;
   final HiveLocalSource<T> schedulerHiveLocalSource;
-  final ProfileRepository<ProfileModel> profileRepository;
+  final ProfileRepository profileRepository;
+  final CoreFirebaseAuth coreFirebaseAuth;
   final NetworkInfo networkInfo;
 
   MealScheduleRepositoryImpl({
     required this.schedulerFirebaseSource,
     required this.schedulerHiveLocalSource,
+    required this.coreFirebaseAuth,
     required this.profileRepository,
     required this.networkInfo,
   });
+
+  @override
+  Future<bool> get isLoggedIn async =>
+      await coreFirebaseAuth.currentUser != null;
 
   @override
   Future<Either<Failure, T?>> createMealSchedule(T obj) {
@@ -79,11 +86,11 @@ class MealScheduleRepositoryImpl<T extends MealScheduleModel>
   @override
   Future<Stream<List<T>>> subscribeTo(List<WhereClause>? where) async {
     final profile = await profileRepository.getCachedProfile();
+
     return schedulerFirebaseSource.subscribeTo([
-      if (profile!.schedulers != null) ...[
-        WhereClause.whereIn(fieldName: 'id', value: profile.schedulers!),
+      if (profile?.schedulers != null) ...[
+        WhereClause.whereIn(fieldName: 'id', value: profile!.schedulers!),
       ],
-      if (where != null) ...where
     ]).asBroadcastStream()
       ..listen((List<T> mealSchedulers) {
         for (final mealScheduler in mealSchedulers) {

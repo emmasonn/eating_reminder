@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/core/widgets/custom_page.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_blog_drawer.dart';
 import 'package:informat/feature/what_to_eat/widgets/home_food_card.dart';

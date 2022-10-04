@@ -16,15 +16,20 @@ class MealScheduleLoaded extends MealScheduleState {
     this.error,
   }) : super();
 
-  MealScheduleState copyWith({
-    required bool status,
-    List<MealScheduleModel>? mealSchedules,
-    String? error,
-  }) {
-    return MealScheduleLoaded(
-      status: status,
-      mealSchedules: mealSchedules ?? this.mealSchedules,
-      error: error ?? error,
-    );
-  }
+  // MealScheduleState copyWith({
+  //   required bool status,
+  //   List<MealScheduleModel>? mealSchedules,
+  //   String? error,
+  // }) {
+  //   return MealScheduleLoaded(
+  //     status: status,
+  //     mealSchedules: mealSchedules ?? this.mealSchedules,
+  //     error: error ?? error,
+  //   );
+  // }
+}
+
+class CheckAuthLoaded extends MealScheduleState {
+  final bool status;
+  const CheckAuthLoaded(this.status);
 }

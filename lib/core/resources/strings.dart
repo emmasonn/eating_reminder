@@ -23,3 +23,4 @@ const String profileKey = 'profile_pref_key';
 //What-to-eat Firebase String
 const String mealSchedulersPath = 'meal_schedulers';
 const String profilesPath = 'profiles';
+const String foodsPath = 'foods';

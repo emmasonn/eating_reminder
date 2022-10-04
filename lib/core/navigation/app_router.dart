@@ -16,6 +16,10 @@ final goRouter = GoRouter(
       AppRoutes.schedule,
     ],
     redirect: (GoRouterState state) {
+      final isUserLogggedIn = foodManager.isUserExist;
+      if (state.location == '/schedule' && !isUserLogggedIn) {
+        return '/what-to-eat/login';
+      }
       return null;
     },
     errorPageBuilder: (BuildContext context, GoRouterState state) {

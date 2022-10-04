@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:informat/core/resources/colors.dart';
 import 'package:informat/feature/profile/widgets/drawer_profile_header.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_drawer_item.dart';
 
@@ -28,8 +29,8 @@ class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const ProfileDrawerHeader(),
-          const Divider(
-            color: Color(0xff34333f),
+          Divider(
+            color: lightPink,
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -75,6 +76,7 @@ class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
                     icon: Icons.food_bank,
                     isActive: widget.tag == 'account',
                     onPressed: () {
+                      GoRouter.of(context).go('/login');
                       Navigator.pop(context);
                     },
                   ),

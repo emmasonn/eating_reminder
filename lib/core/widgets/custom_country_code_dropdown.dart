@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CustomCountryCodesDropDown extends StatefulWidget {
   const CustomCountryCodesDropDown({
@@ -29,7 +28,7 @@ class _CustomCountryCodesDropDownState
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 55,
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       decoration: BoxDecoration(
@@ -45,11 +44,15 @@ class _CustomCountryCodesDropDownState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 5,
+            height: 6,
           ),
-          Text(
+          const Text(
             'Country Code',
-            style: GoogleFonts.montserrat(fontSize: 12),
+            style: TextStyle(
+              fontSize: 12,
+              fontFamily: 'Rubik',
+              fontWeight: FontWeight.w500,
+            ),
           ),
           Expanded(
             child: Row(
@@ -57,31 +60,31 @@ class _CustomCountryCodesDropDownState
                 Expanded(
                   child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                          iconSize: 24,
+                    iconSize: 24,
+                    style: const TextStyle(
+                        fontFamily: 'Rubik',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                    value: currentValue,
+                    items: countryCodes.map<DropdownMenuItem<String>>((e) {
+                      return DropdownMenuItem(
+                        value: e,
+                        child: Text(
+                          e,
                           style: const TextStyle(
                               fontFamily: 'Rubik',
                               fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                          value: currentValue,
-                          items:
-                              countryCodes.map<DropdownMenuItem<String>>((e) {
-                            return DropdownMenuItem(
-                              value: e,
-                              child: Text(
-                                e,
-                                style: const TextStyle(
-                                    fontFamily: 'Rubik',
-                                    fontSize: 16,
-                                    color: Colors.black),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: ((value) {
-                            setState(() {
-                              currentValue = value;
-                              widget.onSelected;
-                            });
-                          }))),
+                              color: Colors.black),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: ((value) {
+                      setState(() {
+                        currentValue = value;
+                        widget.onSelected;
+                      });
+                    }),
+                  )),
                 ),
               ],
             ),

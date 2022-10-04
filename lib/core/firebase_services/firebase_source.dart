@@ -58,6 +58,7 @@ class FirebaseSource<T extends DataModel> extends Source<T> {
     return fromDocument(await docRef.get());
   }
 
+  //this function get single itemn.
   @override
   Future<T?> viewItem(String id) async =>
       fromDocument((await collection.doc(id).get()));

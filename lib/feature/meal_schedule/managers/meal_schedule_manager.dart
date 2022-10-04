@@ -10,12 +10,18 @@ class MealScheduleManager extends StateNotifier<MealScheduleState> {
 
   MealScheduleManager(MealScheduleRepository scheduleRepository)
       : _scheduleRepository = scheduleRepository,
-        super(MealScheduleState.initial());
+        super(MealScheduleState.initial()) {
+    isUserLoggedIn();
+  }
 
   StreamSubscription? _scheduleSubscription;
+  bool isUserExist = false;
+
+  void isUserLoggedIn() async {
+    isUserExist = await _scheduleRepository.isLoggedIn;
+  }
 
   Future<void> createSchedule(MealScheduleModel mealSchedule) {
-    //Am
     return _scheduleRepository.createMealSchedule(mealSchedule);
   }
 
@@ -25,10 +31,12 @@ class MealScheduleManager extends StateNotifier<MealScheduleState> {
     //update the ui with cached data
     updateMealScheduleUi(cachedSchedules);
 
-    _scheduleSubscription =
-        (await _scheduleRepository.subscribeTo([])).listen((mealSchedules) {
-      updateMealScheduleUi(mealSchedules);
-    });
+    if (isUserExist) {
+      _scheduleSubscription =
+          (await _scheduleRepository.subscribeTo([])).listen((mealSchedules) {
+        updateMealScheduleUi(mealSchedules);
+      });
+    }
   }
 
   void updateMealScheduleUi(List<MealScheduleModel> mealSchedules) {

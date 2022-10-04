@@ -1,5 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:informat/feature/Auth/managers/auth_manager.dart';
+import 'package:informat/feature/Auth/managers/auth_state.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
 import 'package:informat/feature/profile/manager/profile_manager.dart';
@@ -9,25 +13,36 @@ import 'package:informat/injection_container.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:informat/injection_container.dart' as di;
 
-
-
+//! Making all the stateNotifer Provider Global
 late FoodManager foodManager;
+
+late StateNotifierProvider<AuthManager, AuthState> authProvider;
 
 late StateNotifierProvider<MealScheduleManager, MealScheduleState>
     mealScheduleProvider;
 
 late StateNotifierProvider<ProfileManager, ProfileState> profileProvider;
 
+//! This function initializes some external packages
 Future<void> bootStrap() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //initialize FirebaseApp
+  await Firebase.initializeApp();
 
   //Initialize Hive Database
   final appDocumentDir = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDir.path);
 
   //initialize di(service locator)
-   await di.init();
-  //initializing foodManager instance variable
+  await di.init();
+
+  //foodManager instance variable
   foodManager = sl<FoodManager>();
+
+  //authProvider
+  authProvider =
+      StateNotifierProvider<AuthManager, AuthState>((ref) => sl<AuthManager>());
 
   //mealScheduleProvider
   mealScheduleProvider =
@@ -35,6 +50,6 @@ Future<void> bootStrap() async {
           (ref) => sl<MealScheduleManager>());
 
   //profileProvider
-  profileProvider = StateNotifierProvider((ref) => sl<ProfileManager>());
-  
+  profileProvider = StateNotifierProvider<ProfileManager, ProfileState>(
+      (ref) => sl<ProfileManager>());
 }

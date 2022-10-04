@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/resources/app_theme.dart';
 import 'package:provider/provider.dart' as pr;
-
 import 'core/navigation/app_router.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
   //call boostrap function here
   await bootStrap();
 
-  runApp(const FoodBlog());
+  runApp(const ProviderScope(
+    child: FoodBlog(),
+  ));
 }
 
 class FoodBlog extends StatefulWidget {

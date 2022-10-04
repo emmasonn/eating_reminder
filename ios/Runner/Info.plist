@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -43,7 +45,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
+	<key>UIStatusBarHidden</key>
+	<false/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Upload images from you gallery to update your profile and cover images</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take images from your camera for updating you profile or coverr image</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Upload images from you gallery to update your profile and cover images</string>
 </dict>
 </plist>

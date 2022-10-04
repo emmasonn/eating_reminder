@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class InfoDialog {
+class CustomProgressDialog {
   //Loading Icons
   static Widget threeDots({Color? color}) {
     return Container(
@@ -38,7 +38,7 @@ class InfoDialog {
   }
 
   //curpertino loading
-  Widget cupertinoLoading({
+  static Widget cupertinoLoading({
     Color? color,
     String? message,
   }) {
