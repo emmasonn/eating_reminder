@@ -17,8 +17,15 @@ class ProfileManager extends StateNotifier<ProfileState> {
   void saveProfile(ProfileModel obj) async {
     final result = await _profileRepository.saveProfile(obj);
     result.fold(
-      (l) => null,
-      (r) => null,
+      (error) {
+        state = const ProfileLoaded(
+          status: false,
+        );
+      },
+      (profile) => state = ProfileLoaded(
+        status: true,
+        profileModel: profile,
+      ),
     );
   }
 
@@ -34,8 +41,9 @@ class ProfileManager extends StateNotifier<ProfileState> {
       if (cachedProfile != null)
         WhereClause.greaterThan(
             fieldName: 'lastUpdated', value: cachedProfile.lastUpdated)
-    ])).listen((profile) {
-      updateProfileUi(profile);
+    ]))
+        .listen((profile) {
+      updateProfileUi(profile.first);
     });
   }
 

@@ -45,6 +45,13 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
   void initState() {
     super.initState();
     profileManager = ref.read(profileProvider.notifier);
+    profileManager?.subScribeToProfile();
+  }
+
+  @override
+  void dispose() {
+    profileManager?.unsubscribeProfile();
+    super.dispose();
   }
 
   @override
@@ -56,7 +63,6 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
         profileData = state.profileModel;
       });
     }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -101,53 +107,34 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
             ),
             InkWell(
                 onTap: () {
-                  
-                  selectImage(ImageSource.gallery, (path) {
-                    setState(() {
-                      profileImage = path;
-                    });
-                  });
-
                   selectImageBottomSheet(
                     context,
-                    fromGallery: () {
-                      selectImage(ImageSource.gallery, (path) {
-                        setState(() {
-                          profileImage = path;
-                        });
+                    onSelected: (image) {
+                      setState(() {
+                        profileImage = image;
                       });
-                    },
-                    fromCamera: () {
-                      selectImage(ImageSource.camera, (path) {
-                        setState(() {
-                          profileImage = path;
-                        });
-                      });
+                      Navigator.pop(context);
                     },
                   );
                 },
                 child: SizedBox(
-                  height: 100,
-                  width: 100,
+                  height: 130,
+                  width: 130,
                   child: CircleAvatar(
-                    backgroundColor: Colors.grey.withOpacity(0.2),
-                    child: Image(
-                      image: getImage(profileImage),
-                      height: size.width,
-                      fit: BoxFit.cover,
-                    ),
-                    //            const Icon(
-                    //   FontAwesomeIcons.cameraRetro,
-                    //   color: Colors.white,
-                    //   size: 50,
-                    // )
-                  ),
+                      backgroundColor: Colors.grey.withOpacity(0.2),
+                      backgroundImage: getImage(profileImage),
+                      child: const Icon(
+                        FontAwesomeIcons.cameraRetro,
+                        color: Colors.black12,
+                        size: 50,
+                      )),
                 )),
             const SizedBox(
               height: 20,
             ),
             CustomTextField(
               hintText: 'Name',
+              initialValue: profileData?.name,
               displayHint: DisplayHint.inside,
               onChanged: (value) {
                 name = value!;
@@ -158,7 +145,7 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
             ),
             CustomTextField(
               hintText: 'Phone Number',
-              initialValue: '+234070454345',
+              initialValue: profileData?.telephone,
               displayHint: DisplayHint.inside,
               onChanged: (value) {
                 telephone = value!;
@@ -166,7 +153,7 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
             ),
             CustomTextField(
               hintText: 'Email Address',
-              initialValue: 'Words.cs1@gmail.com',
+              initialValue: profileData?.email,
               displayHint: DisplayHint.inside,
               onChanged: (value) {
                 telephone = value!;

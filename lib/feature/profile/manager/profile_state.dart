@@ -5,6 +5,8 @@ class ProfileState {
   factory ProfileState.initial() => const ProfileState();
 }
 
+class ProfileLoading extends ProfileState {}
+
 class ProfileLoaded extends ProfileState {
   final bool status;
   final ProfileModel? profileModel;
