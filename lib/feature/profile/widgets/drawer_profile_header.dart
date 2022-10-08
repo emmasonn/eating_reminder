@@ -38,51 +38,51 @@ class _ProfileDrawerHeaderState extends State<ProfileDrawerHeader> {
             ),
           ),
         ),
-        PopupMenuButton<ProfileMenu>(
-            padding: const EdgeInsets.all(0.0),
-            child: const Padding(
-              padding: EdgeInsets.only(right: 8.0),
-              child: Icon(
-                Icons.more_vert,
-              ),
-            ),
-            onSelected: (ProfileMenu item) {
-              if (item == ProfileMenu.edit) {
-              } else if (item == ProfileMenu.delete) {}
-            },
-            itemBuilder: (BuildContext context) =>
-                <PopupMenuEntry<ProfileMenu>>[
-                  PopupMenuItem<ProfileMenu>(
-                    value: ProfileMenu.edit,
-                    child: Text(
-                      'Edit Profile',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue),
-                    ),
-                  ),
-                  PopupMenuItem<ProfileMenu>(
-                    value: ProfileMenu.logOut,
-                    child: Text(
-                      'Log Out',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 14,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  PopupMenuItem<ProfileMenu>(
-                    value: ProfileMenu.edit,
-                    child: Text(
-                      'Delete Account',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 14,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ]),
+        // PopupMenuButton<ProfileMenu>(
+        //     padding: const EdgeInsets.all(0.0),
+        //     child: const Padding(
+        //       padding: EdgeInsets.only(right: 8.0),
+        //       child: Icon(
+        //         Icons.more_vert,
+        //       ),
+        //     ),
+        //     onSelected: (ProfileMenu item) {
+        //       if (item == ProfileMenu.edit) {
+        //       } else if (item == ProfileMenu.delete) {}
+        //     },
+        //     itemBuilder: (BuildContext context) =>
+        //         <PopupMenuEntry<ProfileMenu>>[
+        //           PopupMenuItem<ProfileMenu>(
+        //             value: ProfileMenu.edit,
+        //             child: Text(
+        //               'Edit Profile',
+        //               style: GoogleFonts.montserrat(
+        //                   fontSize: 14,
+        //                   fontWeight: FontWeight.bold,
+        //                   color: Colors.blue),
+        //             ),
+        //           ),
+        //           PopupMenuItem<ProfileMenu>(
+        //             value: ProfileMenu.logOut,
+        //             child: Text(
+        //               'Log Out',
+        //               style: GoogleFonts.montserrat(
+        //                   fontSize: 14,
+        //                   color: Colors.blue,
+        //                   fontWeight: FontWeight.bold),
+        //             ),
+        //           ),
+        //           PopupMenuItem<ProfileMenu>(
+        //             value: ProfileMenu.edit,
+        //             child: Text(
+        //               'Delete Account',
+        //               style: GoogleFonts.montserrat(
+        //                   fontSize: 14,
+        //                   color: Colors.red,
+        //                   fontWeight: FontWeight.bold),
+        //             ),
+        //           ),
+        //         ]),
       ],
     );
   }

@@ -3,21 +3,20 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/core/animations/slide_animation.dart';
-import 'package:informat/feature/what_to_eat/widgets/schedule_meal_card.dart';
+import 'package:informat/feature/meal_schedule/widgets/schedule_meal_card.dart';
 
-class ScheduleStickyHorizontal extends StatefulWidget {
-  const ScheduleStickyHorizontal({
+class FoodScheduleStickyCard extends StatefulWidget {
+  const FoodScheduleStickyCard({
     super.key,
     required this.title,
   });
   final String? title;
 
   @override
-  State<ScheduleStickyHorizontal> createState() =>
-      _ScheduleStickyHorizontalState();
+  State<FoodScheduleStickyCard> createState() => _FoodScheduleStickyCardState();
 }
 
-class _ScheduleStickyHorizontalState extends State<ScheduleStickyHorizontal>
+class _FoodScheduleStickyCardState extends State<FoodScheduleStickyCard>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
 
@@ -62,7 +61,8 @@ class _ScheduleStickyHorizontalState extends State<ScheduleStickyHorizontal>
               ],
             ),
             IconButton(
-                onPressed: () {}, icon: const Icon(FontAwesomeIcons.penToSquare))
+                onPressed: () {},
+                icon: const Icon(FontAwesomeIcons.penToSquare))
           ],
         ),
       ),

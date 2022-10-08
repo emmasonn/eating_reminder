@@ -7,24 +7,26 @@ import 'package:informat/core/widgets/custom_page.dart';
 import 'package:informat/feature/Auth/pages/page_auth.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
+import 'package:informat/feature/meal_schedule/widgets/custom_floating_bar.dart';
+import 'package:informat/feature/meal_schedule/widgets/schedule_sticky_card.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_blog_drawer.dart';
 import 'package:informat/feature/meal_schedule/widgets/food_schedule_sticky.dart';
 
-class PageMealSchedule extends ConsumerStatefulWidget {
-  const PageMealSchedule({super.key});
+class PageScheduleGroups extends ConsumerStatefulWidget {
+  const PageScheduleGroups({super.key});
 
   static Page page({LocalKey? key}) {
     return CustomPage<void>(
         key: key,
         animationStyle: PageAnimationStyle.fade,
-        child: const PageMealSchedule());
+        child: const PageScheduleGroups());
   }
 
   @override
-  ConsumerState<PageMealSchedule> createState() => _PageMealScheduleState();
+  ConsumerState<PageScheduleGroups> createState() => _PageMealScheduleState();
 }
 
-class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
+class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
   late MealScheduleManager mealScheduleManager;
 
   @override
@@ -77,12 +79,6 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () {
-                // GoRouter.of(context).go('/schedule/login');
-              },
-              icon: const Icon(FontAwesomeIcons.plus),
-            ),
             Padding(
               padding: const EdgeInsets.only(right: 5.0),
               child: IconButton(
@@ -103,7 +99,8 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
             ),
           ],
         ),
-        drawer: const FoodBlogDrawer(tag: 'schedule'),
+        drawer: const FoodBlogDrawer(tag: 'scheduleGroups'),
+        floatingActionButton: const CustomFloatingBar(),
         body: SafeArea(
             child: Container(
           width: size.width,
@@ -121,20 +118,18 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
                 child: Container(
                   decoration: const BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/food_icon.png'))),
+                    image: AssetImage('assets/images/food_icon.png'),
+                  )),
                 ),
               ),
             ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 10),
+            ),
             ...[
-              'Monday',
-              'Tueday',
-              'Wednesday',
-              'Thursday',
-              'Friday',
-              'Saturday',
-              'Sunday'
+              'Suggestions',
             ].map((e) {
-              return FoodScheduleStickyCard(
+              return ScheduleStickyCard(
                 title: e,
               );
             }).toList()

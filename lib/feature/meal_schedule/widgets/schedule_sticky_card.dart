@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/core/animations/slide_animation.dart';
-import 'package:informat/feature/what_to_eat/widgets/schedule_card.dart';
-import 'package:informat/feature/what_to_eat/widgets/schedule_meal_card.dart';
+import 'package:informat/feature/meal_schedule/widgets/schedule_card.dart';
+import 'package:informat/feature/meal_schedule/widgets/schedule_meal_card.dart';
 
-class ScheduleStickyWidget extends StatefulWidget {
-  const ScheduleStickyWidget({super.key});
+class ScheduleStickyCard extends StatefulWidget {
+  const ScheduleStickyCard({
+    super.key,
+    this.title,
+  });
+  final String? title;
 
   @override
-  State<ScheduleStickyWidget> createState() => _ScheduleStickyWidgetState();
+  State<ScheduleStickyCard> createState() => _ScheduleStickyCardState();
 }
 
-class _ScheduleStickyWidgetState extends State<ScheduleStickyWidget>
+class _ScheduleStickyCardState extends State<ScheduleStickyCard>
     with SingleTickerProviderStateMixin {
   AnimationController? _animationController;
 
@@ -31,10 +35,14 @@ class _ScheduleStickyWidgetState extends State<ScheduleStickyWidget>
   Widget build(BuildContext context) {
     return SliverStickyHeader(
         header: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.only(left: 33.0, top: 10, bottom: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8.0),
+            color: Colors.white,
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Grandma schedule',
+            widget.title ?? '',
             style: GoogleFonts.montserrat(
                 fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
           ),
@@ -42,7 +50,7 @@ class _ScheduleStickyWidgetState extends State<ScheduleStickyWidget>
         sliver: SliverList(
             delegate: SliverChildListDelegate([
           ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             scrollDirection: Axis.vertical,
             itemCount: 3,
             primary: false,
@@ -53,7 +61,7 @@ class _ScheduleStickyWidgetState extends State<ScheduleStickyWidget>
                 position: index,
                 animationController: _animationController,
                 slideDirection: SlideDirection.fromRight,
-                child: const ScheduleMealCard(),
+                child: const ScheduleCard(),
               );
             }),
           )

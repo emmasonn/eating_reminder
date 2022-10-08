@@ -57,9 +57,9 @@ class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
                   FoodDrawerItem(
                     title: 'Meal Schedule',
                     icon: Icons.food_bank,
-                    isActive: widget.tag == 'schedule',
+                    isActive: widget.tag == 'scheduleGroups',
                     onPressed: () {
-                      GoRouter.of(context).go('/schedule');
+                      GoRouter.of(context).go('/schedule-groups');
                       Navigator.pop(context);
                     },
                   ),
