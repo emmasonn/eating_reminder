@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/core/resources/colors.dart';
 import 'package:informat/feature/profile/widgets/drawer_profile_header.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_drawer_item.dart';
@@ -75,12 +77,55 @@ class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
                       Navigator.pop(context);
                     },
                   ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 16),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'Theme',
+                          style: TextStyle(fontFamily: 'Rubik'),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: 'Light',
+                            onChanged: (value) {},
+                            items: ['Light', 'Dark']
+                                .map<DropdownMenuItem<String>>((e) {
+                              return DropdownMenuItem(
+                                  value: e,
+                                  child: Center(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          e,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 14, color: Colors.blue),
+                                        ),
+                                        e == 'Light'
+                                            ? const Icon(Icons.light_mode)
+                                            : const Icon(Icons.dark_mode)
+                                      ],
+                                    ),
+                                  ));
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    color: lightPink,
+                  ),
                   FoodDrawerItem(
-                    title: 'Account',
+                    title: 'Buy me Coffee ☕',
                     icon: Icons.food_bank,
-                    isActive: widget.tag == 'account',
+                    isActive: widget.tag == 'notification',
                     onPressed: () {
-                      GoRouter.of(context).go('/login');
                       Navigator.pop(context);
                     },
                   ),
