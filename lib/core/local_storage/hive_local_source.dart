@@ -41,13 +41,13 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
   @override
   Future<List<T>> getItems() async =>
       _itemsBox.values
-          ?.map<T>((data) => fromJson(data.castt<String, dynamic>()))
+          ?.map<T>((data) => fromJson(data.cast<String, dynamic>()))
           .toList() ??
       [];
 
   @override
   Future<T?> setItem(T obj) async {
-    _itemsBox.put(obj.id, obj);
+    _itemsBox.put(obj.id, toJson(obj));
     return fromJson(
       (_itemsBox.get(obj.id) as Map).cast<String, dynamic>(),
     );

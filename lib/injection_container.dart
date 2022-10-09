@@ -50,7 +50,10 @@ Future<void> init() async {
   //AuthRepository
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
-        firebaseRemoteAuth: sl(), networkInfo: sl(), profileRepository: sl()),
+      firebaseRemoteAuth: sl(),
+      networkInfo: sl(),
+      profileFirebaseSource: sl(),
+    ),
   );
 
   //mealRepository

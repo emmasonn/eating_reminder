@@ -42,8 +42,7 @@ class FirebaseSource<T extends DataModel> extends Source<T> {
   @override
   Future<T?> setItem(T obj) async {
     late firestore.DocumentReference docRef;
-
-    if (obj.id != null) {
+    if (obj.id == null) {
       //if the object already exists, do the Firebase equivalent of
       //PUT/PATCH
       docRef = await collection.add(toJson(obj));

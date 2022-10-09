@@ -1,3 +1,4 @@
+import 'package:informat/core/failure/failure.dart';
 import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 
 class MealScheduleState {
@@ -29,7 +30,19 @@ class MealScheduleLoaded extends MealScheduleState {
   // }
 }
 
-class CheckAuthLoaded extends MealScheduleState {
+class CreateScheduleLoading extends MealScheduleState{}
+
+class CreateScheduleLoaded extends MealScheduleState {
   final bool status;
-  const CheckAuthLoaded(this.status);
+  CreateScheduleLoaded(this.status);
 }
+
+class CreateScheduleError extends MealScheduleState {
+  final Failure failure;
+  CreateScheduleError(this.failure);
+}
+
+// class CheckAuthLoaded extends MealScheduleState {
+//   final bool status;
+//   const CheckAuthLoaded(this.status);
+// }

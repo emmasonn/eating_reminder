@@ -68,6 +68,7 @@ class _SignOutWidgetState extends ConsumerState<SignOutWidget> {
                     TextButton(
                       onPressed: () {
                         _profileManager.signOutUser();
+                        Navigator.pop(context);
                       },
                       child: Text('Continue',
                           style: GoogleFonts.montserrat(fontSize: 14)),

@@ -11,17 +11,17 @@ import 'package:informat/feature/profile/repository/profile_repository.dart';
 
 abstract class MealScheduleRepository<T extends MealScheduleModel> {
   Future<bool> get isLoggedIn;
-  Future<List<T>> getCachedMealSchedule();
-  Future<Either<Failure, T?>> createMealSchedule(T obj);
+  Future<List<MealScheduleModel>> getCachedMealSchedule();
+  Future<Either<Failure, MealScheduleModel?>> createMealSchedule(T obj);
   Future<Either<Failure, bool>> pinMealSchedule(T obj);
   Future<Either<Failure, bool>> deleteMealSchedule(T obj);
-  Future<Stream<List<T>>> subscribeTo(List<WhereClause>? where);
+  Future<Stream<List<MealScheduleModel>>> subscribeTo(List<WhereClause>? where);
 }
 
 class MealScheduleRepositoryImpl<T extends MealScheduleModel>
     extends MealScheduleRepository<T> {
-  final FirebaseSource<T> schedulerFirebaseSource;
-  final HiveLocalSource<T> schedulerHiveLocalSource;
+  final FirebaseSource<MealScheduleModel> schedulerFirebaseSource;
+  final HiveLocalSource<MealScheduleModel> schedulerHiveLocalSource;
   final ProfileRepository profileRepository;
   final CoreFirebaseAuth coreFirebaseAuth;
   final NetworkInfo networkInfo;
@@ -39,9 +39,14 @@ class MealScheduleRepositoryImpl<T extends MealScheduleModel>
       await coreFirebaseAuth.currentUser != null;
 
   @override
-  Future<Either<Failure, T?>> createMealSchedule(T obj) {
-    return HiveFireServiceRunner<T?>(networkInfo: networkInfo)
-        .runServiceTask(() => schedulerFirebaseSource.setItem(obj));
+  Future<Either<Failure, MealScheduleModel?>> createMealSchedule(T obj) {
+    return HiveFireServiceRunner<MealScheduleModel?>(networkInfo: networkInfo)
+        .runServiceTask(() async {
+      final doc = schedulerFirebaseSource.collection.doc();
+      final cachedProfile = await profileRepository.getCachedProfile();
+      final newObj = obj.withCopy(id: doc.id, ownerId: cachedProfile?.id);
+      return schedulerFirebaseSource.setItem(newObj);
+    });
   }
 
   @override
@@ -54,7 +59,7 @@ class MealScheduleRepositoryImpl<T extends MealScheduleModel>
   }
 
   @override
-  Future<List<T>> getCachedMealSchedule() async {
+  Future<List<MealScheduleModel>> getCachedMealSchedule() async {
     //get cached data
     return schedulerHiveLocalSource.getItems();
   }
@@ -84,7 +89,8 @@ class MealScheduleRepositoryImpl<T extends MealScheduleModel>
   }
 
   @override
-  Future<Stream<List<T>>> subscribeTo(List<WhereClause>? where) async {
+  Future<Stream<List<MealScheduleModel>>> subscribeTo(
+      List<WhereClause>? where) async {
     final profile = await profileRepository.getCachedProfile();
 
     return schedulerFirebaseSource.subscribeTo([
@@ -92,7 +98,7 @@ class MealScheduleRepositoryImpl<T extends MealScheduleModel>
         WhereClause.whereIn(fieldName: 'id', value: profile!.schedulers!),
       ],
     ]).asBroadcastStream()
-      ..listen((List<T> mealSchedulers) {
+      ..listen((List<MealScheduleModel> mealSchedulers) {
         for (final mealScheduler in mealSchedulers) {
           schedulerHiveLocalSource.setItem(mealScheduler);
         }

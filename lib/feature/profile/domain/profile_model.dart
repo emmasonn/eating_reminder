@@ -27,6 +27,14 @@ class ProfileModel extends DataModel implements Equatable {
   }) : super(id: id);
 
   factory ProfileModel.fromJson(Map<dynamic, dynamic> json) {
+    List<String>? schedulers;
+
+    if (json['schedulers'] != null) {
+      schedulers = (json['schedulers'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList();
+    }
+
     return ProfileModel(
       id: json['id'],
       email: json['email'],
@@ -37,9 +45,7 @@ class ProfileModel extends DataModel implements Equatable {
       username: json['username'],
       telephone: json['telephone'],
       lastUpdated: DateTime.parse(json['lastUpdated'] as String),
-      schedulers: (json['schedulers'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      schedulers: schedulers,
     );
   }
 

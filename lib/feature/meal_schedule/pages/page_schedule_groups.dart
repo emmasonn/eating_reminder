@@ -34,7 +34,7 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
   void initState() {
     super.initState();
     mealScheduleManager = ref.read(mealScheduleProvider.notifier);
-    // mealScheduleManager.subscribeToSchedule();
+    mealScheduleManager.subscribeToSchedule();
   }
 
   @override
@@ -48,10 +48,6 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
-
-    // if (!mealScheduleManager.isUserExist) {
-    //   context.go('/schedule/login');
-    // }
     final state = ref.watch(mealScheduleProvider);
 
     return Scaffold(

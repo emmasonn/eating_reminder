@@ -21,8 +21,13 @@ class MealScheduleManager extends StateNotifier<MealScheduleState> {
     isUserExist = await _scheduleRepository.isLoggedIn;
   }
 
-  Future<void> createSchedule(MealScheduleModel mealSchedule) {
-    return _scheduleRepository.createMealSchedule(mealSchedule);
+  void createSchedule(MealScheduleModel mealSchedule) async {
+    state = CreateScheduleLoading();
+    final result = await _scheduleRepository.createMealSchedule(mealSchedule);
+    result.fold(
+      (failure) => state = CreateScheduleError(failure),
+      (status) => state = CreateScheduleLoaded(true),
+    );
   }
 
   void subscribeToSchedule() async {

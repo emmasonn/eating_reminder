@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:informat/feature/meal_schedule/widgets/add_group_widget.dart';
 import 'package:informat/feature/meal_schedule/widgets/custom_floating_item.dart';
 
 class CustomFloatingBar extends StatefulWidget {
@@ -41,7 +42,6 @@ class _CustomFloatingBarState extends State<CustomFloatingBar> {
             icon: FontAwesomeIcons.tag,
             onPressed: () async {
               isDialOpen.value = false;
-
               //Reload
               widget.onReload!();
             },
@@ -53,6 +53,7 @@ class _CustomFloatingBarState extends State<CustomFloatingBar> {
             icon: Icons.new_label,
             onPressed: () async {
               isDialOpen.value = false;
+              showCreateScheduleDialog(context);
               //Reload
               widget.onReload!();
             },
