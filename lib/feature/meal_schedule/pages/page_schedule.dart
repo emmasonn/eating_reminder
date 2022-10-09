@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -45,10 +46,6 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
-
-    // if (!mealScheduleManager.isUserExist) {
-    //   context.go('/schedule/login');
-    // }
     final state = ref.watch(mealScheduleProvider);
 
     return Scaffold(
@@ -58,49 +55,26 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
           backgroundColor: Colors.white,
           centerTitle: false,
           iconTheme: IconThemeData(color: theme.primaryColor, size: 25),
-          leading: Align(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Image.asset(
-                'assets/images/food_icon.png',
-                height: 35,
-                width: 35,
-                fit: BoxFit.cover,
-              ),
-            ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(CupertinoIcons.back),
           ),
-          title: const Text(
-            'Meal Schedule',
-            style: TextStyle(
-              fontFamily: 'RubikBold',
-              fontSize: 25,
-            ),
-          ),
+          // title: const Text(
+          //   'Meal Schedule',
+          //   style: TextStyle(
+          //     fontFamily: 'RubikBold',
+          //     fontSize: 20,
+          //   ),
+          // ),
           actions: [
             IconButton(
-              onPressed: () {
-                // GoRouter.of(context).go('/schedule/login');
-              },
-              icon: const Icon(FontAwesomeIcons.plus),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 5.0),
-              child: IconButton(
-                  onPressed: () {
-                    if (!_scaffoldKey.currentState!.isEndDrawerOpen) {
-                      _scaffoldKey.currentState!.openDrawer();
-                    } else {
-                      Navigator.pop(context);
-                    }
-                  },
-                  icon: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 500),
-                    child: Icon(
-                      FontAwesomeIcons.bars,
-                      color: theme.primaryColor,
-                    ),
-                  )),
-            ),
+              onPressed: () {},
+              icon: Icon(
+                CupertinoIcons.share,
+              ),
+            )
           ],
         ),
         drawer: const FoodBlogDrawer(tag: 'schedule'),
@@ -109,22 +83,6 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
           width: size.width,
           height: size.height,
           child: CustomScrollView(slivers: <Widget>[
-            SliverAppBar(
-              pinned: false,
-              floating: false,
-              snap: false,
-              automaticallyImplyLeading: false,
-              expandedHeight: 200,
-              flexibleSpace: SizedBox(
-                height: 200,
-                width: size.width,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/food_icon.png'))),
-                ),
-              ),
-            ),
             ...[
               'Monday',
               'Tueday',

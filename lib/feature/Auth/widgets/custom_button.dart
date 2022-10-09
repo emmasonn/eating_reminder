@@ -23,10 +23,13 @@ class AuthProviderButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon != null ? icon! : Container(),
-            Expanded(
-                child: Align(
+            const SizedBox(
+              width: 5,
+            ),
+            Align(
               child: Text(
                 text,
                 style: style ??
@@ -35,7 +38,7 @@ class AuthProviderButton extends StatelessWidget {
                       fontSize: 16,
                     ),
               ),
-            ))
+            )
           ],
         ));
   }

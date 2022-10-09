@@ -28,7 +28,11 @@ class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const ProfileDrawerHeader(),
+          ProfileDrawerHeader(
+            onSignOut: () {
+              Navigator.pop(context);
+            },
+          ),
           Divider(
             color: lightPink,
           ),

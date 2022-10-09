@@ -60,8 +60,14 @@ class FirebaseSource<T extends DataModel> extends Source<T> {
 
   //this function get single itemn.
   @override
-  Future<T?> viewItem(String id) async =>
-      fromDocument((await collection.doc(id).get()));
+  Future<T?> viewItem(String id) async {
+    firestore.DocumentSnapshot userDoc = await collection.doc(id).get();
+    if (userDoc.data() != null) {
+      return fromDocument(userDoc);
+    } else {
+      return null;
+    }
+  }
 
   @override
   Stream<List<T>> subscribeTo(List<WhereClause>? where) async* {

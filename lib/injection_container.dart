@@ -4,7 +4,7 @@ import 'package:informat/core/firebase_services/firebase_source.dart';
 import 'package:informat/core/local_storage/hive_local_source.dart';
 import 'package:informat/core/network_info/network_info.dart';
 import 'package:informat/core/resources/strings.dart';
-import 'package:informat/feature/Auth/managers/auth_manager.dart';
+import 'package:informat/feature/Auth/manager/auth_manager.dart';
 import 'package:informat/feature/Auth/repository/auth_repository.dart';
 import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
@@ -30,7 +30,8 @@ Future<void> init() async {
   sl.registerFactory(() => MealScheduleManager(sl()));
 
   //AuthManager
-  sl.registerFactory(() => AuthManager(authRepository: sl()));
+  sl.registerFactory(
+      () => AuthManager(authRepository: sl(), foodManager: sl()));
 
   //ProfileManager
   sl.registerFactory(() => ProfileManager(sl()));

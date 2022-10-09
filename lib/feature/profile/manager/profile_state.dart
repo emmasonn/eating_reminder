@@ -14,7 +14,16 @@ class ProfileLoaded extends ProfileState {
 
   const ProfileLoaded({
     required this.status,
-     this.profileModel,
-     this.error,
+    this.profileModel,
+    this.error,
   });
 }
+
+class SignOutLoading extends ProfileState {}
+
+class SignOutLoaded extends ProfileState {
+  final bool status;
+  SignOutLoaded(this.status);
+}
+
+class SignOutError extends ProfileState {}

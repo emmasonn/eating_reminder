@@ -7,6 +7,7 @@ import 'package:informat/core/widgets/custom_page.dart';
 import 'package:informat/feature/Auth/pages/page_auth.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
+import 'package:informat/feature/meal_schedule/widgets/custom_carousel.dart';
 import 'package:informat/feature/meal_schedule/widgets/custom_floating_bar.dart';
 import 'package:informat/feature/meal_schedule/widgets/schedule_sticky_card.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_blog_drawer.dart';
@@ -115,17 +116,22 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
               flexibleSpace: SizedBox(
                 height: 200,
                 width: size.width,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                    image: AssetImage('assets/images/food_icon.png'),
-                  )),
-                ),
+                child: const CustomCarousel(),
               ),
             ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
+            //this section contain the meal schedules created and
+            //pinned by user
+            const ScheduleStickyCard(
+              title: 'Personalized',
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 10),
+            ),
+            //the below section will show list of meal schedule created for 
+            //different ethnic group dwelling in thet country of user
             ...[
               'Suggestions',
             ].map((e) {

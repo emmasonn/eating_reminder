@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/widgets/custom_page.dart';
-import 'package:informat/feature/Auth/managers/auth_manager.dart';
-import 'package:informat/feature/Auth/managers/auth_state.dart';
+import 'package:informat/feature/Auth/manager/auth_manager.dart';
+import 'package:informat/feature/Auth/manager/auth_state.dart';
 import 'package:informat/feature/Auth/widgets/custom_button.dart';
 
 class PageAuth extends ConsumerStatefulWidget {
@@ -33,27 +34,24 @@ class _PageAuthState extends ConsumerState<PageAuth> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     final state = ref.watch(authProvider);
 
-    if (state is AuthLoaded) {
-      final profile = state.profileModel;
-      if (profile != null) {
-        Navigator.pop(context);
-      } else {
-        //To user to screen to complete profile
-      }
+    if (state is AuthError) {
+      print('Error');
     }
 
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
+        iconTheme: IconThemeData(color: theme.primaryColor, size: 25),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            GoRouter.of(context).pop();
           },
-          icon: const Icon(FontAwesomeIcons.arrowLeft),
+          icon: const Icon(CupertinoIcons.back),
         ),
       ),
       body: Container(
@@ -109,5 +107,9 @@ class _PageAuthState extends ConsumerState<PageAuth> {
         ),
       ),
     );
+  }
+
+  void popToPrevious() {
+    Navigator.pop(context);
   }
 }

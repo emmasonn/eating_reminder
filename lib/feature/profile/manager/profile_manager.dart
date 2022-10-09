@@ -36,15 +36,27 @@ class ProfileManager extends StateNotifier<ProfileState> {
     //update the ui with cached data
     updateProfileUi(cachedProfile);
 
-    //register the subscribtion
-    _profileSubscription = (await _profileRepository.subscribeTo([
-      if (cachedProfile != null)
+    if (cachedProfile != null) {
+      //register the subscribtion
+      _profileSubscription = (await _profileRepository.subscribeTo([
         WhereClause.greaterThan(
             fieldName: 'lastUpdated', value: cachedProfile.lastUpdated)
-    ]))
-        .listen((profile) {
-      updateProfileUi(profile.first);
-    });
+      ]))
+          .listen((profiles) {
+        if (profiles.isNotEmpty) {
+          updateProfileUi(profiles.first);
+        }
+      });
+    }
+  }
+
+  void signOutUser() async {
+    state = SignOutLoading();
+    final result = await _profileRepository.signOut();
+    result.fold(
+      (failure) => state = SignOutError(),
+      (status) => state = SignOutLoaded(status),
+    );
   }
 
   void updateProfileUi(ProfileModel? profileModel) {

@@ -13,6 +13,7 @@ abstract class HiveLocalSource<T extends DataModel> {
   Future<void> updateItem(T obj);
   Future<List<String>> getFavoritesId();
   Future<void> toggleFavorite(String id);
+  Future<void> clear();
   Future<void> setFavorite(String id, bool isFavorited);
 }
 
@@ -31,7 +32,7 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
   String get _itemsBoxName => '${T.toString()}-items'; //hive db name
   String get _favoriteBoxName => '${T.toString()}-favorites'; //hive db name
 
- @override
+  @override
   Future<void> initBox() async {
     _itemsBox = await Hive.openBox(_itemsBoxName);
     _favoriteBox = await Hive.openBox(_favoriteBoxName);
@@ -70,6 +71,7 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
     throw UnimplementedError();
   }
 
+  @override
   Future<void> clear() async {
     _favoriteBox.clear();
     _itemsBox.clear();

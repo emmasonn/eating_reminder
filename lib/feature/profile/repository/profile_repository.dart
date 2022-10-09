@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:informat/core/api_service/service_runner.dart';
 import 'package:informat/core/failure/failure.dart';
 import 'package:informat/core/firebase_services/firebase_auth.dart';
 import 'package:informat/core/firebase_services/firebase_service_runner.dart';
@@ -15,6 +16,7 @@ abstract class ProfileRepository {
   Future<ProfileModel?> getCachedProfile();
   Future<Either<Failure, ProfileModel?>> saveProfile(ProfileModel obj);
   Future<Either<Failure, ProfileModel>> deleteProfile(ProfileModel obj);
+  Future<Either<Failure, bool>> signOut();
   Future<ProfileModel?> getProfile(String id);
   Future<Stream<List<ProfileModel>>> subscribeTo(List<WhereClause>? where);
 }
@@ -73,13 +75,16 @@ class ProfileRepositoryImpl extends ProfileRepository {
       List<WhereClause>? where) async {
     final cachedProfile = await getCachedProfile();
     return profileFirebaseSource.subscribeTo([
-      if (cachedProfile != null)
+      if (cachedProfile != null) ...[
         WhereClause.equals(fieldName: 'id', value: cachedProfile.id!),
-      WhereClause.greaterThan(
-          fieldName: 'lastUpdated', value: cachedProfile!.lastUpdated)
+        WhereClause.greaterThan(
+            fieldName: 'lastUpdated', value: cachedProfile.lastUpdated)
+      ]
     ]).asBroadcastStream()
       ..listen((profiles) {
-        saveProfile(profiles.first);
+        if (profiles.isNotEmpty) {
+          saveProfile(profiles.first);
+        }
       });
   }
 
@@ -93,13 +98,23 @@ class ProfileRepositoryImpl extends ProfileRepository {
     if (profile != null) {
       profileHiveSource.setItem(profile);
     } else {
-      return profile?.copyWith(
+      return ProfileModel(
+        name: '',
         lastUpdated: DateTime.now(),
         id: firebaseUser?.id,
-        email: firebaseUser?.email,
+        email: firebaseUser?.email ?? '',
         imageUrl: firebaseUser?.imageUrl,
       );
     }
     return profile;
+  }
+
+  @override
+  Future<Either<Failure, bool>> signOut() async {
+    return ServiceRunner<bool>(networkInfo: networkInfo).runNetworkTask(() {
+      coreFirebaseAuth.signOut();
+      profileHiveSource.clear();
+      return Future.value(true);
+    });
   }
 }

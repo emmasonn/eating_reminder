@@ -12,13 +12,15 @@ final goRouter = GoRouter(
     refreshListenable: foodManager,
     routes: [
       AppRoutes.home,
+      AppRoutes.scheduleGroups,
       AppRoutes.collection,
-      AppRoutes.schedule,
     ],
     redirect: (GoRouterState state) {
       final isUserLogggedIn = foodManager.isUserExist;
-      if (state.location == '/schedule' && !isUserLogggedIn) {
+      if (state.location == '/schedule-groups' && !isUserLogggedIn) {
         return '/what-to-eat/login';
+      } else if (state.subloc == '/what-to-eat/login' && isUserLogggedIn) {
+        return '/schedule-groups';
       }
       return null;
     },

@@ -3,7 +3,6 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/core/animations/slide_animation.dart';
 import 'package:informat/feature/meal_schedule/widgets/schedule_card.dart';
-import 'package:informat/feature/meal_schedule/widgets/schedule_meal_card.dart';
 
 class ScheduleStickyCard extends StatefulWidget {
   const ScheduleStickyCard({
@@ -60,7 +59,7 @@ class _ScheduleStickyCardState extends State<ScheduleStickyCard>
                 itemCount: 3,
                 position: index,
                 animationController: _animationController,
-                slideDirection: SlideDirection.fromRight,
+                slideDirection: SlideDirection.fromTop,
                 child: const ScheduleCard(),
               );
             }),

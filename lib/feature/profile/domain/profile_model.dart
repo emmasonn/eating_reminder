@@ -100,5 +100,5 @@ class ProfileModel extends DataModel implements Equatable {
       ];
 
   @override
-  bool? get stringify => true;
+  bool? get stringify => false;
 }
