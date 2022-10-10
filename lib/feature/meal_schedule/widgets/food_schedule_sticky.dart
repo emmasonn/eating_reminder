@@ -36,7 +36,6 @@ class _FoodScheduleStickyCardState extends State<FoodScheduleStickyCard>
     // final size = MediaQuery.of(context).size;
     return SliverStickyHeader(
       header: Container(
-        color: Colors.white,
         padding: const EdgeInsets.only(left: 33.0, top: 10, bottom: 10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,9 +53,7 @@ class _FoodScheduleStickyCardState extends State<FoodScheduleStickyCard>
                 Text(
                   widget.title ?? '',
                   style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700),
+                      fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ],
             ),

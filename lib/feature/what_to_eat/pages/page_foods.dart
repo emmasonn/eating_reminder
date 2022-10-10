@@ -31,7 +31,6 @@ class _PageContactsState extends State<PageFoods> {
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.white,
         centerTitle: false,
         iconTheme: IconThemeData(color: theme.primaryColor, size: 25),
         leading: Align(

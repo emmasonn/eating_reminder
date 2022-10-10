@@ -29,7 +29,8 @@ class FoodDrawerItem extends StatelessWidget {
               style: TextStyle(
                 fontFamily: isActive ? 'RubikBold' : 'RubikRegular',
                 fontSize: isActive ? 16 : 14,
-                color: isActive ? theme.primaryColor : Colors.black,
+                color:
+                    isActive ? theme.primaryColor : theme.colorScheme.onPrimary,
               ),
             ),
           ],

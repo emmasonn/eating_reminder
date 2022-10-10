@@ -36,14 +36,13 @@ class _ScheduleStickyCardState extends State<ScheduleStickyCard>
         header: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
-            color: Colors.white,
           ),
           margin: const EdgeInsets.symmetric(horizontal: 10),
           padding: const EdgeInsets.all(8.0),
           child: Text(
             widget.title ?? '',
             style: GoogleFonts.montserrat(
-                fontSize: 18, color: Colors.black, fontWeight: FontWeight.w700),
+                fontSize: 18, fontWeight: FontWeight.w700),
           ),
         ),
         sliver: SliverList(

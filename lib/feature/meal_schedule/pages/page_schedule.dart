@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/widgets/custom_page.dart';
-import 'package:informat/feature/Auth/pages/page_auth.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
-import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_blog_drawer.dart';
 import 'package:informat/feature/meal_schedule/widgets/food_schedule_sticky.dart';
 
@@ -52,7 +48,6 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
         key: _scaffoldKey,
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Colors.white,
           centerTitle: false,
           iconTheme: IconThemeData(color: theme.primaryColor, size: 25),
           leading: IconButton(
@@ -71,7 +66,7 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 CupertinoIcons.share,
               ),
             )

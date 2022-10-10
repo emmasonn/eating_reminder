@@ -54,7 +54,6 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
         key: _scaffoldKey,
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: Colors.white,
           centerTitle: false,
           iconTheme: IconThemeData(color: theme.primaryColor, size: 25),
           leading: Align(
@@ -126,7 +125,7 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
             const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
-            //the below section will show list of meal schedule created for 
+            //the below section will show list of meal schedule created for
             //different ethnic group dwelling in thet country of user
             ...[
               'Suggestions',

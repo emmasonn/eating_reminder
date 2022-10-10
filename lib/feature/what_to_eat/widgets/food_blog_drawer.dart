@@ -23,9 +23,10 @@ class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return Container(
       width: size.width * 0.7,
-      color: Colors.white,
+      color: theme.appBarTheme.backgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 120),
       child: Column(
         mainAxisSize: MainAxisSize.min,
