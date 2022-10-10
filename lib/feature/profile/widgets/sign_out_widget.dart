@@ -25,6 +25,7 @@ class _SignOutWidgetState extends ConsumerState<SignOutWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final state = ref.watch(profileProvider);
 
     if (state is SignOutLoading) {
@@ -38,18 +39,15 @@ class _SignOutWidgetState extends ConsumerState<SignOutWidget> {
       height: 200,
       width: 250,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
-      ),
+          borderRadius: BorderRadius.circular(12),
+          color: theme.appBarTheme.backgroundColor),
       child: !isLoading
           ? Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Are you sure to Sign out?',
-                  style: GoogleFonts.montserrat(fontSize: 14),
-                ),
+                const Text('Are you sure to Sign out?',
+                    style: TextStyle(fontFamily: 'Rubik')),
                 const SizedBox(
                   height: 20,
                 ),
@@ -78,7 +76,11 @@ class _SignOutWidgetState extends ConsumerState<SignOutWidget> {
               ],
             )
           : const Center(
-              child: Text('Signing out...'),
+              child: Text(
+                'Signing out...',
+                style:
+                    TextStyle(fontFamily: 'Rubik', fontWeight: FontWeight.w500),
+              ),
             ),
     );
   }

@@ -13,6 +13,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       child: Stack(
@@ -24,6 +25,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
             children: [
               Expanded(
                 child: Card(
+                  color: theme.appBarTheme.backgroundColor,
                   child: InkWell(
                     onTap: () {
                       GoRouter.of(context).go('/schedule-groups/schedule/1');
