@@ -7,10 +7,20 @@ part 'food_model.freezed.dart';
 @Freezed()
 class FoodModel extends DataModel with _$FoodModel {
   @JsonSerializable(explicitToJson: true)
-   factory FoodModel({
+  factory FoodModel({
     required String id,
-    required List<String> foods
+    required  String ownerId,
+    required String scheduleId,
+    required String title,
+    required String period,
+    required String day,
+    String? recipe,
+    String? description,
+    DateTime? time,
   }) = _FoodModel;
 
-  factory FoodModel.fromJson(Map<String,dynamic> json) => _$FoodModelFromJson(json);
+  const FoodModel._() : super(id: '');
+
+  factory FoodModel.fromJson(Map<String, dynamic> json) =>
+      _$FoodModelFromJson(json);
 }

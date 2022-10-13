@@ -8,7 +8,7 @@ import 'package:informat/feature/Auth/manager/auth_manager.dart';
 import 'package:informat/feature/Auth/repository/auth_repository.dart';
 import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
-import 'package:informat/feature/meal_schedule/repository/meal_repository.dart';
+import 'package:informat/feature/meal_schedule/repository/food_repository.dart';
 import 'package:informat/feature/meal_schedule/repository/meal_schedule_repository.dart';
 import 'package:informat/feature/profile/domain/profile_model.dart';
 import 'package:informat/feature/profile/manager/profile_manager.dart';
@@ -41,8 +41,8 @@ Future<void> init() async {
   sl.registerLazySingleton<FoodRepository>(
     () => FoodRepositoryImpl(
       networkInfo: sl(),
-      firebaseSource: sl(),
-      hiveLocalSource: sl(),
+      foodFirebaseSource: sl(),
+      foodHiveLocalSource: sl(),
       coreFirebaseAuth: sl(),
     ),
   );
@@ -57,10 +57,10 @@ Future<void> init() async {
   );
 
   //mealRepository
-  sl.registerLazySingleton<MealRepository>(
-    () => MealRepositoryImpl(
-      firebaseSource: sl(),
-      hiveLocalSource: sl(),
+  sl.registerLazySingleton<FoodRepository>(
+    () => FoodRepositoryImpl(
+      foodFirebaseSource: sl(),
+      foodHiveLocalSource: sl(),
     ),
   );
 

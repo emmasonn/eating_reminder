@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
 import 'package:informat/feature/meal_schedule/repository/meal_schedule_repository.dart';
+import 'package:informat/feature/what_to_eat/domain/food_model.dart';
+import 'package:informat/feature/what_to_eat/managers/food_manager.dart';
 
 class MealScheduleManager extends StateNotifier<MealScheduleState> {
   final MealScheduleRepository _scheduleRepository;
@@ -28,6 +30,10 @@ class MealScheduleManager extends StateNotifier<MealScheduleState> {
       (failure) => state = CreateScheduleError(failure),
       (status) => state = CreateScheduleLoaded(true),
     );
+  }
+
+  void createFood(FoodModel foodModel) {
+    
   }
 
   void subscribeToSchedule() async {

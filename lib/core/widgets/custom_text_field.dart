@@ -20,6 +20,7 @@ class CustomTextField extends StatelessWidget {
     this.elevate,
     this.helperText,
     this.initialValue,
+    this.maxLine,
     required this.onChanged,
   }) : super(key: key);
   final TextEditingController? controller;
@@ -38,6 +39,7 @@ class CustomTextField extends StatelessWidget {
   final String? helperText;
   final String? initialValue;
   final Function(String?) onChanged;
+  final int? maxLine;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,8 @@ class CustomTextField extends StatelessWidget {
           if (displayHint == DisplayHint.outside) ...[
             Text(
               hintText,
-              style: theme.textTheme.subtitle1?.copyWith(color: Colors.black54),
+              style: theme.textTheme.subtitle1
+                  ?.copyWith(color: theme.primaryColorLight),
             ),
             const SizedBox(
               height: 10,
@@ -64,6 +67,7 @@ class CustomTextField extends StatelessWidget {
             keyboardType: TextInputType.number,
             autocorrect: false,
             initialValue: initialValue,
+            maxLines: maxLine,
             decoration: displayHint == DisplayHint.outside
                 ? InputDecoration(
                     border: OutlineInputBorder(

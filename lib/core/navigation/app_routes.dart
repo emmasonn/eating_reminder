@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:informat/core/widgets/custom_page.dart';
 import 'package:informat/feature/Auth/pages/page_auth.dart';
+import 'package:informat/feature/meal_schedule/pages/page_add_food.dart';
 import 'package:informat/feature/meal_schedule/pages/page_schedule_groups.dart';
 import 'package:informat/feature/profile/pages/page_edit_profile.dart';
 import 'package:informat/feature/what_to_eat/pages/page_foods.dart';
@@ -40,25 +41,36 @@ class AppRoutes {
       name: 'schedule',
       pageBuilder: (BuildContext context, GoRouterState state) {
         final String id = state.params['id'] ?? '';
-        return PageMealSchedule.page(key: state.pageKey);
+        return PageMealSchedule.page(key: state.pageKey,);
       },
       routes: [
-        editProfile,
+        addFood,
       ]);
-
-  static final collection = GoRoute(
-    path: '/collection',
-    name: 'collection',
-    pageBuilder: (BuildContext context, GoRouterState state) {
-      return PageFoods.page(key: state.pageKey);
-    },
-  );
 
   static final login = GoRoute(
     path: 'login',
     name: 'login',
     pageBuilder: (BuildContext context, GoRouterState state) {
       return PageAuth.page(key: state.pageKey);
+    },
+  );
+
+  static final addFood = GoRoute(
+    path: 'add-food/:day',
+    name: 'add-food',
+    pageBuilder: (BuildContext context, GoRouterState state) {
+      final parameter = state.params['day'] ?? '';
+      final scheduleId = state.params['id'] ?? '';
+     
+      return PageAddFood.page(key: state.pageKey,id: scheduleId,day: parameter);
+    },
+  );
+
+  static final collection = GoRoute(
+    path: '/collection',
+    name: 'collection',
+    pageBuilder: (BuildContext context, GoRouterState state) {
+      return PageFoods.page(key: state.pageKey);
     },
   );
 

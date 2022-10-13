@@ -21,7 +21,14 @@ FoodModel _$FoodModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$FoodModel {
   String get id => throw _privateConstructorUsedError;
-  List<String> get foods => throw _privateConstructorUsedError;
+  String get ownerId => throw _privateConstructorUsedError;
+  String get scheduleId => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get period => throw _privateConstructorUsedError;
+  String get day => throw _privateConstructorUsedError;
+  String? get recipe => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  DateTime? get time => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +40,16 @@ mixin _$FoodModel {
 abstract class $FoodModelCopyWith<$Res> {
   factory $FoodModelCopyWith(FoodModel value, $Res Function(FoodModel) then) =
       _$FoodModelCopyWithImpl<$Res>;
-  $Res call({String id, List<String> foods});
+  $Res call(
+      {String id,
+      String ownerId,
+      String scheduleId,
+      String title,
+      String period,
+      String day,
+      String? recipe,
+      String? description,
+      DateTime? time});
 }
 
 /// @nodoc
@@ -47,17 +63,52 @@ class _$FoodModelCopyWithImpl<$Res> implements $FoodModelCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? foods = freezed,
+    Object? ownerId = freezed,
+    Object? scheduleId = freezed,
+    Object? title = freezed,
+    Object? period = freezed,
+    Object? day = freezed,
+    Object? recipe = freezed,
+    Object? description = freezed,
+    Object? time = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      foods: foods == freezed
-          ? _value.foods
-          : foods // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      ownerId: ownerId == freezed
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      scheduleId: scheduleId == freezed
+          ? _value.scheduleId
+          : scheduleId // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      period: period == freezed
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as String,
+      day: day == freezed
+          ? _value.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipe: recipe == freezed
+          ? _value.recipe
+          : recipe // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -68,7 +119,16 @@ abstract class _$$_FoodModelCopyWith<$Res> implements $FoodModelCopyWith<$Res> {
           _$_FoodModel value, $Res Function(_$_FoodModel) then) =
       __$$_FoodModelCopyWithImpl<$Res>;
   @override
-  $Res call({String id, List<String> foods});
+  $Res call(
+      {String id,
+      String ownerId,
+      String scheduleId,
+      String title,
+      String period,
+      String day,
+      String? recipe,
+      String? description,
+      DateTime? time});
 }
 
 /// @nodoc
@@ -84,17 +144,52 @@ class __$$_FoodModelCopyWithImpl<$Res> extends _$FoodModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? foods = freezed,
+    Object? ownerId = freezed,
+    Object? scheduleId = freezed,
+    Object? title = freezed,
+    Object? period = freezed,
+    Object? day = freezed,
+    Object? recipe = freezed,
+    Object? description = freezed,
+    Object? time = freezed,
   }) {
     return _then(_$_FoodModel(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      foods: foods == freezed
-          ? _value._foods
-          : foods // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      ownerId: ownerId == freezed
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      scheduleId: scheduleId == freezed
+          ? _value.scheduleId
+          : scheduleId // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      period: period == freezed
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as String,
+      day: day == freezed
+          ? _value.day
+          : day // ignore: cast_nullable_to_non_nullable
+              as String,
+      recipe: recipe == freezed
+          ? _value.recipe
+          : recipe // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -102,25 +197,44 @@ class __$$_FoodModelCopyWithImpl<$Res> extends _$FoodModelCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_FoodModel implements _FoodModel {
-  _$_FoodModel({required this.id, required final List<String> foods})
-      : _foods = foods;
+class _$_FoodModel extends _FoodModel {
+  _$_FoodModel(
+      {required this.id,
+      required this.ownerId,
+      required this.scheduleId,
+      required this.title,
+      required this.period,
+      required this.day,
+      this.recipe,
+      this.description,
+      this.time})
+      : super._();
 
   factory _$_FoodModel.fromJson(Map<String, dynamic> json) =>
       _$$_FoodModelFromJson(json);
 
   @override
   final String id;
-  final List<String> _foods;
   @override
-  List<String> get foods {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_foods);
-  }
+  final String ownerId;
+  @override
+  final String scheduleId;
+  @override
+  final String title;
+  @override
+  final String period;
+  @override
+  final String day;
+  @override
+  final String? recipe;
+  @override
+  final String? description;
+  @override
+  final DateTime? time;
 
   @override
   String toString() {
-    return 'FoodModel(id: $id, foods: $foods)';
+    return 'FoodModel(id: $id, ownerId: $ownerId, scheduleId: $scheduleId, title: $title, period: $period, day: $day, recipe: $recipe, description: $description, time: $time)';
   }
 
   @override
@@ -129,7 +243,16 @@ class _$_FoodModel implements _FoodModel {
         (other.runtimeType == runtimeType &&
             other is _$_FoodModel &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other._foods, _foods));
+            const DeepCollectionEquality().equals(other.ownerId, ownerId) &&
+            const DeepCollectionEquality()
+                .equals(other.scheduleId, scheduleId) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.period, period) &&
+            const DeepCollectionEquality().equals(other.day, day) &&
+            const DeepCollectionEquality().equals(other.recipe, recipe) &&
+            const DeepCollectionEquality()
+                .equals(other.description, description) &&
+            const DeepCollectionEquality().equals(other.time, time));
   }
 
   @JsonKey(ignore: true)
@@ -137,7 +260,14 @@ class _$_FoodModel implements _FoodModel {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(_foods));
+      const DeepCollectionEquality().hash(ownerId),
+      const DeepCollectionEquality().hash(scheduleId),
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(period),
+      const DeepCollectionEquality().hash(day),
+      const DeepCollectionEquality().hash(recipe),
+      const DeepCollectionEquality().hash(description),
+      const DeepCollectionEquality().hash(time));
 
   @JsonKey(ignore: true)
   @override
@@ -152,10 +282,18 @@ class _$_FoodModel implements _FoodModel {
   }
 }
 
-abstract class _FoodModel implements FoodModel {
+abstract class _FoodModel extends FoodModel {
   factory _FoodModel(
       {required final String id,
-      required final List<String> foods}) = _$_FoodModel;
+      required final String ownerId,
+      required final String scheduleId,
+      required final String title,
+      required final String period,
+      required final String day,
+      final String? recipe,
+      final String? description,
+      final DateTime? time}) = _$_FoodModel;
+  _FoodModel._() : super._();
 
   factory _FoodModel.fromJson(Map<String, dynamic> json) =
       _$_FoodModel.fromJson;
@@ -163,7 +301,21 @@ abstract class _FoodModel implements FoodModel {
   @override
   String get id;
   @override
-  List<String> get foods;
+  String get ownerId;
+  @override
+  String get scheduleId;
+  @override
+  String get title;
+  @override
+  String get period;
+  @override
+  String get day;
+  @override
+  String? get recipe;
+  @override
+  String? get description;
+  @override
+  DateTime? get time;
   @override
   @JsonKey(ignore: true)
   _$$_FoodModelCopyWith<_$_FoodModel> get copyWith =>

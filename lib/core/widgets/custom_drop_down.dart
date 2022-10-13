@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 
-class CustomCountryCodesDropDown extends StatefulWidget {
-  const CustomCountryCodesDropDown({
+class CustomDropDown extends StatefulWidget {
+  const CustomDropDown({
     Key? key,
     this.initialValue,
+    required this.title,
+    required this.items,
     required this.onSelected,
   }) : super(key: key);
+  
   final void Function(String?) onSelected;
   final String? initialValue;
+  final String title;
+  final List<String> items;
 
   @override
-  State<CustomCountryCodesDropDown> createState() =>
-      _CustomCountryCodesDropDownState();
+  State<CustomDropDown> createState() => _CustomDropDownState();
 }
 
-class _CustomCountryCodesDropDownState
-    extends State<CustomCountryCodesDropDown> {
-  final countryCodes = ['+234(Nigeria)', '+244(USA)'];
+class _CustomDropDownState extends State<CustomDropDown> {
   String? currentValue;
 
   @override
   void initState() {
     super.initState();
-    currentValue = widget.initialValue ?? countryCodes.first;
+    currentValue = widget.initialValue ?? widget.items.first;
   }
 
   @override
@@ -34,11 +36,11 @@ class _CustomCountryCodesDropDownState
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: const Border(
-            bottom: BorderSide(),
-            top: BorderSide(),
-            right: BorderSide(),
-            left: BorderSide(),
+          border: Border(
+            bottom: BorderSide(color: theme.primaryColorLight, width: 1.0),
+            top: BorderSide(color: theme.primaryColorLight, width: 1.0),
+            right: BorderSide(color: theme.primaryColorLight, width: 1.0),
+            left: BorderSide(color: theme.primaryColorLight, width: 1.0),
           )),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -48,7 +50,7 @@ class _CustomCountryCodesDropDownState
             height: 6,
           ),
           Text(
-            'Country Code',
+            widget.title,
             style: TextStyle(
               fontSize: 12,
               fontFamily: 'Rubik',
@@ -69,7 +71,7 @@ class _CustomCountryCodesDropDownState
                         color: theme.primaryColorLight,
                         fontWeight: FontWeight.w600),
                     value: currentValue,
-                    items: countryCodes.map<DropdownMenuItem<String>>((e) {
+                    items: widget.items.map<DropdownMenuItem<String>>((e) {
                       return DropdownMenuItem(
                         value: e,
                         child: Text(
