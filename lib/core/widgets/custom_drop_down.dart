@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropDown extends StatefulWidget {
@@ -8,18 +9,18 @@ class CustomDropDown extends StatefulWidget {
     required this.items,
     required this.onSelected,
   }) : super(key: key);
-  
-  final void Function(String?) onSelected;
-  final String? initialValue;
+
+  final void Function(Equatable?) onSelected;
+  final Equatable? initialValue;
   final String title;
-  final List<String> items;
+  final List<Equatable> items;
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-  String? currentValue;
+  Equatable? currentValue;
 
   @override
   void initState() {
@@ -63,7 +64,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
               children: [
                 Expanded(
                   child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
+                      child: DropdownButton<Equatable>(
                     iconSize: 24,
                     style: TextStyle(
                         fontFamily: 'Rubik',
@@ -71,11 +72,11 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         color: theme.primaryColorLight,
                         fontWeight: FontWeight.w600),
                     value: currentValue,
-                    items: widget.items.map<DropdownMenuItem<String>>((e) {
+                    items: widget.items.map<DropdownMenuItem<Equatable>>((e) {
                       return DropdownMenuItem(
                         value: e,
                         child: Text(
-                          e,
+                          e.props[0] as String? ?? '',
                           style: TextStyle(
                             fontFamily: 'Rubik',
                             fontSize: 16,

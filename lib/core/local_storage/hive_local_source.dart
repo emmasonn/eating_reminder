@@ -45,6 +45,13 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
           .toList() ??
       [];
 
+  
+  @override
+  Future<T?> getItem(String id) async {
+    final data = _itemsBox.get(id);
+    return data != null ? fromJson(data) : null;
+  }
+
   @override
   Future<T?> setItem(T obj) async {
     _itemsBox.put(obj.id, toJson(obj));
@@ -90,9 +97,4 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
       ? _favoriteBox.delete(id)
       : _favoriteBox.put(id, true);
 
-  @override
-  Future<T?> getItem(String id) async {
-    final data = _itemsBox.get(id);
-    return data != null ? fromJson(data) : null;
-  }
 }

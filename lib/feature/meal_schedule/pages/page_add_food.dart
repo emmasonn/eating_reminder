@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/constants/enum_constants.dart';
+import 'package:informat/core/utils/time_based_utils.dart';
 import 'package:informat/core/widgets/custom_drop_down.dart';
 import 'package:informat/core/widgets/custom_page.dart';
 import 'package:informat/core/widgets/custom_text_field.dart';
@@ -96,8 +98,26 @@ class _PageAddFoodState extends ConsumerState<PageAddFood> {
               SizedBox(
                 height: 150,
                 width: 150,
-                child: CircleAvatar(
-                  backgroundColor: theme.primaryColor.withOpacity(0.2),
+                child: InkWell(
+                  onTap: () {
+                    
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: theme.primaryColor.withOpacity(0.2),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(FontAwesomeIcons.image),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Select Food',
+                          style: GoogleFonts.montserrat(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -110,9 +130,9 @@ class _PageAddFoodState extends ConsumerState<PageAddFood> {
               ),
               CustomDropDown(
                 title: 'Meal Schedule',
-                items: const ['BreakFast', 'Lunch', 'Dinner'],
+                items: mealSchedulers,
                 onSelected: (value) {
-                  mealPeriod = value!;
+                  mealPeriod = value?.props[0] as String? ?? '';
                 },
               ),
               CustomTextField(

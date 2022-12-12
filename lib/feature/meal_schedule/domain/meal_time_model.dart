@@ -9,7 +9,7 @@ class MealTimeModel extends Equatable {
   });
   @override
   List<Object?> get props => [
-    title,
-    time,
+    '$title-$time',
+   
   ];
 }

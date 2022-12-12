@@ -26,7 +26,7 @@ class FirebaseSource<T extends DataModel> extends Source<T> {
 
   //convert from document to dart model
   T fromDocument(firestore.DocumentSnapshot document) => fromJson({
-        ...(document.data() as Map).cast<String, dynamic>(),
+        ...(document.data() as Map).cast<String, dynamic>(), //decontructuring.
         ...{'id': document.id}
       });
 
@@ -42,14 +42,16 @@ class FirebaseSource<T extends DataModel> extends Source<T> {
   @override
   Future<T?> setItem(T obj) async {
     late firestore.DocumentReference docRef;
-    if (obj.id == null) {
+    if (obj.id != null) {
       //if the object already exists, do the Firebase equivalent of
       //PUT/PATCH
-      docRef = await collection.add(toJson(obj));
-    } else {
-      //if the object is new, do the Firebase equivalent of POST
       await collection.doc(obj.id).set(toJson(obj));
       docRef = collection.doc(obj.id);
+    } else {
+      //if the object is new, do the Firebase equivalent of POST
+      final itemId = collection.doc().id; //generate an id;
+      await collection.doc(itemId).set(toJson(obj));
+      docRef = collection.doc(itemId);
     }
 
     //Return a reloaded document in case it had any
@@ -57,7 +59,7 @@ class FirebaseSource<T extends DataModel> extends Source<T> {
     return fromDocument(await docRef.get());
   }
 
-  //this function get single itemn.
+  //this function get single item.
   @override
   Future<T?> viewItem(String id) async {
     firestore.DocumentSnapshot userDoc = await collection.doc(id).get();
