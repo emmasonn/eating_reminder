@@ -46,12 +46,13 @@ class FirebaseStorage<T> {
     final filePath = "${appDocDir.absolute}/images/$fileId.jpg";
     final file = File(filePath);
 
-    //trigger file downlod
+    //trigger file download
     await ref.writeToFile(file);
   }
 
-  Stream<storage.ListResult> getStoredItems(
-      {required storage.Reference ref}) async* {
+  Stream<storage.ListResult> getStoredItems({
+    required storage.Reference ref,
+  }) async* {
     String? pageToken;
 
     do {
