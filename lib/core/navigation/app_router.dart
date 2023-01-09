@@ -20,7 +20,12 @@ final goRouter = GoRouter(
       if (state.location == '/schedule-groups' && !isUserLogggedIn) {
         return '/what-to-eat/login';
       } else if (state.subloc == '/what-to-eat/login' && isUserLogggedIn) {
-        return '/schedule-groups';
+        final user = foodManager.profileModel;
+        if (user != null && user.country != null) {
+          return '/schedule-groups';
+        } else {
+          return '/schedule-groups/edit-profile';
+        }
       }
       return null;
     },

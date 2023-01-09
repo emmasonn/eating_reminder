@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:informat/bootstrap.dart';
 import 'package:informat/core/resources/colors.dart';
+import 'package:informat/feature/profile/manager/profile_manager.dart';
 import 'package:informat/feature/profile/widgets/drawer_profile_header.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_drawer_item.dart';
 
-class FoodBlogDrawer extends StatefulWidget {
+class FoodBlogDrawer extends ConsumerStatefulWidget {
   const FoodBlogDrawer({
     Key? key,
     required this.tag,
@@ -16,10 +19,19 @@ class FoodBlogDrawer extends StatefulWidget {
   final Function()? onPressed;
 
   @override
-  State<FoodBlogDrawer> createState() => _FoodBlogDrawerState();
+  ConsumerState<FoodBlogDrawer> createState() => _FoodBlogDrawerState();
 }
 
-class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
+class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
+  ProfileManager? profileManager;
+  String currentTheme = 'Light';
+
+  @override
+  void initState() {
+    super.initState();
+    profileManager = ref.read(profileProvider.notifier);
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -92,8 +104,17 @@ class _FoodBlogDrawerState extends State<FoodBlogDrawer> {
                         ),
                         DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                            value: 'Light',
-                            onChanged: (value) {},
+                            value: currentTheme,
+                            onChanged: (value) {
+                              if (value == 'Light') {
+                                profileManager?.changetheme(ThemeMode.light);
+                              } else {
+                                profileManager?.changetheme(ThemeMode.dark);
+                              }
+                              setState(() {
+                                currentTheme = value!;
+                              });
+                            },
                             items: ['Light', 'Dark']
                                 .map<DropdownMenuItem<String>>((e) {
                               return DropdownMenuItem(

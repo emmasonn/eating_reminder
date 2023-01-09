@@ -20,4 +20,5 @@ class UserModel extends DataModel implements Equatable {
 
   @override
   bool? get stringify => false;
+  
 }

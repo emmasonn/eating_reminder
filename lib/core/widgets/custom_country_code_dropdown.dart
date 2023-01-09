@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:informat/core/widgets/countries.dart';
+import 'package:informat/core/widgets/custom_input_border.dart';
 
 class CustomCountryCodesDropDown extends StatefulWidget {
   const CustomCountryCodesDropDown({
@@ -16,52 +18,32 @@ class CustomCountryCodesDropDown extends StatefulWidget {
 
 class _CustomCountryCodesDropDownState
     extends State<CustomCountryCodesDropDown> {
-  final countryCodes = ['+234(Nigeria)', '+244(USA)'];
+  final allCountries = countries.toStringList();
   String? currentValue;
-
+  double cornerRadius = 8.0;
   @override
   void initState() {
     super.initState();
-    currentValue = widget.initialValue ?? countryCodes.first;
+    currentValue = widget.initialValue;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      height: 55,
-      margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+      height: 60,
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: const Border(
-            bottom: BorderSide(),
-            top: BorderSide(),
-            right: BorderSide(),
-            left: BorderSide(),
-          )),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 6,
-          ),
-          Text(
-            'Country Code',
-            style: TextStyle(
-              fontSize: 12,
-              fontFamily: 'Rubik',
-              color: theme.primaryColor,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
           Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
+                  child: DropdownButtonFormField<String>(
+                    isExpanded: true,
                     iconSize: 24,
                     style: TextStyle(
                         fontFamily: 'Rubik',
@@ -69,7 +51,31 @@ class _CustomCountryCodesDropDownState
                         color: theme.primaryColorLight,
                         fontWeight: FontWeight.w600),
                     value: currentValue,
-                    items: countryCodes.map<DropdownMenuItem<String>>((e) {
+                    hint: Text('Select country'),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(18),
+                      border: CustomInputBorder(
+                        borderSide: BorderSide(
+                          color: theme.primaryColorLight,
+                        ),
+                        borderRadius: BorderRadius.circular(cornerRadius),
+                      ),
+                      enabledBorder: CustomInputBorder(
+                        borderSide: BorderSide(
+                          width: 1.2,
+                          color: theme.primaryColorLight,
+                        ),
+                        borderRadius: BorderRadius.circular(cornerRadius),
+                      ),
+                      focusedBorder: CustomInputBorder(
+                        borderSide: BorderSide(
+                          width: 1.5,
+                          color: theme.primaryColorLight,
+                        ),
+                        borderRadius: BorderRadius.circular(cornerRadius),
+                      ),
+                    ),
+                    items: allCountries.map<DropdownMenuItem<String>>((e) {
                       return DropdownMenuItem(
                         value: e,
                         child: Text(
@@ -88,7 +94,17 @@ class _CustomCountryCodesDropDownState
                         widget.onSelected;
                       });
                     }),
-                  )),
+                    selectedItemBuilder: (context) {
+                      return allCountries
+                          .map(
+                            (e) => Text(
+                              e,
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                          )
+                          .toList();
+                    },
+                  ),
                 ),
               ],
             ),

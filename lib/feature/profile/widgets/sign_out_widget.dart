@@ -27,12 +27,10 @@ class _SignOutWidgetState extends ConsumerState<SignOutWidget> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final state = ref.watch(profileProvider);
-
     if (state is SignOutLoading) {
       isLoading = true;
     } else if (state is SignOutError) {
       isLoading = false;
-      print('Error occurred');
     }
 
     return Container(

@@ -100,9 +100,4 @@ class FirebaseSource<T extends DataModel> extends Source<T> {
     );
   }
 
-  @override
-  Future<void> updateItem(T obj) {
-    // TODO: implement updateItem
-    throw UnimplementedError();
-  }
 }

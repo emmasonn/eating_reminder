@@ -16,9 +16,7 @@ abstract class Source<T extends DataModel> {
   Future<T?> setItem(T obj);
 
   Future<void> deleteItem(T obj);
-
-  Future<void> updateItem(T obj);
-
+  
   Stream<List<T>> subscribeTo(List<WhereClause>? where);
 
 }

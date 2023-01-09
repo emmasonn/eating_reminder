@@ -6,9 +6,9 @@ extension ProfileExtensions on UserModel? {
     if (this != null) {
       return ProfileModel(
         name: '',
-        lastUpdated: DateTime(2022),
+        lastUpdated: DateTime.now(),
         id: this?.id ?? '',
-        email: this!.email ?? '',
+        email: this?.email ?? '',
         imageUrl: this?.imageUrl,
       );
     } else {

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/core/firebase_services/firebase_util.dart';
 import 'package:informat/feature/profile/domain/profile_model.dart';
@@ -13,6 +14,7 @@ class ProfileManager extends StateNotifier<ProfileState> {
 
   final ProfileRepository _profileRepository;
   StreamSubscription? _profileSubscription;
+  ThemeMode currentTheme = ThemeMode.light;
 
   void saveProfile(ProfileModel obj) async {
     final result = await _profileRepository.saveProfile(obj);
@@ -64,6 +66,13 @@ class ProfileManager extends StateNotifier<ProfileState> {
       status: profileModel == null ? false : true,
       profileModel: profileModel,
     );
+  }
+
+  void changetheme(ThemeMode theme) async {
+    currentTheme = theme;
+    state = ProfileLoaded(
+        status: true,
+        profileModel: await _profileRepository.getCachedProfile());
   }
 
   void unsubscribeProfile() {

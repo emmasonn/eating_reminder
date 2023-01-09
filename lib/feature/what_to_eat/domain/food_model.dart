@@ -9,7 +9,7 @@ class FoodModel extends DataModel with _$FoodModel {
   @JsonSerializable(explicitToJson: true)
   factory FoodModel({
     required String id,
-    required  String ownerId,
+    required String ownerId,
     required String scheduleId,
     required String title,
     required String period,
@@ -23,4 +23,16 @@ class FoodModel extends DataModel with _$FoodModel {
 
   factory FoodModel.fromJson(Map<String, dynamic> json) =>
       _$FoodModelFromJson(json);
+
+  @override
+  DataModel copyWith2(String? newId) {
+    return FoodModel(
+      id: newId ?? id,
+      ownerId: ownerId,
+      scheduleId: scheduleId,
+      title: title,
+      period: period,
+      day: day,
+    );
+  }
 }

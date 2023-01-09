@@ -16,7 +16,7 @@ import 'package:informat/injection_container.dart' as di;
 //! Making all the stateNotifer Provider Global
 late FoodManager foodManager;
 
-late StateNotifierProvider<AuthManager, AuthState> authProvider;
+late AutoDisposeStateNotifierProvider<AuthManager, AuthState> authProvider;
 
 late StateNotifierProvider<MealScheduleManager, MealScheduleState>
     mealScheduleProvider;
@@ -41,8 +41,8 @@ Future<void> bootStrap() async {
   foodManager = sl<FoodManager>();
 
   //authProvider
-  authProvider =
-      StateNotifierProvider<AuthManager, AuthState>((ref) => sl<AuthManager>());
+  authProvider = StateNotifierProvider.autoDispose<AuthManager, AuthState>(
+      (ref) => sl<AuthManager>());
 
   //mealScheduleProvider
   mealScheduleProvider =

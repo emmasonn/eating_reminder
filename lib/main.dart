@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/resources/app_theme.dart';
+import 'package:informat/feature/profile/manager/profile_manager.dart';
+import 'package:informat/feature/profile/manager/profile_state.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart' as pr;
 import 'core/navigation/app_router.dart';
 
@@ -14,23 +17,28 @@ void main() async {
   ));
 }
 
-class FoodBlog extends StatefulWidget {
+class FoodBlog extends ConsumerStatefulWidget {
   const FoodBlog({Key? key}) : super(key: key);
 
   @override
-  State<FoodBlog> createState() => _FoodBlogState();
+  ConsumerState<FoodBlog> createState() => _FoodBlogState();
 }
 
-class _FoodBlogState extends State<FoodBlog> {
+class _FoodBlogState extends ConsumerState<FoodBlog> {
+  ThemeMode appTheme = ThemeMode.light;
+  ProfileManager? profileManager;
+
+  @override
+  void initState() {
+    super.initState();
+    profileManager = ref.read(profileProvider.notifier);
+    if(profileManager!=null) {
+    appTheme = profileManager!.currentTheme;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // ThemeData themeData;
-    //   // if (themeTemp) {
-    //   //   themeData = AppTheme.dark();
-    //   // } else {
-    //   //   themeData = AppTheme.light();
-    //   // }
-
     return pr.MultiProvider(
       providers: [
         pr.ChangeNotifierProvider.value(
@@ -42,6 +50,7 @@ class _FoodBlogState extends State<FoodBlog> {
         title: 'FoodBlog',
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
+        themeMode: appTheme,
         routeInformationParser: goRouter.routeInformationParser,
         routeInformationProvider: goRouter.routeInformationProvider,
         routerDelegate: goRouter

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:informat/core/constants/enum_constants.dart';
 import 'package:informat/core/widgets/custom_input_border.dart';
 
-class CustomTextField extends StatefulWidget {
-  const CustomTextField({
+class CustomPasswordField extends StatefulWidget {
+  const CustomPasswordField({
     Key? key,
     required this.hintText,
     this.displayHint = DisplayHint.outside,
@@ -20,7 +20,7 @@ class CustomTextField extends StatefulWidget {
     this.elevate,
     this.helperText,
     this.initialValue,
-    this.maxLine,
+    this.hideEyes,
     required this.onChanged,
   }) : super(key: key);
   final TextEditingController? controller;
@@ -38,21 +38,15 @@ class CustomTextField extends StatefulWidget {
   final bool? outline;
   final String? helperText;
   final String? initialValue;
+  final bool? hideEyes;
   final Function(String?) onChanged;
-  final int? maxLine;
 
   @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
+  State<CustomPasswordField> createState() => _CustomPasswordFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
-  String? currentValue;
-
-  @override
-  void initState() {
-    super.initState();
-    currentValue = widget.initialValue;
-  }
+class _CustomPasswordFieldState extends State<CustomPasswordField> {
+  bool obscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +71,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
             style: theme.textTheme.headline6
                 ?.copyWith(fontSize: 16, fontFamily: 'Rubik'),
             enabled: true,
-            keyboardType: TextInputType.text,
+            keyboardType: TextInputType.visiblePassword,
             autocorrect: false,
-            initialValue: currentValue,
-            maxLines: widget.maxLine,
+            obscureText: obscure,
+            initialValue: widget.initialValue,
             decoration: widget.displayHint == DisplayHint.outside
                 ? InputDecoration(
                     border: OutlineInputBorder(
@@ -128,6 +122,19 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         ],
                       ),
                     ),
+                    suffixIcon: widget.hideEyes != null
+                        ? null
+                        : GestureDetector(
+                            child: Icon(
+                              obscure ? Icons.visibility : Icons.visibility_off,
+                              color: theme.primaryColor.withOpacity(0.5),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                obscure = !obscure;
+                              });
+                            },
+                          ),
                     border: CustomInputBorder(
                       borderSide: BorderSide(
                           color: theme.primaryColorLight, width: 1.0),
@@ -144,7 +151,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     hintText: widget.hintText,
                     hintStyle: theme.textTheme.subtitle2?.copyWith(
                         color: theme.primaryColorLight.withOpacity(0.2)),
-                    suffixIcon: widget.suffixIcon,
                   ),
             onChanged: widget.onChanged,
           ),

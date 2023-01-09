@@ -34,6 +34,7 @@ class AppRoutes {
       },
       routes: [
         schedule,
+        editProfile
       ]);
 
   static final schedule = GoRoute(
@@ -54,7 +55,7 @@ class AppRoutes {
       return PageAuth.page(key: state.pageKey);
     },
   );
-
+  
   static final addFood = GoRoute(
     path: 'add-food/:day',
     name: 'add-food',

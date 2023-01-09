@@ -16,9 +16,11 @@ import 'package:informat/core/widgets/custom_text_field.dart';
 import 'package:informat/feature/profile/domain/profile_model.dart';
 import 'package:informat/feature/profile/manager/profile_manager.dart';
 import 'package:informat/feature/profile/manager/profile_state.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class PageEditProfie extends ConsumerStatefulWidget {
-  const PageEditProfie({super.key});
+  const PageEditProfie({super.key, this.title});
+  final String? title;
 
   static Page page({LocalKey? key}) {
     return CustomPage<void>(
@@ -38,12 +40,15 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
   String countryCode = '';
   String phoneNumber = '';
   String profileImage = '';
+  String email = '';
   ProfileManager? profileManager;
   ProfileModel? profileData;
+  String? title;
 
   @override
   void initState() {
     super.initState();
+    title = widget.title ?? 'Edit Profile';
     profileManager = ref.read(profileProvider.notifier);
     profileManager?.subScribeToProfile();
   }
@@ -82,7 +87,7 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
             onPressed: () {
               showCustomDialog(
                 context,
-                CustomProgressDialog.cupertinoLoading(color: Colors.white),
+                CustomProgressWidget.cupertinoLoading(color: Colors.white),
               );
               profileManager?.saveProfile(
                 profileData!.copyWith(
@@ -90,7 +95,7 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
                 ),
               );
             },
-            icon: const Icon(FontAwesomeIcons.floppyDisk),
+            icon: const Icon(Icons.done),
           ),
         ],
       ),
@@ -156,7 +161,7 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
               initialValue: profileData?.email,
               displayHint: DisplayHint.inside,
               onChanged: (value) {
-                telephone = value!;
+                email = value!;
               },
             ),
           ],

@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/helpers/image_processors.dart';
-import 'package:informat/core/widgets/confirm_dialog.dart';
 import 'package:informat/feature/Auth/widgets/custom_button.dart';
 import 'package:informat/feature/profile/domain/profile_model.dart';
 import 'package:informat/feature/profile/manager/profile_manager.dart';
@@ -63,7 +62,9 @@ class _ProfileDrawerHeaderState extends ConsumerState<ProfileDrawerHeader> {
                     height: 60,
                     width: 60,
                     child: CircleAvatar(
-                      backgroundImage: getImage(profileImage),
+                      backgroundImage: profileImage.isNotEmpty
+                          ? getImage(profileImage)
+                          : null,
                       child: profileImage.isEmpty
                           ? const Icon(FontAwesomeIcons.person)
                           : const SizedBox(),
@@ -104,6 +105,7 @@ class _ProfileDrawerHeaderState extends ConsumerState<ProfileDrawerHeader> {
                       height: 20.0,
                       width: 20.0,
                     ),
+                    header: 'Setup Profile',
                     onPressed: () {
                       GoRouter.of(context).go('/what-to-eat/login');
                       widget.onSignOut.call();

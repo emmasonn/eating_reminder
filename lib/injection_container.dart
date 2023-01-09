@@ -23,7 +23,7 @@ GetIt sl = GetIt.instance;
 Future<void> init() async {
   //! manager instances
   //foodmanager
-  sl.registerFactory(() => FoodManager(sl()));
+  sl.registerFactory(() => FoodManager(sl(), sl()));
 
   //mealSchedulemanager
   sl.registerFactory(() => MealScheduleManager(sl()));
@@ -114,7 +114,7 @@ Future<void> init() async {
       toJson: (FoodModel obj) => obj.toJson(),
     ),
   );
- 
+
   //MealScheduleModel local source
   sl.registerLazySingleton<HiveLocalSource<MealScheduleModel>>(
       () => HiveLocalSourceImpl(
