@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -45,35 +43,85 @@ class _ProfileDrawerHeaderState extends ConsumerState<ProfileDrawerHeader> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final state = ref.watch(profileProvider);
     if (state is ProfileLoaded) {
       profileModel = state.profileModel;
     }
     String profileImage = profileModel?.imageUrl ?? '';
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           child: profileModel != null
               ? ListTile(
-                  horizontalTitleGap: 4,
-                  leading: SizedBox(
-                    height: 60,
-                    width: 60,
-                    child: CircleAvatar(
-                      backgroundImage: profileImage.isNotEmpty
-                          ? getImage(profileImage)
-                          : null,
-                      child: profileImage.isEmpty
-                          ? const Icon(FontAwesomeIcons.person)
-                          : const SizedBox(),
+                  horizontalTitleGap: 10,
+                  leading: InkWell(
+                    onTap: () {
+                      GoRouter.of(context)
+                          .go('/what-to-eat/edit-profile/${'Edit Profile'}');
+                      widget.onSignOut.call();
+                    },
+                    child: SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: CircleAvatar(
+                        backgroundColor: theme.primaryColor,
+                        child: CircleAvatar(
+                          radius: 30 - 5,
+                          backgroundImage: profileImage.isNotEmpty
+                              ? getImage(profileImage)
+                              : null,
+                          child: profileImage.isEmpty
+                              ? const Icon(FontAwesomeIcons.person)
+                              : const SizedBox(),
+                        ),
+                      ),
                     ),
                   ),
-                  title: Text(
-                    profileModel?.email ?? '',
-                    maxLines: 2,
-                    style: GoogleFonts.montserrat(fontSize: 14),
+                  title: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      if (profileModel != null &&
+                          profileModel!.name.isNotEmpty) ...[
+                        Text(
+                          profileModel?.name ?? '',
+                          maxLines: 2,
+                          style: theme.textTheme.subtitle1
+                              ?.copyWith(fontWeight: FontWeight.w500),
+                        ),
+                      ] else ...[
+                        InkWell(
+                          onTap: () {
+                            GoRouter.of(context).go(
+                                '/what-to-eat/edit-profile/${'Complete Profile'}');
+                            widget.onSignOut.call();
+                          },
+                          child: Text(
+                            'Complete profile', //profileModel?.name ??
+                            maxLines: 2,
+                            style: theme.textTheme.subtitle1?.copyWith(
+                                color: theme.primaryColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                      const SizedBox(
+                        height: 2.0,
+                      ),
+                      Text(
+                        profileModel?.email ?? '',
+                        maxLines: 2,
+                        style: theme.textTheme.bodyText2?.copyWith(
+                          color: theme.primaryColorLight.withOpacity(0.7),
+                        ),
+                      ),
+                    ],
                   ),
                   subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

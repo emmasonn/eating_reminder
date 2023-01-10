@@ -7,6 +7,7 @@ import 'package:informat/feature/profile/pages/page_edit_profile.dart';
 import 'package:informat/feature/what_to_eat/pages/page_foods.dart';
 import 'package:informat/feature/meal_schedule/pages/page_schedule.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class AppRoutes {
   static final home = GoRoute(
@@ -23,6 +24,7 @@ class AppRoutes {
     routes: [
       login,
       details,
+      editProfile,
     ],
   );
 
@@ -34,7 +36,6 @@ class AppRoutes {
       },
       routes: [
         schedule,
-        editProfile
       ]);
 
   static final schedule = GoRoute(
@@ -42,7 +43,9 @@ class AppRoutes {
       name: 'schedule',
       pageBuilder: (BuildContext context, GoRouterState state) {
         final String id = state.params['id'] ?? '';
-        return PageMealSchedule.page(key: state.pageKey,);
+        return PageMealSchedule.page(
+          key: state.pageKey,
+        );
       },
       routes: [
         addFood,
@@ -55,15 +58,16 @@ class AppRoutes {
       return PageAuth.page(key: state.pageKey);
     },
   );
-  
+
   static final addFood = GoRoute(
     path: 'add-food/:day',
     name: 'add-food',
     pageBuilder: (BuildContext context, GoRouterState state) {
       final parameter = state.params['day'] ?? '';
       final scheduleId = state.params['id'] ?? '';
-     
-      return PageAddFood.page(key: state.pageKey,id: scheduleId,day: parameter);
+
+      return PageAddFood.page(
+          key: state.pageKey, id: scheduleId, day: parameter);
     },
   );
 
@@ -76,10 +80,12 @@ class AppRoutes {
   );
 
   static final editProfile = GoRoute(
-    path: 'edit-profile',
+    path: 'edit-profile/:title',
     name: 'edit-profile',
     pageBuilder: (BuildContext context, GoRouterState state) {
-      return PageEditProfie.page(key: state.pageKey);
+      log(state.params);
+      final parameter = state.params['title'];
+      return PageEditProfie.page(key: state.pageKey, title: parameter);
     },
   );
 

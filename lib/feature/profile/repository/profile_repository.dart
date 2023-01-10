@@ -4,6 +4,7 @@ import 'package:informat/core/failure/failure.dart';
 import 'package:informat/core/firebase_services/firebase_auth.dart';
 import 'package:informat/core/firebase_services/firebase_service_runner.dart';
 import 'package:informat/core/firebase_services/firebase_source.dart';
+import 'package:informat/core/firebase_services/firebase_storage.dart';
 import 'package:informat/core/firebase_services/firebase_util.dart';
 import 'package:informat/core/local_storage/hive_local_source.dart';
 import 'package:informat/core/network_info/network_info.dart';
@@ -22,16 +23,18 @@ abstract class ProfileRepository {
 }
 
 class ProfileRepositoryImpl extends ProfileRepository {
-  final FirebaseSource<ProfileModel> profileFirebaseSource;
+  final CustomFirebaseSource<ProfileModel> profileFirebaseSource;
   final HiveLocalSource<ProfileModel> profileHiveSource;
   final NetworkInfo networkInfo;
   final CoreFirebaseAuth coreFirebaseAuth;
+  final CustomFirebaseStorage firebaseStorage;
 
   ProfileRepositoryImpl({
     required this.profileFirebaseSource,
     required this.profileHiveSource,
     required this.networkInfo,
     required this.coreFirebaseAuth,
+    required this.firebaseStorage,
   });
 
   @override
@@ -64,7 +67,21 @@ class ProfileRepositoryImpl extends ProfileRepository {
         }
       },
     ).runServiceTask(
-      () => profileFirebaseSource.setItem(obj.copyWith(id: firebaseUser?.id)),
+      () async {
+        if (obj.imageUrl != null && obj.imageUrl!.contains('.')) {
+          //upload the image on storage to get link
+          final imageLink = await firebaseStorage.uploadFile(
+            storagePath: profileStoragePath,
+            fileId: firebaseUser?.id ?? '',
+            filePath: obj.imageUrl ?? '',
+          );
+          return profileFirebaseSource
+              .setItem(obj.copyWith(id: firebaseUser?.id, imageUrl: imageLink));
+        } else {
+          return profileFirebaseSource
+              .setItem(obj.copyWith(id: firebaseUser?.id));
+        }
+      },
     );
   }
 

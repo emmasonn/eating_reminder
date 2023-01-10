@@ -79,6 +79,8 @@ class AppTheme {
       brightness: Brightness.light,
       primaryColor: Colors.blue,
       primaryColorLight: Colors.black,
+      backgroundColor: Colors.white,
+      scaffoldBackgroundColor: Colors.white,
       checkboxTheme: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith(
           (states) {
@@ -106,6 +108,8 @@ class AppTheme {
       brightness: Brightness.dark,
       primaryColor: Colors.blue,
       primaryColorLight: Colors.white,
+      backgroundColor: Colors.black,
+      scaffoldBackgroundColor: Colors.grey[900],
       appBarTheme: AppBarTheme(
         foregroundColor: Colors.white,
         backgroundColor: Colors.grey[900],

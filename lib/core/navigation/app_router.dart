@@ -24,7 +24,7 @@ final goRouter = GoRouter(
         if (user != null && user.country != null) {
           return '/schedule-groups';
         } else {
-          return '/schedule-groups/edit-profile';
+          return '/what-to-eat/edit-profile/${'Complete Profile'}';
         }
       }
       return null;

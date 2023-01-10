@@ -13,6 +13,7 @@ class ImageButtomSheetWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
         height: 150,
         child: Material(
@@ -28,12 +29,7 @@ class ImageButtomSheetWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 24, vertical: 16.0),
-                  child: Text('Select Image',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      )),
+                  child: Text('Select Image', style: theme.textTheme.subtitle1),
                 ),
                 Row(
                   children: [
@@ -54,14 +50,7 @@ class ImageButtomSheetWidget extends StatelessWidget {
                             color: Colors.blue,
                             size: 50,
                           ),
-                          Text(
-                            'Camera',
-                            style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                              fontSize: 16,
-                            ),
-                          ),
+                          Text('Camera', style: theme.textTheme.subtitle2),
                         ],
                       ),
                     ),
@@ -78,12 +67,7 @@ class ImageButtomSheetWidget extends StatelessWidget {
                         children: [
                           const Icon(Icons.photo_rounded,
                               size: 50, color: Colors.blue),
-                          Text('Gallery ',
-                              style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                                fontSize: 16,
-                              )),
+                          Text('Gallery ', style: theme.textTheme.subtitle2),
                         ],
                       ),
                     )

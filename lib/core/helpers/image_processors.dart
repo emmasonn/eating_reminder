@@ -10,6 +10,7 @@ import 'package:informat/core/api_service/api_endpoints.dart';
 import 'package:informat/core/constants/enum_constants.dart';
 
 import 'package:http/http.dart' as client;
+import 'package:informat/core/widgets/custom_progress_widget.dart';
 
 ImageProvider getImage(String path) {
   if (path.startsWith('http://') || path.startsWith('https://')) {
@@ -21,6 +22,24 @@ ImageProvider getImage(String path) {
   } else {
     // log('Coming without http: $path');
     return FileImage(File(path));
+  }
+}
+
+Widget getImageWidget(String path) {
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    // log('Coming with http: $path');
+    return CachedNetworkImage(
+      imageUrl: path,
+      placeholder: (context, url) => CustomProgressWidget.cupertinoLoading(),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
+      fit: BoxFit.cover,
+    );
+  } else if (path.contains('assets')) {
+    // log('Coming without http: $path');
+    return Image.asset(path, fit: BoxFit.cover);
+  } else {
+    // log('Coming without http: $path');
+    return Image.file(File(path), fit: BoxFit.cover);
   }
 }
 

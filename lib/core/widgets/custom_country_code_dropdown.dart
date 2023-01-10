@@ -53,7 +53,8 @@ class _CustomCountryCodesDropDownState
                     value: currentValue,
                     hint: Text('Select country'),
                     decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(18),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 18),
                       border: CustomInputBorder(
                         borderSide: BorderSide(
                           color: theme.primaryColorLight,
@@ -91,16 +92,15 @@ class _CustomCountryCodesDropDownState
                     onChanged: ((value) {
                       setState(() {
                         currentValue = value;
-                        widget.onSelected;
+                        widget.onSelected(value);
                       });
                     }),
                     selectedItemBuilder: (context) {
                       return allCountries
                           .map(
-                            (e) => Text(
-                              e,
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
+                            (e) => Text(e,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500)),
                           )
                           .toList();
                     },

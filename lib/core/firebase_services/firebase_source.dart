@@ -3,8 +3,8 @@ import 'package:informat/core/firebase_services/data_model.dart';
 import 'package:informat/core/firebase_services/firebase_util.dart';
 import 'package:informat/core/firebase_services/source.dart';
 
-class FirebaseSource<T extends DataModel> extends Source<T> {
-  FirebaseSource({
+class CustomFirebaseSource<T extends DataModel> extends Source<T> {
+  CustomFirebaseSource({
     required this.collectionName,
     required this.fromJson,
     required this.toJson,
@@ -99,5 +99,4 @@ class FirebaseSource<T extends DataModel> extends Source<T> {
           snapshot.docs.map<T>(fromDocument).toList(),
     );
   }
-
 }

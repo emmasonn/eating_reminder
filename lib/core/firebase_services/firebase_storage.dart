@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
 import 'package:path_provider/path_provider.dart';
 
-class FirebaseStorage<T> {
-  FirebaseStorage() {
+class CustomFirebaseStorage<T> {
+  CustomFirebaseStorage() {
     storageRef = storage.FirebaseStorage.instance.ref();
   }
   late storage.Reference storageRef;
@@ -23,7 +23,6 @@ class FirebaseStorage<T> {
     final file = File(filePath);
     //create file metadata to update
     // final newMetaData = storage.SettableMetadata(contentType: contentType);
-
     try {
       await ref.putFile(file);
       // await ref.updateMetadata(newMetaData); // update metadata properties

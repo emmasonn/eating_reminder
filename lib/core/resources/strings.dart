@@ -24,3 +24,12 @@ const String profileKey = 'profile_pref_key';
 const String mealSchedulersPath = 'meal_schedulers';
 const String profilesPath = 'profiles';
 const String foodsPath = 'foods';
+const String profileStoragePath = 'profile';
+
+//common strings
+const lightTheme = 'light';
+const darkTheme = 'dark';
+
+//storage keys
+const settingsKey = 'settingsKey';
+const themeKey = 'themeKey';
