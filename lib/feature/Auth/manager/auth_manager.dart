@@ -8,6 +8,7 @@ class AuthManager extends StateNotifier<AuthState> {
     required this.authRepository,
     required this.foodManager,
   }) : super(AuthState.initial());
+
   final AuthRepository authRepository;
   final FoodManager foodManager;
 
@@ -16,7 +17,7 @@ class AuthManager extends StateNotifier<AuthState> {
     result.fold((error) {
       state = AuthLoaded(error: error.message);
     }, (profile) {
-      state = const AuthLoaded(status: true);
+      // state = const AuthLoaded(status: true);
     });
   }
 

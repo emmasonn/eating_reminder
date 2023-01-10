@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 import 'package:informat/core/firebase_services/data_model.dart';
 
-class ProfileModel extends DataModel implements Equatable {
+class ProfileModel extends DataModel {
   final String email;
   final String name;
   final String? country;
@@ -79,7 +78,7 @@ class ProfileModel extends DataModel implements Equatable {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> get toJson => {
         "id": id,
         "email": email,
         "name": name,
@@ -96,15 +95,12 @@ class ProfileModel extends DataModel implements Equatable {
   List<Object?> get props => [
         name,
         email,
-        count,
         imageUrl,
         country,
-        username,
         telephone,
+        count,
+        username,
         lastUpdated,
         schedulers,
       ];
-
-  @override
-  bool? get stringify => false;
 }

@@ -13,16 +13,20 @@ class ProfileManager extends StateNotifier<ProfileState> {
 
   final ProfileRepository _profileRepository;
   StreamSubscription? _profileSubscription;
+  ProfileModel? currentProfileModel;
 
   void saveProfile(ProfileModel obj) async {
+    state = ProfileLoading();
+
     final result = await _profileRepository.saveProfile(obj);
     result.fold(
       (error) {
-        state = const ProfileLoaded(
+        state = ProfileUpdated(
           status: false,
+          profileModel: currentProfileModel,
         );
       },
-      (profile) => state = ProfileLoaded(
+      (profile) => state = ProfileUpdated(
         status: true,
         profileModel: profile,
       ),
@@ -62,6 +66,8 @@ class ProfileManager extends StateNotifier<ProfileState> {
   }
 
   void updateProfileUi(ProfileModel? profileModel) {
+    currentProfileModel = profileModel;
+
     state = ProfileLoaded(
       status: profileModel == null ? false : true,
       profileModel: profileModel,

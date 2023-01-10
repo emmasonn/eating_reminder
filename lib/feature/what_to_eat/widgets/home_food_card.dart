@@ -11,10 +11,12 @@ class HomeFoodCard extends StatefulWidget {
 class _HomeFoodCardState extends State<HomeFoodCard> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Card(
+          color: theme.scaffoldBackgroundColor,
           child: Image.asset(
             'assets/images/food_icon.png',
             height: 150,

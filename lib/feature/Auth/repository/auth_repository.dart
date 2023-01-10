@@ -21,7 +21,7 @@ abstract class AuthRepository<T extends UserModel> {
 class AuthRepositoryImpl extends AuthRepository {
   final CoreFirebaseAuth firebaseRemoteAuth;
   final NetworkInfo networkInfo;
-  final FirebaseSource<ProfileModel> profileFirebaseSource;
+  final CustomFirebaseSource<ProfileModel> profileFirebaseSource;
   AuthRepositoryImpl({
     required this.firebaseRemoteAuth,
     required this.networkInfo,

@@ -19,6 +19,18 @@ class ProfileLoaded extends ProfileState {
   });
 }
 
+class ProfileUpdated extends ProfileState {
+  final bool status;
+  final ProfileModel? profileModel;
+  final String? error;
+
+  const ProfileUpdated({
+    required this.status,
+    this.profileModel,
+    this.error,
+  });
+}
+
 class SignOutLoading extends ProfileState {}
 
 class SignOutLoaded extends ProfileState {

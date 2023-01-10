@@ -1,6 +1,8 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:informat/core/firebase_services/firebase_auth.dart';
 import 'package:informat/core/firebase_services/firebase_source.dart';
+import 'package:informat/core/firebase_services/firebase_storage.dart';
 import 'package:informat/core/local_storage/hive_local_source.dart';
 import 'package:informat/core/network_info/network_info.dart';
 import 'package:informat/core/resources/strings.dart';
@@ -68,29 +70,17 @@ Future<void> init() async {
   //profile repository
   sl.registerLazySingleton<ProfileRepository>(
     () => ProfileRepositoryImpl(
-      profileFirebaseSource: sl(),
-      profileHiveSource: sl(),
-      coreFirebaseAuth: sl(),
-      networkInfo: sl(),
-    ),
+        profileFirebaseSource: sl(),
+        profileHiveSource: sl(),
+        coreFirebaseAuth: sl(),
+        networkInfo: sl(),
+        firebaseStorage: sl()),
   );
 
   //! Remote instance
-  //FirebaseRemote Auth
-  sl.registerLazySingleton<CoreFirebaseAuth>(() => CoreFirebaseAuth());
-
-  //FoodModel remote source
-  sl.registerLazySingleton<FirebaseSource<FoodModel>>(
-    () => FirebaseSource(
-      collectionName: foodsPath,
-      fromJson: (data) => FoodModel.fromJson(data),
-      toJson: (FoodModel obj) => obj.toJson(),
-    ),
-  );
-
   //MealScheduleModel remote source
-  sl.registerLazySingleton<FirebaseSource<MealScheduleModel>>(
-    () => FirebaseSource(
+  sl.registerLazySingleton<CustomFirebaseSource<MealScheduleModel>>(
+    () => CustomFirebaseSource(
       collectionName: mealSchedulersPath,
       toJson: (MealScheduleModel obj) => obj.toJson(),
       fromJson: (data) => MealScheduleModel.fromJson(data),
@@ -98,10 +88,10 @@ Future<void> init() async {
   );
 
   //profileModel remote source
-  sl.registerLazySingleton<FirebaseSource<ProfileModel>>(
-    () => FirebaseSource(
+  sl.registerLazySingleton<CustomFirebaseSource<ProfileModel>>(
+    () => CustomFirebaseSource(
       collectionName: profilesPath,
-      toJson: (ProfileModel obj) => obj.toJson(),
+      toJson: (ProfileModel obj) => obj.toJson,
       fromJson: (data) => ProfileModel.fromJson(data),
     ),
   );
@@ -125,7 +115,7 @@ Future<void> init() async {
   //Profile local instance
   sl.registerLazySingleton<HiveLocalSource<ProfileModel>>(
       () => HiveLocalSourceImpl(
-            toJson: (ProfileModel obj) => obj.toJson(),
+            toJson: (ProfileModel obj) => obj.toJson,
             fromJson: (data) => ProfileModel.fromJson(data),
           ));
 
@@ -138,6 +128,24 @@ Future<void> init() async {
   await sl<HiveLocalSource<ProfileModel>>().initBox();
 
   //! Core
+  //FirebaseRemote Auth
+  sl.registerLazySingleton<CoreFirebaseAuth>(() => CoreFirebaseAuth());
+
+  //firebase firestore remote source
+  sl.registerLazySingleton<CustomFirebaseSource<FoodModel>>(
+    () => CustomFirebaseSource(
+      collectionName: foodsPath,
+      fromJson: (data) => FoodModel.fromJson(data),
+      toJson: (FoodModel obj) => obj.toJson(),
+    ),
+  );
+
+  //firebase storage source
+  sl.registerLazySingleton<CustomFirebaseStorage>(
+    () => CustomFirebaseStorage(),
+  );
+
+  //shared preference
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);

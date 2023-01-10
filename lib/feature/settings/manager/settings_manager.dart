@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/core/resources/strings.dart';
 import 'package:informat/core/shared_pref_cache/cache_manager.dart';
 import 'package:informat/feature/settings/model/settings_model.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class SettingsManager extends StateNotifier<SettingsModel> {
   SettingsManager() : super(const SettingsModel()) {
@@ -15,10 +14,15 @@ class SettingsManager extends StateNotifier<SettingsModel> {
     final cacheManager = CacheManager.instance;
     final stringSettingState = await cacheManager.getPref(settingsKey);
     if (stringSettingState == null) {
-      cacheManager.storePref(settingsKey, (const SettingsModel()).toJson);
+      //initialize the cache
+      const initialSettingsState = SettingsModel();
+      cacheManager.storePref(settingsKey, initialSettingsState.toJson);
+      settingsModel = initialSettingsState;
     } else {
+      //parse the cached settings state
       settingsModel = SettingsModel.fromJson(stringSettingState);
     }
+    state = settingsModel;
   }
 
   void changeTheme(ThemeMode mode) {
@@ -28,7 +32,6 @@ class SettingsManager extends StateNotifier<SettingsModel> {
       settingsModel = settingsModel.copyWith(isDark: true);
     }
     state = settingsModel;
-    log(settingsModel);
     saveCurrentState();
   }
 

@@ -35,4 +35,7 @@ class FoodModel extends DataModel with _$FoodModel {
       day: day,
     );
   }
+
+  @override
+  List<Object?> get props => [];
 }

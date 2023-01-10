@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/resources/colors.dart';
+import 'package:informat/core/resources/strings.dart';
 import 'package:informat/feature/profile/widgets/drawer_profile_header.dart';
-import 'package:informat/feature/settings/manager/settings_manager.dart';
+import 'package:informat/feature/settings/manager/theme_manager.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_drawer_item.dart';
 
 class FoodBlogDrawer extends ConsumerStatefulWidget {
@@ -22,26 +23,21 @@ class FoodBlogDrawer extends ConsumerStatefulWidget {
 }
 
 class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
-  SettingsManager? settingsManager;
-  String currentTheme = 'Light';
+  ThemeManager? themeManager;
+  String currentTheme = lightTheme;
 
   @override
   void initState() {
     super.initState();
-    settingsManager = ref.read(settingsProvider.notifier);
+    themeManager = ref.read(themeStateProvider.notifier);
   }
 
   @override
   Widget build(BuildContext context) {
     //listens to change in settingsModel darktheme to update the app theme
-    final isDark = ref.watch(
-        settingsProvider.select((settingsModel) => settingsModel.isDarkTheme));
+    final themeState = ref.watch(themeStateProvider);
 
-    if (isDark) {
-      currentTheme = 'Dark';
-    } else {
-      currentTheme = 'Light';
-    }
+    currentTheme = themeState;
 
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
@@ -115,13 +111,13 @@ class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
                           child: DropdownButton<String>(
                             value: currentTheme,
                             onChanged: (value) {
-                              if (value == 'Light') {
-                                settingsManager?.changeTheme(ThemeMode.light);
+                              if (value == lightTheme) {
+                                themeManager?.changeTheme(ThemeMode.light);
                               } else {
-                                settingsManager?.changeTheme(ThemeMode.dark);
+                                themeManager?.changeTheme(ThemeMode.dark);
                               }
                             },
-                            items: ['Light', 'Dark']
+                            items: [lightTheme, darkTheme]
                                 .map<DropdownMenuItem<String>>((e) {
                               return DropdownMenuItem(
                                   value: e,
@@ -134,7 +130,7 @@ class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
                                           style: GoogleFonts.montserrat(
                                               fontSize: 14, color: Colors.blue),
                                         ),
-                                        e == 'Light'
+                                        e == lightTheme
                                             ? const Icon(Icons.light_mode)
                                             : const Icon(Icons.dark_mode)
                                       ],

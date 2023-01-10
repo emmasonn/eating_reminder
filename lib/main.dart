@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/resources/app_theme.dart';
+import 'package:informat/core/resources/strings.dart';
+import 'package:informat/feature/settings/manager/theme_manager.dart';
 import 'package:provider/provider.dart' as pr;
 import 'core/navigation/app_router.dart';
 
@@ -25,8 +27,7 @@ class _FoodBlogState extends ConsumerState<FoodBlog> {
   @override
   Widget build(BuildContext context) {
     //listens to change in settingsModel darktheme to update the app theme
-    final isDark = ref.watch(
-        settingsProvider.select((settingsModel) => settingsModel.isDarkTheme));
+    final themeState = ref.watch(themeStateProvider);
 
     return pr.MultiProvider(
       providers: [
@@ -39,7 +40,7 @@ class _FoodBlogState extends ConsumerState<FoodBlog> {
         title: 'FoodBlog',
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
-        themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+        themeMode: themeState == darkTheme ? ThemeMode.dark : ThemeMode.light,
         routeInformationParser: goRouter.routeInformationParser,
         routeInformationProvider: goRouter.routeInformationProvider,
         routerDelegate: goRouter

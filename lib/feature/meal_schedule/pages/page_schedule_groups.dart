@@ -98,18 +98,18 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
           width: size.width,
           height: size.height,
           child: CustomScrollView(slivers: <Widget>[
-            SliverAppBar(
-              pinned: false,
-              floating: false,
-              snap: false,
-              automaticallyImplyLeading: false,
-              expandedHeight: 200,
-              flexibleSpace: SizedBox(
-                height: 200,
-                width: size.width,
-                child: const CustomCarousel(),
-              ),
-            ),
+            // SliverAppBar(
+            //   pinned: false,
+            //   floating: false,
+            //   snap: false,
+            //   automaticallyImplyLeading: false,
+            //   expandedHeight: 200,
+            //   flexibleSpace: SizedBox(
+            //     height: 200,
+            //     width: size.width,
+            //     child: const CustomCarousel(),
+            //   ),
+            // ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),

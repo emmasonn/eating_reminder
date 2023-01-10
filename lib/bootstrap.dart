@@ -9,6 +9,7 @@ import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart
 import 'package:informat/feature/profile/manager/profile_manager.dart';
 import 'package:informat/feature/profile/manager/profile_state.dart';
 import 'package:informat/feature/settings/manager/settings_manager.dart';
+import 'package:informat/feature/settings/manager/theme_manager.dart';
 import 'package:informat/feature/settings/model/settings_model.dart';
 import 'package:informat/feature/what_to_eat/managers/food_manager.dart';
 import 'package:informat/injection_container.dart';
@@ -23,9 +24,12 @@ late AutoDisposeStateNotifierProvider<AuthManager, AuthState> authProvider;
 late StateNotifierProvider<MealScheduleManager, MealScheduleState>
     mealScheduleProvider;
 
-late StateNotifierProvider<ProfileManager, ProfileState> profileProvider;
+late AutoDisposeStateNotifierProvider<ProfileManager, ProfileState>
+    profileProvider;
 
 late StateNotifierProvider<SettingsManager, SettingsModel> settingsProvider;
+
+late StateNotifierProvider<ThemeManager, String> themeStateProvider;
 
 //! This function initializes some external packages
 Future<void> bootStrap() async {
@@ -44,6 +48,13 @@ Future<void> bootStrap() async {
   //foodManager instance variable
   foodManager = sl<FoodManager>();
 
+  //themeProvider
+  themeStateProvider = StateNotifierProvider((ref) => ThemeManager());
+
+  //settingsProvider
+  settingsProvider = StateNotifierProvider<SettingsManager, SettingsModel>(
+      (ref) => SettingsManager());
+
   //authProvider
   authProvider = StateNotifierProvider.autoDispose<AuthManager, AuthState>(
       (ref) => sl<AuthManager>());
@@ -54,10 +65,7 @@ Future<void> bootStrap() async {
           (ref) => sl<MealScheduleManager>());
 
   //profileProvider
-  profileProvider = StateNotifierProvider<ProfileManager, ProfileState>(
-      (ref) => sl<ProfileManager>());
-
-  //settingsProvider
-  settingsProvider = StateNotifierProvider<SettingsManager, SettingsModel>(
-      (ref) => SettingsManager());
+  profileProvider =
+      StateNotifierProvider.autoDispose<ProfileManager, ProfileState>(
+          (ref) => sl<ProfileManager>());
 }

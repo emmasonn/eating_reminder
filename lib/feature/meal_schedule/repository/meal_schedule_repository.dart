@@ -20,7 +20,7 @@ abstract class MealScheduleRepository<T extends MealScheduleModel> {
 
 class MealScheduleRepositoryImpl<T extends MealScheduleModel>
     extends MealScheduleRepository<T> {
-  final FirebaseSource<MealScheduleModel> schedulerFirebaseSource;
+  final CustomFirebaseSource<MealScheduleModel> schedulerFirebaseSource;
   final HiveLocalSource<MealScheduleModel> schedulerHiveLocalSource;
   final ProfileRepository profileRepository;
   final CoreFirebaseAuth coreFirebaseAuth;

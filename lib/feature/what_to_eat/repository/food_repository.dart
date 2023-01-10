@@ -19,7 +19,7 @@ abstract class FoodRepository {
 
 class FoodRepositoryImpl extends FoodRepository {
   final NetworkInfo networkInfo;
-  final FirebaseSource<FoodModel> foodFirebaseSource;
+  final CustomFirebaseSource<FoodModel> foodFirebaseSource;
   final HiveLocalSource<FoodModel> foodHiveLocalSource;
   final CoreFirebaseAuth coreFirebaseAuth;
   FoodRepositoryImpl({
@@ -61,13 +61,13 @@ class FoodRepositoryImpl extends FoodRepository {
     // TODO: implement subscribeTo
     throw UnimplementedError();
   }
-  
+
   @override
   Future<Either<Failure, bool>> deleteMeal(String id) {
     // TODO: implement deleteMeal
     throw UnimplementedError();
   }
-  
+
   @override
   Future<Either<Failure, List<FoodModel>>> getMeals() {
     // TODO: implement getMeals
