@@ -8,6 +8,8 @@ import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.da
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
 import 'package:informat/feature/profile/manager/profile_manager.dart';
 import 'package:informat/feature/profile/manager/profile_state.dart';
+import 'package:informat/feature/settings/manager/settings_manager.dart';
+import 'package:informat/feature/settings/model/settings_model.dart';
 import 'package:informat/feature/what_to_eat/managers/food_manager.dart';
 import 'package:informat/injection_container.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,6 +24,8 @@ late StateNotifierProvider<MealScheduleManager, MealScheduleState>
     mealScheduleProvider;
 
 late StateNotifierProvider<ProfileManager, ProfileState> profileProvider;
+
+late StateNotifierProvider<SettingsManager, SettingsModel> settingsProvider;
 
 //! This function initializes some external packages
 Future<void> bootStrap() async {
@@ -52,4 +56,8 @@ Future<void> bootStrap() async {
   //profileProvider
   profileProvider = StateNotifierProvider<ProfileManager, ProfileState>(
       (ref) => sl<ProfileManager>());
+
+  //settingsProvider
+  settingsProvider = StateNotifierProvider<SettingsManager, SettingsModel>(
+      (ref) => SettingsManager());
 }

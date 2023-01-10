@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/resources/colors.dart';
-import 'package:informat/feature/profile/manager/profile_manager.dart';
 import 'package:informat/feature/profile/widgets/drawer_profile_header.dart';
+import 'package:informat/feature/settings/manager/settings_manager.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_drawer_item.dart';
 
 class FoodBlogDrawer extends ConsumerStatefulWidget {
@@ -23,17 +22,27 @@ class FoodBlogDrawer extends ConsumerStatefulWidget {
 }
 
 class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
-  ProfileManager? profileManager;
+  SettingsManager? settingsManager;
   String currentTheme = 'Light';
 
   @override
   void initState() {
     super.initState();
-    profileManager = ref.read(profileProvider.notifier);
+    settingsManager = ref.read(settingsProvider.notifier);
   }
 
   @override
   Widget build(BuildContext context) {
+    //listens to change in settingsModel darktheme to update the app theme
+    final isDark = ref.watch(
+        settingsProvider.select((settingsModel) => settingsModel.isDarkTheme));
+
+    if (isDark) {
+      currentTheme = 'Dark';
+    } else {
+      currentTheme = 'Light';
+    }
+
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
     return Container(
@@ -100,20 +109,17 @@ class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
                           style: TextStyle(fontFamily: 'Rubik'),
                         ),
                         const SizedBox(
-                          width: 30,
+                          width: 10,
                         ),
                         DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
                             value: currentTheme,
                             onChanged: (value) {
                               if (value == 'Light') {
-                                profileManager?.changetheme(ThemeMode.light);
+                                settingsManager?.changeTheme(ThemeMode.light);
                               } else {
-                                profileManager?.changetheme(ThemeMode.dark);
+                                settingsManager?.changeTheme(ThemeMode.dark);
                               }
-                              setState(() {
-                                currentTheme = value!;
-                              });
                             },
                             items: ['Light', 'Dark']
                                 .map<DropdownMenuItem<String>>((e) {
