@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:informat/core/api_service/api_endpoints.dart';
@@ -25,13 +26,26 @@ ImageProvider getImage(String path) {
   }
 }
 
+Widget loadImageWidget(String path, {BoxShape? shape}) {
+  return Container(
+    clipBehavior: Clip.hardEdge,
+    decoration: BoxDecoration(
+      shape: shape ?? BoxShape.circle,
+    ),
+    child: path.isEmpty
+        ? const Icon(FontAwesomeIcons.person)
+        : getImageWidget(path),
+  );
+}
+
 Widget getImageWidget(String path) {
   if (path.startsWith('http://') || path.startsWith('https://')) {
     // log('Coming with http: $path');
     return CachedNetworkImage(
       imageUrl: path,
       placeholder: (context, url) => CustomProgressWidget.cupertinoLoading(),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) =>
+          const Center(child: Icon(Icons.error)),
       fit: BoxFit.cover,
     );
   } else if (path.contains('assets')) {

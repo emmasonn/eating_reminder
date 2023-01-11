@@ -15,6 +15,7 @@ class CustomFloatingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: SizedBox(
@@ -33,7 +34,7 @@ class CustomFloatingItem extends StatelessWidget {
               const SizedBox(width: 10.0),
               Text(
                 title,
-                style: GoogleFonts.montserrat(),
+                style: theme.textTheme.bodyText1?.copyWith(color: Colors.white),
               ),
             ],
           ),

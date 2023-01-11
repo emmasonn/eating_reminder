@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:informat/core/firebase_services/data_model.dart';
 import 'package:informat/core/firebase_services/source.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 abstract class HiveLocalSource<T extends DataModel> {
   SourceType get type;

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 
 class ScheduleCard extends StatefulWidget {
-  const ScheduleCard({super.key});
+  const ScheduleCard({
+    super.key,
+    required this.mealScheduleModel,
+  });
+  final MealScheduleModel mealScheduleModel;
 
   @override
   State<ScheduleCard> createState() => _ScheduleCardState();
@@ -25,7 +30,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
             children: [
               Expanded(
                 child: Card(
-                  color: theme.appBarTheme.backgroundColor,
+                  clipBehavior: Clip.hardEdge,
+                  color: theme.backgroundColor,
+                  elevation: 2.0,
                   child: InkWell(
                     onTap: () {
                       GoRouter.of(context).go('/schedule-groups/schedule/1');
@@ -33,7 +40,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                     child: Container(
                       width: size.width,
                       padding: const EdgeInsets.symmetric(
-                          vertical: 16.0, horizontal: 16.0),
+                          vertical: 20.0, horizontal: 16.0),
                       child: Column(
                         children: [
                           Row(
@@ -43,8 +50,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Amina (Hausa Meal Schedule)',
-                                    style: GoogleFonts.montserrat(fontSize: 12),
+                                    widget.mealScheduleModel.title,
+                                    style: theme.textTheme.subtitle1,
                                   ),
                                 ],
                               )
@@ -55,14 +62,10 @@ class _ScheduleCardState extends State<ScheduleCard> {
                           ),
                           Row(
                             children: [
-                              const Text('🌎'),
-                              const SizedBox(
-                                width: 4,
-                              ),
                               Text(
-                                'United Arab Emirate',
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 12, fontWeight: FontWeight.w500),
+                                widget.mealScheduleModel.country ?? '',
+                                style: theme.textTheme.subtitle2
+                                    ?.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ],
                           )

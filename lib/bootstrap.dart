@@ -19,6 +19,8 @@ import 'package:informat/injection_container.dart' as di;
 //! Making all the stateNotifer Provider Global
 late FoodManager foodManager;
 
+late ChangeNotifierProvider<FoodManager> foodProvider;
+
 late AutoDisposeStateNotifierProvider<AuthManager, AuthState> authProvider;
 
 late StateNotifierProvider<MealScheduleManager, MealScheduleState>
@@ -47,6 +49,9 @@ Future<void> bootStrap() async {
 
   //foodManager instance variable
   foodManager = sl<FoodManager>();
+
+  //foodProvider
+  foodProvider = ChangeNotifierProvider((ref) => foodManager);
 
   //themeProvider
   themeStateProvider = StateNotifierProvider((ref) => ThemeManager());

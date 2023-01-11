@@ -15,8 +15,9 @@ _$_FoodModel _$$_FoodModelFromJson(Map<String, dynamic> json) => _$_FoodModel(
       day: json['day'] as String,
       recipe: json['recipe'] as String?,
       description: json['description'] as String?,
-      time:
-          json['time'] == null ? null : DateTime.parse(json['time'] as String),
+      lastUpdated: json['lastUpdated'] == null
+          ? null
+          : DateTime.parse(json['lastUpdated'] as String),
     );
 
 Map<String, dynamic> _$$_FoodModelToJson(_$_FoodModel instance) =>
@@ -29,5 +30,5 @@ Map<String, dynamic> _$$_FoodModelToJson(_$_FoodModel instance) =>
       'day': instance.day,
       'recipe': instance.recipe,
       'description': instance.description,
-      'time': instance.time?.toIso8601String(),
+      'lastUpdated': instance.lastUpdated?.toIso8601String(),
     };

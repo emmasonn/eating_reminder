@@ -67,6 +67,14 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
 
+    final state = ref.watch(profileProvider);
+
+    if (state is ProfileLoaded) {
+      setState(() {
+        profileData = state.profileModel;
+      });
+    }
+
     ref.listen<ProfileState>(profileProvider, (prev, state) {
       if (state is ProfileLoading) {
         showCustomDialog(
@@ -95,11 +103,6 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
         setState(() {
           profileData = state.profileModel;
         });
-      } else if (state is ProfileLoaded) {
-        log('${state.profileModel.toString()}');
-        setState(() {
-          profileData = state.profileModel;
-        });
       }
     });
 
@@ -123,7 +126,7 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
               profileManager?.saveProfile(
                 profileData!.copyWith(
                   name: name,
-                  imageUrl: profileImage,
+                  newImageUrl: profileImage,
                   country: country,
                   telephone: telephone,
                   lastUpdated: DateTime.now(),
@@ -146,40 +149,40 @@ class _PageEditProfieState extends ConsumerState<PageEditProfie> {
                   const SizedBox(
                     height: 30,
                   ),
-                  InkWell(
-                      onTap: () {
-                        selectImageBottomSheet(
-                          context,
-                          onSelected: (image) {
-                            Navigator.pop(context);
-                            setState(() {
-                              profileImage = image;
-                            });
-                            log(image);
-                          },
-                        );
-                      },
-                      child: SizedBox(
-                        height: 130,
-                        width: 130,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey.withOpacity(0.2),
-                          backgroundImage: profileImage.isEmptyOrNull
+                  SizedBox(
+                    height: 130,
+                    width: 130,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey.withOpacity(0.2),
+                      backgroundImage: profileImage.isEmptyOrNull
+                          ? profileData!.imageUrl != null
+                              ? getImage(profileData!.imageUrl!)
+                              : null
+                          : getImage(profileImage!),
+                      child: InkWell(
+                        onTap: () {
+                          selectImageBottomSheet(
+                            context,
+                            onSelected: (image) {
+                              Navigator.pop(context);
+                              setState(() {
+                                profileImage = image;
+                              });
+                            },
+                          );
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.cameraRetro,
+                          color: profileImage.isEmptyOrNull
                               ? profileData!.imageUrl != null
-                                  ? getImage(profileData!.imageUrl!)
-                                  : null
-                              : getImage(profileImage!),
-                          child: Icon(
-                            FontAwesomeIcons.cameraRetro,
-                            color: profileImage.isEmptyOrNull
-                                ? profileData!.imageUrl != null
-                                    ? theme.primaryColor.withOpacity(0.5)
-                                    : theme.primaryColor
-                                : theme.primaryColor.withOpacity(0.5),
-                            size: 50,
-                          ),
+                                  ? theme.primaryColor.withOpacity(0.5)
+                                  : theme.primaryColor
+                              : theme.primaryColor.withOpacity(0.5),
+                          size: 50,
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

@@ -45,7 +45,7 @@ class CustomFirebaseSource<T extends DataModel> extends Source<T> {
     if (obj.id != null) {
       //if the object already exists, do the Firebase equivalent of
       //PUT/PATCH
-      await collection.doc(obj.id).set(toJson(obj));
+      await collection.doc(obj.id).update(toJson(obj));
       docRef = collection.doc(obj.id);
     } else {
       //if the object is new, do the Firebase equivalent of POST

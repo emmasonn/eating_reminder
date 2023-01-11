@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/resources/app_theme.dart';
 import 'package:informat/core/resources/strings.dart';
-import 'package:informat/feature/settings/manager/theme_manager.dart';
 import 'package:provider/provider.dart' as pr;
 import 'core/navigation/app_router.dart';
 

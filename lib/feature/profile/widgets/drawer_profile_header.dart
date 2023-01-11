@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -66,15 +67,19 @@ class _ProfileDrawerHeaderState extends ConsumerState<ProfileDrawerHeader> {
                       height: 60,
                       width: 60,
                       child: CircleAvatar(
+                        radius: 30,
                         backgroundColor: theme.primaryColor,
                         child: CircleAvatar(
-                          radius: 30 - 5,
-                          backgroundImage: profileImage.isNotEmpty
-                              ? getImage(profileImage)
-                              : null,
-                          child: profileImage.isEmpty
-                              ? const Icon(FontAwesomeIcons.person)
-                              : const SizedBox(),
+                          radius: 26,
+                          child: Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: profileImage.isEmpty
+                                ? const Icon(FontAwesomeIcons.person)
+                                : getImageWidget(profileImage),
+                          ),
                         ),
                       ),
                     ),

@@ -15,6 +15,7 @@ abstract class FoodRepository {
   Future<Either<Failure, List<FoodModel>>> getMeals();
   Future<Either<Failure, bool>> deleteMeal(String id);
   Future<Stream<List<FoodModel>>> subscribeTo(List<WhereClause>? where);
+  Future<Stream<List<FoodModel>>> subscribeToSchedule(List<WhereClause>? where);
 }
 
 class FoodRepositoryImpl extends FoodRepository {
@@ -51,14 +52,34 @@ class FoodRepositoryImpl extends FoodRepository {
       await coreFirebaseAuth.currentUser != null;
 
   @override
-  Future<List<FoodModel>> getCachedFoods() {
-    // TODO: implement getCachedFoods
-    throw UnimplementedError();
+  Future<List<FoodModel>> getCachedFoods() async {
+    return foodHiveLocalSource.getItems();
   }
 
   @override
-  Future<Stream<List<FoodModel>>> subscribeTo(List<WhereClause>? where) {
-    // TODO: implement subscribeTo
+  Future<Stream<List<FoodModel>>> subscribeToSchedule(
+      List<WhereClause>? where) async {
+    final cachedFoods = await getCachedFoods();
+
+    return foodFirebaseSource.subscribeTo([
+      ...where ?? [], //delist the  incoming where
+      if (cachedFoods.isNotEmpty) ...[
+        WhereClause.greaterThan(
+          fieldName: 'lastUpated',
+          value: cachedFoods.last.lastUpdated!,
+        )
+      ]
+    ]).asBroadcastStream()
+      ..listen((foods) {
+        for (final food in foods) {
+          foodHiveLocalSource.setItem(food);
+        }
+      });
+  }
+
+  @override
+  Future<Stream<List<FoodModel>>> subscribeTo(List<WhereClause>? where) async {
+    // TODO: implement subscribeToSchedule
     throw UnimplementedError();
   }
 

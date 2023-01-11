@@ -57,7 +57,7 @@ class ProfileModel extends DataModel {
     String? email,
     String? name,
     String? country,
-    String? imageUrl,
+    String? newImageUrl,
     DateTime? lastUpdated,
     int? count,
     String? telephone,
@@ -70,7 +70,7 @@ class ProfileModel extends DataModel {
       name: name ?? this.name,
       country: country ?? this.country,
       lastUpdated: lastUpdated ?? this.lastUpdated,
-      imageUrl: imageUrl ?? this.imageUrl,
+      imageUrl: newImageUrl,
       telephone: telephone ?? this.telephone,
       username: username ?? this.username,
       schedulers: schedulers ?? this.schedulers,
@@ -78,18 +78,27 @@ class ProfileModel extends DataModel {
     );
   }
 
-  Map<String, dynamic> get toJson => {
-        "id": id,
-        "email": email,
-        "name": name,
-        "count": count,
-        "country": country,
+  Map<String, dynamic> toJson() {
+    final body = {
+      "id": id,
+      "email": email,
+      "name": name,
+      "count": count,
+      "country": country,
+      "username": username,
+      "telephone": telephone,
+      "lastUpdated": lastUpdated.toIso8601String(),
+      "schedulers": schedulers,
+    };
+
+    if (imageUrl != null && imageUrl!.isNotEmpty) {
+      body.addAll({
         "imageUrl": imageUrl,
-        "username": username,
-        "telephone": telephone,
-        "lastUpdated": lastUpdated.toIso8601String(),
-        "schedulers": schedulers,
-      };
+      });
+    }
+
+    return body;
+  }
 
   @override
   List<Object?> get props => [

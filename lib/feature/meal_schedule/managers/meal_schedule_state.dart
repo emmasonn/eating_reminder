@@ -6,35 +6,18 @@ class MealScheduleState {
   factory MealScheduleState.initial() => const MealScheduleState();
 }
 
-class MealScheduleLoaded extends MealScheduleState {
-  final bool status;
-  final List<MealScheduleModel> mealSchedules;
+class ScheduleLoading extends MealScheduleState {}
+
+class AllSchedulesLoaded extends MealScheduleState {
+  final List<MealScheduleModel>? mealSchedules;
   final String? error;
-
-  const MealScheduleLoaded({
-    required this.status,
-    this.mealSchedules = const [],
-    this.error,
-  }) : super();
-
-  // MealScheduleState copyWith({
-  //   required bool status,
-  //   List<MealScheduleModel>? mealSchedules,
-  //   String? error,
-  // }) {
-  //   return MealScheduleLoaded(
-  //     status: status,
-  //     mealSchedules: mealSchedules ?? this.mealSchedules,
-  //     error: error ?? error,
-  //   );
-  // }
+  AllSchedulesLoaded({this.mealSchedules, this.error});
 }
-
-class CreateScheduleLoading extends MealScheduleState{}
 
 class CreateScheduleLoaded extends MealScheduleState {
   final bool status;
-  CreateScheduleLoaded(this.status);
+  final String? error;
+  CreateScheduleLoaded({required this.status, this.error});
 }
 
 class CreateScheduleError extends MealScheduleState {

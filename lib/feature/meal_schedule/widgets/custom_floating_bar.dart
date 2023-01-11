@@ -7,8 +7,9 @@ import 'package:informat/feature/meal_schedule/widgets/add_group_widget.dart';
 import 'package:informat/feature/meal_schedule/widgets/custom_floating_item.dart';
 
 class CustomFloatingBar extends StatefulWidget {
-  final void Function()? onReload;
-  const CustomFloatingBar({Key? key, this.onReload}) : super(key: key);
+  const CustomFloatingBar({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<CustomFloatingBar> createState() => _CustomFloatingBarState();
@@ -36,33 +37,32 @@ class _CustomFloatingBarState extends State<CustomFloatingBar> {
         setState(() {});
       },
       children: [
+        // SpeedDialChild(
+        //   labelWidget: CustomFloatingItem(
+        //     title: 'Add From Suggestions',
+        //     icon: FontAwesomeIcons.tag,
+        //     onPressed: () async {
+        //       isDialOpen.value = false;
+        //       //Reload
+        //       widget.onReload!();
+        //     },
+        //   ),
+        // ),
         SpeedDialChild(
           labelWidget: CustomFloatingItem(
-            title: 'Add From Suggestions',
-            icon: FontAwesomeIcons.tag,
-            onPressed: () async {
-              isDialOpen.value = false;
-              //Reload
-              widget.onReload!();
-            },
-          ),
-        ),
-        SpeedDialChild(
-          labelWidget: CustomFloatingItem(
-            title: 'Create Meal Schedule',
+            title: 'Create New Schedule',
             icon: Icons.new_label,
             onPressed: () async {
               isDialOpen.value = false;
               showCreateScheduleDialog(context);
               //Reload
-              widget.onReload!();
             },
           ),
         ),
       ],
       child: Transform.rotate(
         angle: isDialOpen.value ? pi / 4 : 0,
-        child: const Icon(Icons.add),
+        child: const Icon(FontAwesomeIcons.plus),
       ),
     );
   }

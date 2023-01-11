@@ -1,4 +1,3 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:informat/core/firebase_services/firebase_auth.dart';
 import 'package:informat/core/firebase_services/firebase_source.dart';
@@ -91,7 +90,7 @@ Future<void> init() async {
   sl.registerLazySingleton<CustomFirebaseSource<ProfileModel>>(
     () => CustomFirebaseSource(
       collectionName: profilesPath,
-      toJson: (ProfileModel obj) => obj.toJson,
+      toJson: (ProfileModel obj) => obj.toJson(),
       fromJson: (data) => ProfileModel.fromJson(data),
     ),
   );
@@ -115,7 +114,7 @@ Future<void> init() async {
   //Profile local instance
   sl.registerLazySingleton<HiveLocalSource<ProfileModel>>(
       () => HiveLocalSourceImpl(
-            toJson: (ProfileModel obj) => obj.toJson,
+            toJson: (ProfileModel obj) => obj.toJson(),
             fromJson: (data) => ProfileModel.fromJson(data),
           ));
 

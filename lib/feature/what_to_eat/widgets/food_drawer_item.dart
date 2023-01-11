@@ -4,14 +4,14 @@ class FoodDrawerItem extends StatelessWidget {
   const FoodDrawerItem({
     Key? key,
     required this.title,
-    required this.icon,
+    this.icon,
     required this.isActive,
     required this.onPressed,
   }) : super(key: key);
 
   final bool isActive;
   final String title;
-  final IconData icon;
+  final IconData? icon;
   final Function() onPressed;
 
   @override
@@ -32,6 +32,13 @@ class FoodDrawerItem extends StatelessWidget {
                 color: isActive ? theme.primaryColor : theme.primaryColorLight,
               ),
             ),
+            if (icon != null) ...[
+              Icon(
+                Icons.verified,
+                size: 14,
+                color: theme.primaryColor,
+              )
+            ]
           ],
         ),
       ),

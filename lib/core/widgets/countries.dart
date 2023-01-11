@@ -1481,7 +1481,7 @@ extension PlainStringList on List<Map<String, String>> {
   List<String> toStringList() {
     final List<String> plainStrings = [];
     for (final element in this) {
-      plainStrings.add('${element['dial_code']}(${element['name']})');
+      plainStrings.add('${element['flag']} ${element['name']}');
     }
     return plainStrings;
   }

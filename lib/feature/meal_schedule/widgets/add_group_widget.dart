@@ -29,15 +29,16 @@ class _AddMealGroupDialogState extends ConsumerState<AddMealGroupDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(mealScheduleProvider);
-    if (state is CreateScheduleLoading) {
-      isLoading = true;
-    } else if (state is CreateScheduleLoaded) {
-      isLoading = false;
-      Future.delayed(const Duration(microseconds: 500), () {
+    final theme = Theme.of(context);
+
+    ref.listen(mealScheduleProvider, (prev, state) {
+      if (state is ScheduleLoading) {
+        isLoading = true;
+      } else if (state is CreateScheduleLoaded) {
+        isLoading = false;
         Navigator.pop(context);
-      });
-    }
+      }
+    });
 
     return Container(
         height: 250,
@@ -55,11 +56,9 @@ class _AddMealGroupDialogState extends ConsumerState<AddMealGroupDialog> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Create Meal Scheadule',
-                      style: GoogleFonts.montserrat(
-                          fontSize: 15, fontWeight: FontWeight.w500),
-                    ),
+                    Text('Create Meal Plan',
+                        style:
+                            theme.textTheme.subtitle1?.copyWith(fontSize: 18)),
                     const SizedBox(
                       height: 20,
                     ),
@@ -80,23 +79,28 @@ class _AddMealGroupDialogState extends ConsumerState<AddMealGroupDialog> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text(
-                            'Cancel',
-                            style: GoogleFonts.montserrat(fontSize: 14),
-                          ),
+                          child: Text('Cancel',
+                              style: theme.textTheme.subtitle1?.copyWith(
+                                  color: theme.primaryColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500)),
                         ),
                         TextButton(
                           onPressed: () {
                             mealScheduleManager
                                 .createSchedule(MealScheduleModel(
-                              country: 'Nigeria',
                               title: title,
-                              description: 'Created by Nnamani',
                               createdAt: DateTime.now(),
                             ));
                           },
-                          child: Text('Submit',
-                              style: GoogleFonts.montserrat(fontSize: 14)),
+                          child: Text(
+                            'Continue',
+                            style: theme.textTheme.subtitle1?.copyWith(
+                              color: theme.primaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ],
                     )

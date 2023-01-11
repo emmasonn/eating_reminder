@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
 import 'package:informat/feature/meal_schedule/repository/meal_schedule_repository.dart';
-import 'package:informat/feature/what_to_eat/domain/food_model.dart';
 
 class MealScheduleManager extends StateNotifier<MealScheduleState> {
   final MealScheduleRepository _scheduleRepository;
@@ -23,16 +22,18 @@ class MealScheduleManager extends StateNotifier<MealScheduleState> {
   }
 
   void createSchedule(MealScheduleModel mealSchedule) async {
-    state = CreateScheduleLoading();
-    final result = await _scheduleRepository.createMealSchedule(mealSchedule);
-    result.fold(
-      (failure) => state = CreateScheduleError(failure),
-      (status) => state = CreateScheduleLoaded(true),
-    );
-  }
+    state = ScheduleLoading();
 
-  void createFood(FoodModel foodModel) {
-    
+    final result = await _scheduleRepository.createMealSchedule(mealSchedule);
+
+    result.fold((failure) {
+      state = CreateScheduleLoaded(
+        status: false,
+        error: failure.message,
+      );
+    }, (status) {
+      state = CreateScheduleLoaded(status: true);
+    });
   }
 
   void subscribeToSchedule() async {
@@ -50,8 +51,7 @@ class MealScheduleManager extends StateNotifier<MealScheduleState> {
   }
 
   void updateMealScheduleUi(List<MealScheduleModel> mealSchedules) {
-    state = MealScheduleLoaded(
-      status: true,
+    state = AllSchedulesLoaded(
       mealSchedules: mealSchedules,
     );
   }

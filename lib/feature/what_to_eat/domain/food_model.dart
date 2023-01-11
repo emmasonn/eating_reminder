@@ -16,7 +16,7 @@ class FoodModel extends DataModel with _$FoodModel {
     required String day,
     String? recipe,
     String? description,
-    DateTime? time,
+    DateTime? lastUpdated,
   }) = _FoodModel;
 
   const FoodModel._() : super(id: '');

@@ -63,7 +63,6 @@ class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
                 children: [
                   FoodDrawerItem(
                     title: 'What to eat',
-                    icon: Icons.food_bank,
                     isActive: widget.tag == 'home',
                     onPressed: () {
                       GoRouter.of(context).go('/what-to-eat');
@@ -72,7 +71,6 @@ class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
                   ),
                   FoodDrawerItem(
                     title: 'Collection',
-                    icon: Icons.food_bank,
                     isActive: widget.tag == 'collection',
                     onPressed: () {
                       Navigator.pop(context);
@@ -80,7 +78,6 @@ class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
                   ),
                   FoodDrawerItem(
                     title: 'Meal Schedule',
-                    icon: Icons.food_bank,
                     isActive: widget.tag == 'scheduleGroups',
                     onPressed: () {
                       GoRouter.of(context).go('/schedule-groups');
@@ -89,7 +86,14 @@ class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
                   ),
                   FoodDrawerItem(
                     title: 'Notifications',
-                    icon: Icons.food_bank,
+                    isActive: widget.tag == 'notification',
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  FoodDrawerItem(
+                    title: 'Nutritionist',
+                    icon: Icons.verified,
                     isActive: widget.tag == 'notification',
                     onPressed: () {
                       Navigator.pop(context);
@@ -147,7 +151,6 @@ class _FoodBlogDrawerState extends ConsumerState<FoodBlogDrawer> {
                   ),
                   FoodDrawerItem(
                     title: 'Buy me Coffee ☕',
-                    icon: Icons.food_bank,
                     isActive: widget.tag == 'notification',
                     onPressed: () {
                       Navigator.pop(context);

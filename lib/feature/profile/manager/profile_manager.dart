@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/core/firebase_services/firebase_util.dart';
@@ -43,12 +44,8 @@ class ProfileManager extends StateNotifier<ProfileState> {
     if (cachedProfile != null) {
       //register the subscribtion
       _profileSubscription = (await _profileRepository.subscribeTo(
-        [
-          WhereClause.greaterThan(
-              fieldName: 'lastUpdated', value: cachedProfile.lastUpdated)
-        ],
-      ))
-          .listen((profiles) {
+        [],
+      )).listen((profiles) {
         if (profiles.isNotEmpty) {
           updateProfileUi(profiles.first);
         }

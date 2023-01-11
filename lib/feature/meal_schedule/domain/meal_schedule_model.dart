@@ -3,19 +3,19 @@ import 'package:equatable/equatable.dart';
 import 'package:informat/core/firebase_services/data_model.dart';
 
 class MealScheduleModel extends DataModel implements Equatable {
-  final String country;
+  final String? country;
   final String title;
   final int? likes;
   final String? tags;
   final String? ownerId;
-  final DateTime createdAt;
+  final DateTime createdAt; //rename to lastUpdated
   final String? telephone;
   final String? description;
   DocumentReference? reference;
 
   MealScheduleModel({
     super.id,
-    required this.country,
+     this.country,
     required this.title,
     this.ownerId,
     this.telephone,

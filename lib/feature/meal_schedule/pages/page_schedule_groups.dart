@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:informat/bootstrap.dart';
+import 'package:informat/core/widgets/confirm_dialog.dart';
 import 'package:informat/core/widgets/custom_page.dart';
+import 'package:informat/core/widgets/custom_progress_dialog.dart';
+import 'package:informat/core/widgets/custom_top_snackbar.dart';
+import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
+import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
 import 'package:informat/feature/meal_schedule/widgets/custom_carousel.dart';
 import 'package:informat/feature/meal_schedule/widgets/custom_floating_bar.dart';
 import 'package:informat/feature/meal_schedule/widgets/schedule_sticky_card.dart';
 import 'package:informat/feature/what_to_eat/widgets/food_blog_drawer.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class PageScheduleGroups extends ConsumerStatefulWidget {
   const PageScheduleGroups({super.key});
@@ -25,6 +31,8 @@ class PageScheduleGroups extends ConsumerStatefulWidget {
 
 class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
   late MealScheduleManager mealScheduleManager;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<MealScheduleModel> mealSchedules = [];
 
   @override
   void initState() {
@@ -39,12 +47,44 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
     super.dispose();
   }
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
+
     final state = ref.watch(mealScheduleProvider);
+
+    if (state is AllSchedulesLoaded) {
+      mealSchedules = state.mealSchedules ?? [];
+    }
+
+    ref.listen(mealScheduleProvider, (prev, state) {
+      if (state is ScheduleLoading) {
+        showCustomDialog(
+          context,
+          const CustomProgressDialog(),
+        );
+      } else if (state is CreateScheduleLoaded) {
+        //pop loading
+        Navigator.pop(context);
+
+        if (state.status) {
+          //show top appbar
+          showCustomTopSnackBar(
+            context,
+            msg: 'Created Successfuly',
+            color: greenColor,
+          );
+        } else {
+          //show top appbar
+          showCustomTopSnackBar(
+            context,
+            msg: state.error ?? '',
+            color: redColor,
+          );
+        }
+      }
+    });
 
     return Scaffold(
         key: _scaffoldKey,
@@ -115,22 +155,29 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
             ),
             //this section contain the meal schedules created and
             //pinned by user
-            const ScheduleStickyCard(
-              title: 'Personalized',
+            ScheduleStickyCard(
+              title: 'Pinned',
+              mealSchedules: mealSchedules,
             ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
-            //the below section will show list of meal schedule created for
-            //different ethnic group dwelling in thet country of user
+            //the below section will show list of meal schedule created by
+            //other people in thet country of user
             ...[
-              'Suggestions',
+              'Others meal schedules',
             ].map((e) {
               return ScheduleStickyCard(
                 title: e,
+                mealSchedules: [],
               );
             }).toList()
           ]),
         )));
+  }
+
+  void reinitProvider() {
+    ref.invalidate(mealScheduleProvider);
+    mealScheduleManager = ref.read(mealScheduleProvider.notifier);
   }
 }

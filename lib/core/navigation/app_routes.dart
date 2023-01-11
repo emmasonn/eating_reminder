@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:informat/core/widgets/custom_page.dart';
 import 'package:informat/feature/Auth/pages/page_auth.dart';
-import 'package:informat/feature/meal_schedule/pages/page_add_food.dart';
+import 'package:informat/feature/what_to_eat/pages/page_add_food.dart';
 import 'package:informat/feature/meal_schedule/pages/page_schedule_groups.dart';
 import 'package:informat/feature/profile/pages/page_edit_profile.dart';
 import 'package:informat/feature/what_to_eat/pages/page_foods.dart';
-import 'package:informat/feature/meal_schedule/pages/page_schedule.dart';
+import 'package:informat/feature/what_to_eat/pages/page_schedule.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nb_utils/nb_utils.dart';
 

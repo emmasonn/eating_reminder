@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:informat/core/api_service/service_runner.dart';
 import 'package:informat/core/failure/failure.dart';
@@ -68,15 +71,15 @@ class ProfileRepositoryImpl extends ProfileRepository {
       },
     ).runServiceTask(
       () async {
-        if (obj.imageUrl != null && obj.imageUrl!.contains('.')) {
+        if (obj.imageUrl != null && obj.imageUrl!.isNotEmpty) {
           //upload the image on storage to get link
           final imageLink = await firebaseStorage.uploadFile(
             storagePath: profileStoragePath,
             fileId: firebaseUser?.id ?? '',
             filePath: obj.imageUrl ?? '',
           );
-          return profileFirebaseSource
-              .setItem(obj.copyWith(id: firebaseUser?.id, imageUrl: imageLink));
+          return profileFirebaseSource.setItem(
+              obj.copyWith(id: firebaseUser?.id, newImageUrl: imageLink));
         } else {
           return profileFirebaseSource
               .setItem(obj.copyWith(id: firebaseUser?.id));
@@ -100,7 +103,7 @@ class ProfileRepositoryImpl extends ProfileRepository {
     ]).asBroadcastStream()
       ..listen((profiles) {
         if (profiles.isNotEmpty) {
-          saveProfile(profiles.first);
+          profileHiveSource.setItem(profiles.first);
         }
       });
   }

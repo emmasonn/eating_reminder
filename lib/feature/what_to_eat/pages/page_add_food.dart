@@ -6,12 +6,15 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:informat/bootstrap.dart';
 import 'package:informat/core/constants/enum_constants.dart';
+import 'package:informat/core/helpers/image_processors.dart';
+import 'package:informat/core/utils/custom_select_image_dialog.dart';
 import 'package:informat/core/utils/time_based_utils.dart';
 import 'package:informat/core/widgets/custom_drop_down.dart';
 import 'package:informat/core/widgets/custom_page.dart';
 import 'package:informat/core/widgets/custom_text_field.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
 import 'package:informat/feature/what_to_eat/domain/food_model.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class PageAddFood extends ConsumerStatefulWidget {
   const PageAddFood({super.key, this.scheduleId, this.day});
@@ -34,10 +37,11 @@ class PageAddFood extends ConsumerStatefulWidget {
 
 class _PageAddFoodState extends ConsumerState<PageAddFood> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  late MealScheduleManager mealScheduleManager;
-  String mealPeriod = '';
-  String title = '';
-  String desc = '';
+  MealScheduleManager? mealScheduleManager;
+  String? mealPeriod;
+  String? title;
+  String? desc;
+  String? foodImage;
 
   @override
   void initState() {
@@ -73,8 +77,8 @@ class _PageAddFoodState extends ConsumerState<PageAddFood> {
                 id: '',
                 ownerId: '',
                 scheduleId: widget.scheduleId ?? '',
-                title: title,
-                period: mealPeriod,
+                title: title ?? '',
+                period: mealPeriod ?? '',
                 day: widget.day ?? '',
               );
             },
@@ -100,23 +104,34 @@ class _PageAddFoodState extends ConsumerState<PageAddFood> {
                 width: 150,
                 child: InkWell(
                   onTap: () {
-                    
+                    selectImageBottomSheet(
+                      context,
+                      onSelected: (image) {
+                        Navigator.pop(context);
+                        setState(() {
+                          foodImage = image;
+                        });
+                        log(image);
+                      },
+                    );
                   },
                   child: CircleAvatar(
                     backgroundColor: theme.primaryColor.withOpacity(0.2),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(FontAwesomeIcons.image),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'Select Food',
-                          style: GoogleFonts.montserrat(fontSize: 12),
-                        ),
-                      ],
-                    ),
+                    child: foodImage.isEmptyOrNull
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(FontAwesomeIcons.image),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'Select Food',
+                                style: GoogleFonts.montserrat(fontSize: 12),
+                              ),
+                            ],
+                          )
+                        : loadImageWidget(foodImage!),
                   ),
                 ),
               ),
@@ -130,7 +145,7 @@ class _PageAddFoodState extends ConsumerState<PageAddFood> {
               ),
               CustomDropDown(
                 title: 'Meal Schedule',
-                items: mealSchedulers,
+                items: schedulers,
                 onSelected: (value) {
                   mealPeriod = value?.props[0] as String? ?? '';
                 },

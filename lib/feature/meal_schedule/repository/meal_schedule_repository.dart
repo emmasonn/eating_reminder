@@ -8,6 +8,7 @@ import 'package:informat/core/local_storage/hive_local_source.dart';
 import 'package:informat/core/network_info/network_info.dart';
 import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 import 'package:informat/feature/profile/repository/profile_repository.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 abstract class MealScheduleRepository<T extends MealScheduleModel> {
   Future<bool> get isLoggedIn;
@@ -42,9 +43,15 @@ class MealScheduleRepositoryImpl<T extends MealScheduleModel>
   Future<Either<Failure, MealScheduleModel?>> createMealSchedule(T obj) {
     return HiveFireServiceRunner<MealScheduleModel?>(networkInfo: networkInfo)
         .runServiceTask(() async {
-      final doc = schedulerFirebaseSource.collection.doc();
+      // final doc = schedulerFirebaseSource.collection.doc();
       final cachedProfile = await profileRepository.getCachedProfile();
-      final newObj = obj.withCopy(id: doc.id, ownerId: cachedProfile?.id);
+      final newObj = obj.withCopy(
+          ownerId: cachedProfile?.id,
+          country: cachedProfile?.country,
+          description: 'created by ${cachedProfile?.name ?? 'Unknown'}');
+
+      log('Schedule to be created: ${newObj}');
+
       return schedulerFirebaseSource.setItem(newObj);
     });
   }
@@ -88,15 +95,26 @@ class MealScheduleRepositoryImpl<T extends MealScheduleModel>
     }
   }
 
+  //Create a stream hivedatabase and make it your source of truth.
+  //such that your ui listens to what is on your database later then
+  //directly from remote database
+
   @override
   Future<Stream<List<MealScheduleModel>>> subscribeTo(
       List<WhereClause>? where) async {
     final profile = await profileRepository.getCachedProfile();
+    final cachedSchedulers = await getCachedMealSchedule();
 
     return schedulerFirebaseSource.subscribeTo([
       if (profile?.schedulers != null) ...[
         WhereClause.whereIn(fieldName: 'id', value: profile!.schedulers!),
       ],
+      if (cachedSchedulers.isNotEmpty) ...[
+        WhereClause.greaterThan(
+          fieldName: 'createdAt',
+          value: cachedSchedulers.last.createdAt,
+        )
+      ]
     ]).asBroadcastStream()
       ..listen((List<MealScheduleModel> mealSchedulers) {
         for (final mealScheduler in mealSchedulers) {
