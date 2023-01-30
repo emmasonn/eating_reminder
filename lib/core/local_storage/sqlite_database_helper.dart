@@ -32,19 +32,19 @@ class SqliteDatabaseHelper {
   //SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     //query to create table
-    await db.execute('''
-      CREATE TABLE $foodTable (
-      $foodId TEXT PRIMARY KEY,
-      period TEXT,
-      scheduleId TEXT,
-      day TEXT,
-      mealTime TEXT,
-      ownerId TEXT,
-      recipe TEXT,
-      description TEXT,
-      lastUpdated TEXT,
-      )
-    ''');
+    await db.execute('''CREATE TABLE $foodTable (
+    $foodId TEXT UNIQUE,
+    period TEXT,
+    title TEXT,
+    imageUrl TEXT,
+    scheduleId TEXT,
+    day TEXT,
+    mealTime TEXT,
+    ownerId TEXT,
+    recipe TEXT,
+    description TEXT,
+    lastUpdated TEXT
+    )''');
   }
 
   Future<Database> _initDatabase() async {
@@ -73,12 +73,15 @@ class SqliteDatabaseHelper {
         _streamDatabase = BriteDatabase(_database!);
       }
     });
-
     return _database!;
   }
 
   Future<BriteDatabase> get streamDatabase async {
     await database;
     return _streamDatabase;
+  }
+
+  void close() {
+    _streamDatabase.close();
   }
 }
