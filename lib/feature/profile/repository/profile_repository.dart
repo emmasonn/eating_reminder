@@ -64,11 +64,11 @@ class ProfileRepositoryImpl extends ProfileRepository {
     final firebaseUser = await coreFirebaseAuth.currentUser;
     return HiveFireServiceRunner<ProfileModel?>(
       networkInfo: networkInfo,
-      onCacheTask: (profile) async {
-        if (profile != null) {
-          profileHiveSource.setItem(profile);
-        }
-      },
+      // onCacheTask: (profile) async {
+      //   if (profile != null) {
+      //     profileHiveSource.setItem(profile);
+      //   }
+      // },
     ).runServiceTask(
       () async {
         if (obj.imageUrl != null && obj.imageUrl!.isNotEmpty) {
@@ -94,16 +94,22 @@ class ProfileRepositoryImpl extends ProfileRepository {
   Future<Stream<List<ProfileModel>>> subscribeTo(
       List<WhereClause>? where) async {
     final cachedProfile = await getCachedProfile();
+    final firebaseUser = await coreFirebaseAuth.currentUser;
+
     return profileFirebaseSource.subscribeTo([
+      WhereClause.equals(fieldName: 'id', value: firebaseUser!.id ?? ''),
       if (cachedProfile != null) ...[
-        WhereClause.equals(fieldName: 'id', value: cachedProfile.id!),
         WhereClause.greaterThan(
-            fieldName: 'lastUpdated', value: cachedProfile.lastUpdated)
+          fieldName: 'lastUpdated',
+          value: cachedProfile.lastUpdated ?? DateTime.now(),
+        )
       ]
     ]).asBroadcastStream()
       ..listen((profiles) {
         if (profiles.isNotEmpty) {
-          profileHiveSource.setItem(profiles.first);
+          for (final profile in profiles) {
+            profileHiveSource.setItem(profile);
+          }
         }
       });
   }

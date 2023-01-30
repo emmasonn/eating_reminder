@@ -24,7 +24,9 @@ const String profileKey = 'profile_pref_key';
 const String mealSchedulersPath = 'meal_schedulers';
 const String profilesPath = 'profiles';
 const String foodsPath = 'foods';
+//Storage paths
 const String profileStoragePath = 'profile';
+const String foodStoragePath = 'foods';
 
 //common strings
 const lightTheme = 'light';

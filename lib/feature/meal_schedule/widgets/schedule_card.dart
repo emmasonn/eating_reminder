@@ -35,7 +35,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   elevation: 2.0,
                   child: InkWell(
                     onTap: () {
-                      GoRouter.of(context).go('/schedule-groups/schedule/1');
+                      GoRouter.of(context).go('/schedule-groups/schedule/${widget.mealScheduleModel.id}');
                     },
                     child: Container(
                       width: size.width,

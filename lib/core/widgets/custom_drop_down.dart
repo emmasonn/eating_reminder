@@ -25,7 +25,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
   @override
   void initState() {
     super.initState();
-    currentValue = widget.initialValue ?? widget.items.first;
+    currentValue = widget.initialValue; // ?? widget.items.first;
   }
 
   @override
@@ -50,15 +50,15 @@ class _CustomDropDownState extends State<CustomDropDown> {
           const SizedBox(
             height: 6,
           ),
-          Text(
-            widget.title,
-            style: TextStyle(
-              fontSize: 12,
-              fontFamily: 'Rubik',
-              color: theme.primaryColor,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          // Text(
+          //   widget.title,
+          //   style: TextStyle(
+          //     fontSize: 12,
+          //     fontFamily: 'Rubik',
+          //     color: theme.primaryColor,
+          //     fontWeight: FontWeight.w500,
+          //   ),
+          // ),
           Expanded(
             child: Row(
               children: [
@@ -72,6 +72,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                         color: theme.primaryColorLight,
                         fontWeight: FontWeight.w600),
                     value: currentValue,
+                    hint: Text('Select Meal time'),
                     items: widget.items.map<DropdownMenuItem<Equatable>>((e) {
                       return DropdownMenuItem(
                         value: e,
@@ -88,7 +89,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                     onChanged: ((value) {
                       setState(() {
                         currentValue = value;
-                        widget.onSelected;
+                        widget.onSelected(value);
                       });
                     }),
                   )),

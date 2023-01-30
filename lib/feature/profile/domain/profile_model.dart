@@ -5,25 +5,24 @@ class ProfileModel extends DataModel {
   final String email;
   final String name;
   final String? country;
-  final String? imageUrl;
   final int count;
   final String? telephone;
   final String? username;
   List<String>? schedulers;
-  final DateTime lastUpdated;
+  final DateTime? lastUpdated;
 
   ProfileModel({
-    required id,
+    super.id,
+    super.imageUrl,
     required this.email,
     required this.name,
     required this.lastUpdated,
     this.count = 0,
     this.country,
-    this.imageUrl,
     this.username,
     this.telephone,
     this.schedulers,
-  }) : super(id: id);
+  });
 
   factory ProfileModel.fromJson(Map<dynamic, dynamic> json) {
     List<String>? schedulers;
@@ -87,7 +86,7 @@ class ProfileModel extends DataModel {
       "country": country,
       "username": username,
       "telephone": telephone,
-      "lastUpdated": lastUpdated.toIso8601String(),
+      "lastUpdated": lastUpdated?.toIso8601String(),
       "schedulers": schedulers,
     };
 
@@ -102,6 +101,7 @@ class ProfileModel extends DataModel {
 
   @override
   List<Object?> get props => [
+        id,
         name,
         email,
         imageUrl,

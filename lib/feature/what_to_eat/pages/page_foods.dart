@@ -157,6 +157,7 @@ class _PageContactsState extends State<PageFoods> {
             ),
             SliverToBoxAdapter(
               child: GridView.builder(
+              
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),

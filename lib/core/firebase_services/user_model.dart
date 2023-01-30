@@ -5,7 +5,7 @@ class UserModel extends DataModel implements Equatable {
   final String? email;
   final String? imageUrl;
   
-  UserModel({
+  const UserModel({
     required super.id,
     required this.email,
     required this.imageUrl,

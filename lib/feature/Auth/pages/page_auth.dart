@@ -65,6 +65,7 @@ class _PageAuthState extends ConsumerState<PageAuth> {
         //invalide authprovider
         reValidateState();
       } else if (state is AuthLoading) {
+        
         showCustomDialog(
           context,
           const CustomProgressDialog(),

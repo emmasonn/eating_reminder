@@ -77,7 +77,7 @@ class _ScheduleStickyCardState extends State<ScheduleStickyCard>
                         height: 5.0,
                       ),
                       Text(
-                        'No meal schedule available',
+                        'No meal schedule',
                         style: theme.textTheme.bodyText2,
                       )
                     ],

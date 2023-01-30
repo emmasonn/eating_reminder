@@ -26,24 +26,34 @@ class CustomFirebaseSource<T extends DataModel> extends Source<T> {
 
   //convert from document to dart model
   T fromDocument(firestore.DocumentSnapshot document) => fromJson({
-        ...(document.data() as Map).cast<String, dynamic>(), //decontructuring.
+        ...(document.data() as Map).cast<String, dynamic>(), //descontructuring.
         ...{'id': document.id}
       });
 
   @override
-  Future<List<T>> getItems() async => (await collection.get())
-      .docs
-      .map<T>(
-        (doc) => fromDocument(doc),
-      )
-      .toList();
+  Future<List<T>> getItems() async =>
+      (await collection.get()).docs.map<T>((doc) => fromDocument(doc)).toList();
 
   // create and updates
   @override
   Future<T?> setItem(T obj) async {
     late firestore.DocumentReference docRef;
+
     if (obj.id != null) {
       //if the object already exists, do the Firebase equivalent of
+
+      //  //upload image on firebase if new image exist
+      //  if (obj.im != null && obj.imageUrl!.isNotEmpty) {
+      //       //upload the image on storage to get link
+      //       final imageLink = await firebaseStorage.uploadFile(
+      //         storagePath: '$foodStoragePath/${firebaseUser?.id ?? ''}',
+      //         fileId: ,
+      //         filePath: obj.imageUrl ?? '',
+      //       );
+      //       return profileFirebaseSource.setItem(
+      //           obj.copyWith(id: firebaseUser?.id, newImageUrl: imageLink));
+      //     }
+
       //PUT/PATCH
       await collection.doc(obj.id).update(toJson(obj));
       docRef = collection.doc(obj.id);

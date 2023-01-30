@@ -40,11 +40,11 @@ Future<void> init() async {
   //FoodRepository
   sl.registerLazySingleton<FoodRepository>(
     () => FoodRepositoryImpl(
-      networkInfo: sl(),
-      foodFirebaseSource: sl(),
-      foodHiveLocalSource: sl(),
-      coreFirebaseAuth: sl(),
-    ),
+        networkInfo: sl(),
+        foodFirebaseSource: sl(),
+        foodHiveLocalSource: sl(),
+        coreFirebaseAuth: sl(),
+        firebaseStorage: sl()),
   );
 
   //AuthRepository
@@ -95,6 +95,15 @@ Future<void> init() async {
     ),
   );
 
+  //foodModel remote source
+  sl.registerLazySingleton<CustomFirebaseSource<FoodModel>>(
+    () => CustomFirebaseSource(
+      collectionName: foodsPath,
+      toJson: (FoodModel obj) => obj.toJson(),
+      fromJson: (data) => FoodModel.fromJson(data),
+    ),
+  );
+
   //! local instance
   //FoodModel remote source
   sl.registerLazySingleton<HiveLocalSource<FoodModel>>(
@@ -129,15 +138,6 @@ Future<void> init() async {
   //! Core
   //FirebaseRemote Auth
   sl.registerLazySingleton<CoreFirebaseAuth>(() => CoreFirebaseAuth());
-
-  //firebase firestore remote source
-  sl.registerLazySingleton<CustomFirebaseSource<FoodModel>>(
-    () => CustomFirebaseSource(
-      collectionName: foodsPath,
-      fromJson: (data) => FoodModel.fromJson(data),
-      toJson: (FoodModel obj) => obj.toJson(),
-    ),
-  );
 
   //firebase storage source
   sl.registerLazySingleton<CustomFirebaseStorage>(

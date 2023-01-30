@@ -45,6 +45,7 @@ class AppRoutes {
         final String id = state.params['id'] ?? '';
         return PageMealSchedule.page(
           key: state.pageKey,
+          scheduleId: id,
         );
       },
       routes: [
@@ -60,11 +61,11 @@ class AppRoutes {
   );
 
   static final addFood = GoRoute(
-    path: 'add-food/:day',
+    path: 'add-food',
     name: 'add-food',
     pageBuilder: (BuildContext context, GoRouterState state) {
-      final parameter = state.params['day'] ?? '';
-      final scheduleId = state.params['id'] ?? '';
+      final parameter = state.queryParams['day'] ?? '';
+      final scheduleId = state.queryParams['id'] ?? '';
 
       return PageAddFood.page(
           key: state.pageKey, id: scheduleId, day: parameter);

@@ -32,12 +32,12 @@ class _FoodBlogState extends ConsumerState<FoodBlog> {
       providers: [
         pr.ChangeNotifierProvider.value(
           value: foodManager,
-        )
+        ),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'FoodBlog',
-        theme: AppTheme.light(),
+        theme: themeState == darkTheme ? AppTheme.dark() : AppTheme.light(),
         darkTheme: AppTheme.dark(),
         themeMode: themeState == darkTheme ? ThemeMode.dark : ThemeMode.light,
         routeInformationParser: goRouter.routeInformationParser,

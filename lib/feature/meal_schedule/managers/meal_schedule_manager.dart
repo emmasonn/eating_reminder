@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:informat/feature/meal_schedule/domain/meal_schedule_model.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_state.dart';
 import 'package:informat/feature/meal_schedule/repository/meal_schedule_repository.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class MealScheduleManager extends StateNotifier<MealScheduleState> {
   final MealScheduleRepository _scheduleRepository;
@@ -39,13 +40,17 @@ class MealScheduleManager extends StateNotifier<MealScheduleState> {
   void subscribeToSchedule() async {
     final cachedSchedules = await _scheduleRepository.getCachedMealSchedule();
 
+    // log('cached - $cachedSchedules');
+
     //update the ui with cached data
     updateMealScheduleUi(cachedSchedules);
 
     if (isUserExist) {
       _scheduleSubscription =
           (await _scheduleRepository.subscribeTo([])).listen((mealSchedules) {
-        updateMealScheduleUi(mealSchedules);
+        if (mealSchedules.isNotEmpty) {
+          updateMealScheduleUi(mealSchedules);
+        }
       });
     }
   }

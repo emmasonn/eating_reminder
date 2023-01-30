@@ -56,6 +56,7 @@ class _PageMealScheduleState extends ConsumerState<PageScheduleGroups> {
 
     if (state is AllSchedulesLoaded) {
       mealSchedules = state.mealSchedules ?? [];
+      // log(mealSchedules);
     }
 
     ref.listen(mealScheduleProvider, (prev, state) {

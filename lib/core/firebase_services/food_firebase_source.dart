@@ -58,7 +58,7 @@ class FoodFirebaseSourceImpl extends FoodFirebaseSource {
     late firestore.DocumentReference docRef;
     //Firebase equivalent of POST
     final itemId = collection.doc().id; //auto-generate an id
-    final newObj = obj.copyWith(id: itemId);
+    final newObj = obj.copyWith(newId: itemId);
     await collection.doc(itemId).set(toJson(newObj));
     docRef = collection.doc(itemId);
 

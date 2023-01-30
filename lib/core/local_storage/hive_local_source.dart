@@ -1,7 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:informat/core/firebase_services/data_model.dart';
 import 'package:informat/core/firebase_services/source.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:informat/feature/what_to_eat/domain/food_model.dart';
 
 abstract class HiveLocalSource<T extends DataModel> {
   SourceType get type;
@@ -11,9 +11,9 @@ abstract class HiveLocalSource<T extends DataModel> {
   Future<T?> setItem(T obj);
   Future<void> deleteItem(T obj);
   Future<void> deleteFavorite(T obj);
-  Future<void> updateItem(T obj);
   Future<List<String>> getFavoritesId();
   Future<void> toggleFavorite(String id);
+  Stream<List<T>> get itemsStream;
   Future<void> clear();
   Future<void> setFavorite(String id, bool isFavorited);
 }
@@ -40,6 +40,17 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
   }
 
   @override
+  Stream<List<T>> get itemsStream => _itemsBox.watch().map(
+        (event) {
+          final List<T> foods = [];
+          for (var event in event.value) {
+            foods.add(fromJson(event.cast<String, dynamic>()));
+          }
+          return foods;
+        },
+      );
+
+  @override
   Future<List<T>> getItems() async =>
       _itemsBox.values
           ?.map<T>((data) => fromJson(data.cast<String, dynamic>()))
@@ -57,7 +68,7 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
 
   @override
   Future<T?> setItem(T obj) async {
-    _itemsBox.put(obj.id, toJson(obj));
+    _itemsBox.put(obj.id!, toJson(obj));
     return fromJson(
       (_itemsBox.get(obj.id) as Map).cast<String, dynamic>(),
     );
@@ -74,12 +85,6 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
 
   @override
   SourceType get type => SourceType.local;
-
-  @override
-  Future<void> updateItem(T obj) {
-    // TODO: implement updateItem
-    throw UnimplementedError();
-  }
 
   @override
   Future<void> clear() async {
