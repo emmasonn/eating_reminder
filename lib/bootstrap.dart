@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:informat/core/local_storage/sqlite_database_helper.dart';
 import 'package:informat/feature/Auth/manager/auth_manager.dart';
 import 'package:informat/feature/Auth/manager/auth_state.dart';
 import 'package:informat/feature/meal_schedule/managers/meal_schedule_manager.dart';
@@ -46,6 +47,9 @@ Future<void> bootStrap() async {
 
   //initialize di(service locator)
   await di.init();
+
+  //setUp sqlite database
+  sl<SqliteDatabaseHelper>().database;
 
   //foodManager instance variable
   foodManager = sl<FoodManager>();

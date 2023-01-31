@@ -16,7 +16,7 @@ abstract class FoodRepository {
   Future<List<FoodModel>> getCachedFoods();
   Future<Either<Failure, FoodModel?>> createMeal(FoodModel obj);
   Future<Either<Failure, List<FoodModel>>> getMeals();
-  Stream<List<FoodModel>> streamGetFoods();
+  // Stream<List<FoodModel>> streamGetFoods();
   Future<Either<Failure, bool>> deleteMeal(String id);
   Future<Stream<List<FoodModel>>> subscribeTo(List<WhereClause>? where);
   Future<Stream<List<FoodModel>>> subscribeToSchedule(List<WhereClause>? where);
@@ -107,8 +107,8 @@ class FoodRepositoryImpl extends FoodRepository {
     throw UnimplementedError();
   }
 
-  @override
-  Stream<List<FoodModel>> streamGetFoods() {
-    return foodHiveLocalSource.itemsStream;
-  }
+  // @override
+  // Stream<List<FoodModel>> streamGetFoods() {
+  //   return foodHiveLocalSource.itemsStream;
+  // }
 }

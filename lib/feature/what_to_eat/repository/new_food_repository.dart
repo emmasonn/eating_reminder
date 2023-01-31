@@ -32,12 +32,29 @@ class FoodRepository {
   Future<List<FoodModel>> findFoodsByScheduleId(String scheduleId) =>
       foodLocalSource.findFoodByScheduleId(scheduleId);
 
+  Future<Either<Failure, bool>> deleteFood(FoodModel foodModel) {
+    return ServiceRunner<bool>(
+      networkInfo: networkInfo,
+    ).runNetworkTask(
+      () async {
+        //delete from firebase firestore
+        final result = await foodLocalSource.deleteFood(foodModel);
+        if (result) {
+          //delete sqflite local database
+          await foodLocalSource.deleteFood(foodModel);
+        }
+        return true;
+      },
+    );
+  }
+
   Stream<List<FoodModel>> watchSpecificFoods(String scheduleId) {
     return foodLocalSource.watchFoodByScheduleId(scheduleId);
   }
 
   void subscribeToSchedule(String scheduleId) async {
     final cachedFoods = await findFoodsByScheduleId(scheduleId);
+
     foodRemoteSource.subscribeTo([
       //fetch the foods with this scheduleId
       WhereClause.equals(
@@ -46,13 +63,12 @@ class FoodRepository {
       ),
       if (cachedFoods.isNotEmpty) ...[
         WhereClause.greaterThan(
-          fieldName: 'lastUpated',
-          value: cachedFoods.last.lastUpdated,
+          fieldName: 'lastUpdated',
+          value: cachedFoods.last.lastUpdated.toIso8601String(),
         )
       ]
     ]).listen((foods) {
       final List<FoodModel> foodList = [];
-
       for (final food in foods) {
         foodList.add(food);
       }

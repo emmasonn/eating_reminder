@@ -32,6 +32,8 @@ class SqliteDatabaseHelper {
   //SQL code to create the database table
   Future _onCreate(Database db, int version) async {
     //query to create table
+    //make id unique to avoid duplicate in the database
+    //make sure that the last field doesnt end with comma ,
     await db.execute('''CREATE TABLE $foodTable (
     $foodId TEXT UNIQUE,
     period TEXT,
@@ -43,9 +45,10 @@ class SqliteDatabaseHelper {
     ownerId TEXT,
     recipe TEXT,
     description TEXT,
-    lastUpdated TEXT
+    lastUpdated TEXT 
     )''');
   }
+
 
   Future<Database> _initDatabase() async {
     //create a document directory

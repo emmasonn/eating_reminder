@@ -33,9 +33,6 @@ class _FoodScheduleStickyCardState extends State<FoodScheduleStickyCard>
   @override
   void initState() {
     super.initState();
-
-    log('food-schedule: ${widget.foods}');
-
     _animationController = AnimationController(
         vsync: this,
         duration: const Duration(

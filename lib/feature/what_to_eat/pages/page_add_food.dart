@@ -15,6 +15,7 @@ import 'package:informat/core/widgets/custom_page.dart';
 import 'package:informat/core/widgets/custom_progress_dialog.dart';
 import 'package:informat/core/widgets/custom_text_field.dart';
 import 'package:informat/core/widgets/custom_top_snackbar.dart';
+import 'package:informat/feature/meal_schedule/widgets/add_again_dialog.dart';
 import 'package:informat/feature/what_to_eat/managers/food_manager.dart';
 import 'package:informat/feature/what_to_eat/managers/food_state.dart';
 import 'package:informat/feature/what_to_eat/domain/food_model.dart';
@@ -69,7 +70,11 @@ class _PageAddFoodState extends ConsumerState<PageAddFood> {
             msg: 'Created Successfuly',
             color: greenColor,
           );
-          reValidateForm();
+          //show clear dialog
+          showAddAgain(context, () {
+            clearFields();
+            Navigator.pop(context);
+          });
         } else {
           //show top appbar
           showCustomTopSnackBar(
@@ -111,8 +116,6 @@ class _PageAddFoodState extends ConsumerState<PageAddFood> {
                 day: widget.day ?? '',
                 lastUpdated: DateTime.now(),
               );
-
-              log(food);
 
               ref.read(foodProvider).createFood(food);
             },
@@ -200,12 +203,11 @@ class _PageAddFoodState extends ConsumerState<PageAddFood> {
     );
   }
 
-  void reValidateForm() {
-    ref.invalidate(foodProvider);
+  void clearFields() {
     setState(() {
-      mealPeriod = '';
-      title = '';
-      desc = '';
+      mealPeriod = null;
+      title = null;
+      desc = null;
       foodImage = '';
     });
   }

@@ -13,9 +13,10 @@ abstract class HiveLocalSource<T extends DataModel> {
   Future<void> deleteFavorite(T obj);
   Future<List<String>> getFavoritesId();
   Future<void> toggleFavorite(String id);
-  Stream<List<T>> get itemsStream;
+  // Stream<List<T>> get itemsStream;
   Future<void> clear();
   Future<void> setFavorite(String id, bool isFavorited);
+
 }
 
 class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
@@ -39,16 +40,16 @@ class HiveLocalSourceImpl<T extends DataModel> extends HiveLocalSource<T> {
     _favoriteBox = await Hive.openBox(_favoriteBoxName);
   }
 
-  @override
-  Stream<List<T>> get itemsStream => _itemsBox.watch().map(
-        (event) {
-          final List<T> foods = [];
-          for (var event in event.value) {
-            foods.add(fromJson(event.cast<String, dynamic>()));
-          }
-          return foods;
-        },
-      );
+  // @override
+  // Stream<List<T>> get itemsStream => _itemsBox.watch().mapToList(
+  //       (event) {
+  //         final List<T> foods = [];
+  //         for (var event in event.value) {
+  //           foods.add(fromJson(event.cast<String, dynamic>()));
+  //         }
+  //         return foods;
+  //       },
+  //     );
 
   @override
   Future<List<T>> getItems() async =>

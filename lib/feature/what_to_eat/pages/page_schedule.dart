@@ -44,7 +44,7 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
     super.initState();
     if (mounted) {
       pr.Provider.of<FoodManager>(context, listen: false)
-          .subscribeToFoodSchedule(widget.scheduleId);
+          .subscribeToFoodsSchedule(widget.scheduleId);
     }
   }
 
@@ -96,14 +96,30 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
           height: size.height,
           child: StreamBuilder<Map<String, List<FoodModel>>>(
               stream: pr.Provider.of<FoodManager>(context, listen: false)
-                  .foodsStream(widget.scheduleId),
+                  .watchSpecificFoods(widget.scheduleId),
               builder: (context, snapshot) {
                 Map<String, List<FoodModel>> foodsAndDay = {};
                 if (snapshot.hasData) {
                   foodsAndDay = snapshot.data ?? {};
                 } else if (snapshot.hasError) {
                   return Container(
-                    child: Text('Error: ${snapshot.error}'),
+                    margin: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircleAvatar(
+                          backgroundColor: whiteSmoke,
+                          child: Icon(Icons.error),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Error: ${snapshot.error}',
+                          style: theme.textTheme.bodyText2,
+                        ),
+                      ],
+                    ),
                   );
                 } else {
                   return const CustomProgressDialog();
@@ -116,9 +132,7 @@ class _PageMealScheduleState extends ConsumerState<PageMealSchedule> {
                         title: e,
                         scheduleId: widget.scheduleId,
                         foods: foodsAndDay[e] ?? [],
-                        onPressed: () {
-                          foodManager.unSubscribeToFoodSchedule();
-                        },
+                        onPressed: () {},
                       );
                     }).toList()
                   ]
