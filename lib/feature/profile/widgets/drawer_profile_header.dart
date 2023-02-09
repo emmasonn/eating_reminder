@@ -70,6 +70,7 @@ class _ProfileDrawerHeaderState extends ConsumerState<ProfileDrawerHeader> {
                         radius: 30,
                         backgroundColor: theme.primaryColor,
                         child: CircleAvatar(
+                          backgroundColor: Colors.grey[200],
                           radius: 26,
                           child: Container(
                             clipBehavior: Clip.hardEdge,

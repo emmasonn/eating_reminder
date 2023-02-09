@@ -32,10 +32,8 @@ class FoodModel extends DataModel {
   }
 
   factory FoodModel.fromJson(Map<dynamic, dynamic> json) {
-    final period = json['period'] as String?;
-    final periodSplit = period?.split('-');
-
-    print('periodsplit: $periodSplit');
+    final period = json['period'] as String;
+    final List<String> periodSplit = period.split('-');
 
     return FoodModel(
       id: json['id'],
@@ -47,7 +45,7 @@ class FoodModel extends DataModel {
       day: json['day'],
       description: json['description'],
       recipe: json['recipe'],
-      mealTime: periodSplit?.last ?? '',
+      mealTime: json['mealTime'] ?? periodSplit.last,
       lastUpdated: DateTime.parse(json['lastUpdated']),
     );
   }
@@ -80,7 +78,6 @@ class FoodModel extends DataModel {
       "day": day,
       "description": description,
       "mealTime": mealTime,
-      "recipe": recipe,
       "lastUpdated": lastUpdated.toIso8601String(),
     };
 

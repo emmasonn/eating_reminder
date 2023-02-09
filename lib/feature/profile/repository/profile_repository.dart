@@ -1,6 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:informat/core/api_service/service_runner.dart';
 import 'package:informat/core/failure/failure.dart';
@@ -14,7 +11,6 @@ import 'package:informat/core/network_info/network_info.dart';
 import 'package:informat/core/resources/strings.dart';
 import 'package:informat/core/shared_pref_cache/cache_manager.dart';
 import 'package:informat/feature/profile/domain/profile_model.dart';
-import 'package:informat/feature/profile/utils/profile_extension.dart';
 
 abstract class ProfileRepository {
   Future<ProfileModel?> getCachedProfile();
@@ -51,11 +47,12 @@ class ProfileRepositoryImpl extends ProfileRepository {
   Future<ProfileModel?> getCachedProfile() async {
     final String? profileId = await CacheManager.instance.getPref(profileKey);
     final cachedProfile = await profileHiveSource.getItem(profileId ?? '');
-    final firebaseUser = await coreFirebaseAuth.currentUser;
     if (cachedProfile != null) {
       return cachedProfile;
     } else {
-      return firebaseUser.toProfileModel();
+      final userProfile =
+          await profileFirebaseSource.viewItem(profileId ?? '0');
+      return userProfile; // firebaseUser.toProfileModel();
     }
   }
 
@@ -98,12 +95,10 @@ class ProfileRepositoryImpl extends ProfileRepository {
 
     return profileFirebaseSource.subscribeTo([
       WhereClause.equals(fieldName: 'id', value: firebaseUser!.id ?? ''),
-      if (cachedProfile != null) ...[
-        WhereClause.greaterThan(
-          fieldName: 'lastUpdated',
-          value: cachedProfile.lastUpdated ?? DateTime.now(),
-        )
-      ]
+      WhereClause.greaterThan(
+        fieldName: 'lastUpdated',
+        value: cachedProfile?.lastUpdated ?? DateTime(2021),
+      )
     ]).asBroadcastStream()
       ..listen((profiles) {
         if (profiles.isNotEmpty) {

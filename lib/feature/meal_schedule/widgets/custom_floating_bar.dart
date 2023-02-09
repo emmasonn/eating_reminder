@@ -37,17 +37,6 @@ class _CustomFloatingBarState extends State<CustomFloatingBar> {
         setState(() {});
       },
       children: [
-        // SpeedDialChild(
-        //   labelWidget: CustomFloatingItem(
-        //     title: 'Add From Suggestions',
-        //     icon: FontAwesomeIcons.tag,
-        //     onPressed: () async {
-        //       isDialOpen.value = false;
-        //       //Reload
-        //       widget.onReload!();
-        //     },
-        //   ),
-        // ),
         SpeedDialChild(
           labelWidget: CustomFloatingItem(
             title: 'Create New Schedule',

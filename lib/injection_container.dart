@@ -3,6 +3,7 @@ import 'package:informat/core/firebase_services/firebase_auth.dart';
 import 'package:informat/core/firebase_services/firebase_source.dart';
 import 'package:informat/core/firebase_services/firebase_storage.dart';
 import 'package:informat/core/local_storage/hive_local_source.dart';
+import 'package:informat/core/local_storage/sqlite_database_helper.dart';
 import 'package:informat/core/network_info/network_info.dart';
 import 'package:informat/core/resources/strings.dart';
 import 'package:informat/feature/Auth/manager/auth_manager.dart';
@@ -15,9 +16,12 @@ import 'package:informat/feature/profile/manager/profile_manager.dart';
 import 'package:informat/feature/profile/repository/profile_repository.dart';
 import 'package:informat/feature/what_to_eat/domain/food_model.dart';
 import 'package:informat/feature/what_to_eat/managers/food_manager.dart';
-import 'package:informat/feature/what_to_eat/repository/food_repository.dart';
+import 'package:informat/feature/what_to_eat/source/food_local_source.dart';
+import 'package:informat/feature/what_to_eat/source/food_remote_source.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'feature/what_to_eat/repository/new_food_repository.dart';
 
 GetIt sl = GetIt.instance;
 
@@ -38,20 +42,29 @@ Future<void> init() async {
 
   //! Repository instance
   //FoodRepository
-  sl.registerLazySingleton<FoodRepository>(
-    () => FoodRepositoryImpl(
+  // sl.registerLazySingleton<FoodRepository>(
+  //   () => FoodRepositoryImpl(
+  //       networkInfo: sl(),
+  //       foodFirebaseSource: sl(),
+  //       foodHiveLocalSource: sl(),
+  //       coreFirebaseAuth: sl(),
+  //       firebaseStorage: sl()),
+  // );
+
+  //FoodRepository
+  sl.registerLazySingleton<FoodRepository>(() => FoodRepository(
         networkInfo: sl(),
-        foodFirebaseSource: sl(),
-        foodHiveLocalSource: sl(),
+        foodLocalSource: sl(),
+        foodRemoteSource: sl(),
         coreFirebaseAuth: sl(),
-        firebaseStorage: sl()),
-  );
+      ));
 
   //AuthRepository
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       firebaseRemoteAuth: sl(),
       networkInfo: sl(),
+      profileHiveSource: sl(),
       profileFirebaseSource: sl(),
     ),
   );
@@ -104,6 +117,11 @@ Future<void> init() async {
     ),
   );
 
+  //food remote source
+  sl.registerLazySingleton<FoodRemoteSource>(
+    () => FoodRemoteSource(firebaseStorage: sl(), coreFirebaseAuth: sl()),
+  );
+
   //! local instance
   //FoodModel remote source
   sl.registerLazySingleton<HiveLocalSource<FoodModel>>(
@@ -112,6 +130,9 @@ Future<void> init() async {
       toJson: (FoodModel obj) => obj.toJson(),
     ),
   );
+
+  //food local source
+  sl.registerLazySingleton<FoodLocalSource>(() => FoodLocalSource(sl()));
 
   //MealScheduleModel local source
   sl.registerLazySingleton<HiveLocalSource<MealScheduleModel>>(
@@ -138,6 +159,10 @@ Future<void> init() async {
   //! Core
   //FirebaseRemote Auth
   sl.registerLazySingleton<CoreFirebaseAuth>(() => CoreFirebaseAuth());
+
+  //Sqfliter Helper
+  sl.registerLazySingleton<SqliteDatabaseHelper>(
+      () => SqliteDatabaseHelper.instance);
 
   //firebase storage source
   sl.registerLazySingleton<CustomFirebaseStorage>(

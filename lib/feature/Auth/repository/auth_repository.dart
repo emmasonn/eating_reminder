@@ -4,6 +4,7 @@ import 'package:informat/core/failure/failure.dart';
 import 'package:informat/core/firebase_services/firebase_auth.dart';
 import 'package:informat/core/firebase_services/firebase_source.dart';
 import 'package:informat/core/firebase_services/user_model.dart';
+import 'package:informat/core/local_storage/hive_local_source.dart';
 import 'package:informat/core/network_info/network_info.dart';
 import 'package:informat/core/resources/strings.dart';
 import 'package:informat/core/shared_pref_cache/cache_manager.dart';
@@ -21,11 +22,13 @@ abstract class AuthRepository<T extends UserModel> {
 class AuthRepositoryImpl extends AuthRepository {
   final CoreFirebaseAuth firebaseRemoteAuth;
   final NetworkInfo networkInfo;
+  final HiveLocalSource<ProfileModel> profileHiveSource;
   final CustomFirebaseSource<ProfileModel> profileFirebaseSource;
   AuthRepositoryImpl({
     required this.firebaseRemoteAuth,
     required this.networkInfo,
     required this.profileFirebaseSource,
+    required this.profileHiveSource,
   });
 
   @override
@@ -55,8 +58,9 @@ class AuthRepositoryImpl extends AuthRepository {
       final authUser = await firebaseRemoteAuth.loginWithEmail(email, password);
       CacheManager.instance.storePref(profileKey, authUser.id!);
       final profile = await profileFirebaseSource.viewItem(authUser.id ?? '');
-      log(authUser);
-      if (profile != null && profile.country != null) {
+      if (profile != null) {
+        log(profile);
+        await profileHiveSource.setItem(profile);
         return true;
       } else {
         return false;
